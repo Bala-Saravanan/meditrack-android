@@ -11,6 +11,9 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -23,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var bottomNav: BottomNavigationView
+    private var currentBottomInset: Int = 0
     private val userRepository: UserRepository by lazy {
         (application as MediTrackApplication).userRepository
     }
@@ -56,16 +60,30 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val mainContainer = findViewById<View>(R.id.main_container)
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         bottomNav = findViewById(R.id.bottom_navigation)
 
+        // Handle System Insets (Status bar & Navigation bar) to prevent header and action overlap
+        ViewCompat.setOnApplyWindowInsetsListener(mainContainer) { _, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            mainContainer.updatePadding(
+                left = insets.left,
+                top = insets.top,
+                right = insets.right
+            )
+            currentBottomInset = insets.bottom
+            updateBottomInsets(bottomNav.visibility == View.VISIBLE)
+            windowInsets
+        }
+
         bottomNav.setupWithNavController(navController)
 
         // Show/hide bottom navigation based on active destination
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
+            val isBottomNavHidden = when (destination.id) {
                 R.id.welcomeFragment,
                 R.id.registrationFragment,
                 R.id.scheduleDetailsFragment,
@@ -73,13 +91,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.addMedicineFragment,
                 R.id.scheduleDoseHistoryFragment,
                 R.id.scheduleReportFragment,
-                R.id.caregiverFormFragment -> {
-                    bottomNav.visibility = View.GONE
-                }
-                else -> {
-                    bottomNav.visibility = View.VISIBLE
-                }
+                R.id.caregiverFormFragment -> true
+                else -> false
             }
+            bottomNav.visibility = if (isBottomNavHidden) View.GONE else View.VISIBLE
+            updateBottomInsets(!isBottomNavHidden)
         }
 
         // On cold start, check if user profile exists
@@ -120,6 +136,17 @@ class MainActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 // Ignore if navigation destination is unreachable in current state
             }
+        }
+    }
+
+    private fun updateBottomInsets(isBottomNavVisible: Boolean) {
+        val navHostView = findViewById<View>(R.id.nav_host_fragment) ?: return
+        if (isBottomNavVisible) {
+            bottomNav.updatePadding(bottom = currentBottomInset)
+            navHostView.updatePadding(bottom = 0)
+        } else {
+            bottomNav.updatePadding(bottom = 0)
+            navHostView.updatePadding(bottom = currentBottomInset)
         }
     }
 }

@@ -74,7 +74,7 @@ class DoseViewModel(
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), FilterCounts())
 
-    val filteredDoseItems: StateFlow<List<DoseUiItem>> = combine(
+    val groupedDoseItems: StateFlow<List<DoseListItem>> = combine(
         rawDosesForDay,
         _selectedFilter
     ) { doses, filter ->
@@ -86,11 +86,33 @@ class DoseViewModel(
             DoseFilter.UNCONFIRMED -> doses.filter { it.status == DoseRecord.STATUS_UNCONFIRMED }
         }
 
-        filtered.map { dose ->
-            val scheduleName = doseRepository.getScheduleName(dose.scheduleId)
-            DoseUiItem(dose = dose, scheduleName = scheduleName)
+        val scheduleIds = filtered.map { it.scheduleId }.distinct()
+        val scheduleMap = scheduleIds.associateWith { id ->
+            doseRepository.getScheduleName(id)
         }
+
+        // Sort schedules deterministically by scheduleName, then scheduleId
+        val sortedScheduleIds = scheduleIds.sortedWith(
+            compareBy({ scheduleMap[it]?.lowercase() ?: "" }, { it })
+        )
+
+        val resultList = mutableListOf<DoseListItem>()
+        for (schedId in sortedScheduleIds) {
+            val schedName = scheduleMap[schedId] ?: "Schedule #$schedId"
+            val dosesForSched = filtered.filter { it.scheduleId == schedId }
+                .sortedWith(compareBy({ it.scheduledAt }, { it.id }))
+
+            resultList.add(DoseListItem.ScheduleHeader(schedId, schedName, dosesForSched.size))
+            for (dose in dosesForSched) {
+                resultList.add(DoseListItem.DoseEntry(dose = dose, scheduleName = schedName))
+            }
+        }
+        resultList
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    val totalDoseCount: StateFlow<Int> = groupedDoseItems.map { items ->
+        items.count { it is DoseListItem.DoseEntry }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 
     fun setSelectedDate(dateMillis: Long) {
         val startOfDay = getStartOfDay(dateMillis)
@@ -120,6 +142,7 @@ class DoseViewModel(
     fun refreshDosesForCurrentDate() {
         val date = _selectedDateMillis.value
         viewModelScope.launch(Dispatchers.IO) {
+            doseRepository.reconcileFutureDoses()
             doseRepository.generateDailyDosesForDate(date)
             doseRepository.markExpiredPendingAsUnconfirmed()
         }

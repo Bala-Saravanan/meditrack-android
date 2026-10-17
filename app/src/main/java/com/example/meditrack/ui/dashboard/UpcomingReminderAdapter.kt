@@ -14,22 +14,90 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+sealed class DashboardReminderItem {
+    data class ScheduleHeader(
+        val scheduleId: Long,
+        val scheduleName: String,
+        val count: Int
+    ) : DashboardReminderItem()
+
+    data class ReminderEntry(
+        val dose: DoseRecord,
+        val scheduleName: String
+    ) : DashboardReminderItem()
+}
+
 class UpcomingReminderAdapter(
     private val onTakenClicked: (DoseRecord) -> Unit,
     private val onSkippedClicked: (DoseRecord) -> Unit,
     private val onItemClicked: ((DoseRecord) -> Unit)? = null
-) : ListAdapter<DoseRecord, UpcomingReminderAdapter.ReminderViewHolder>(DiffCallback) {
+) : ListAdapter<DashboardReminderItem, RecyclerView.ViewHolder>(DiffCallback) {
 
     private val timeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReminderViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_upcoming_reminder, parent, false)
-        return ReminderViewHolder(view)
+    companion object {
+        private const val TYPE_HEADER = 0
+        private const val TYPE_REMINDER = 1
+
+        object DiffCallback : DiffUtil.ItemCallback<DashboardReminderItem>() {
+            override fun areItemsTheSame(
+                oldItem: DashboardReminderItem,
+                newItem: DashboardReminderItem
+            ): Boolean {
+                return when {
+                    oldItem is DashboardReminderItem.ScheduleHeader && newItem is DashboardReminderItem.ScheduleHeader ->
+                        oldItem.scheduleId == newItem.scheduleId
+                    oldItem is DashboardReminderItem.ReminderEntry && newItem is DashboardReminderItem.ReminderEntry ->
+                        oldItem.dose.id == newItem.dose.id
+                    else -> false
+                }
+            }
+
+            override fun areContentsTheSame(
+                oldItem: DashboardReminderItem,
+                newItem: DashboardReminderItem
+            ): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: ReminderViewHolder, position: Int) {
-        holder.bind(getItem(position))
+    override fun getItemViewType(position: Int): Int {
+        return when (getItem(position)) {
+            is DashboardReminderItem.ScheduleHeader -> TYPE_HEADER
+            is DashboardReminderItem.ReminderEntry -> TYPE_REMINDER
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        return when (viewType) {
+            TYPE_HEADER -> {
+                val view = inflater.inflate(R.layout.item_schedule_group_header, parent, false)
+                HeaderViewHolder(view)
+            }
+            else -> {
+                val view = inflater.inflate(R.layout.item_upcoming_reminder, parent, false)
+                ReminderViewHolder(view)
+            }
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (val item = getItem(position)) {
+            is DashboardReminderItem.ScheduleHeader -> (holder as HeaderViewHolder).bind(item)
+            is DashboardReminderItem.ReminderEntry -> (holder as ReminderViewHolder).bind(item)
+        }
+    }
+
+    inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val tvTitle: TextView = itemView.findViewById(R.id.tv_schedule_group_title)
+        private val tvCount: TextView = itemView.findViewById(R.id.tv_schedule_group_count)
+
+        fun bind(header: DashboardReminderItem.ScheduleHeader) {
+            tvTitle.text = header.scheduleName
+            tvCount.text = "${header.count} ${if (header.count == 1) "Reminder" else "Reminders"}"
+        }
     }
 
     inner class ReminderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -43,13 +111,15 @@ class UpcomingReminderAdapter(
         private val btnSkip: Button = itemView.findViewById(R.id.btn_action_skip)
         private val btnTaken: Button = itemView.findViewById(R.id.btn_action_taken)
 
-        fun bind(record: DoseRecord) {
+        fun bind(item: DashboardReminderItem.ReminderEntry) {
+            val record = item.dose
+            val now = System.currentTimeMillis()
+            val isUpcoming = record.scheduledAt > now
+
             tvTime.text = timeFormat.format(Date(record.scheduledAt))
-            
-            val isUpcoming = record.scheduledAt > System.currentTimeMillis()
             tvStatus.text = if (isUpcoming) itemView.context.getString(R.string.status_upcoming) else itemView.context.getString(R.string.status_pending)
 
-            tvScheduleName.text = "Schedule #${record.scheduleId}"
+            tvScheduleName.text = item.scheduleName
             tvMedicineName.text = record.medicineName
             tvPeriod.text = record.period
 
@@ -66,17 +136,18 @@ class UpcomingReminderAdapter(
                 layoutFood.visibility = View.GONE
             }
 
-            btnTaken.setOnClickListener { onTakenClicked(record) }
-            btnSkip.setOnClickListener { onSkippedClicked(record) }
+            // Guard against marking future doses taken/skipped:
+            if (isUpcoming) {
+                btnTaken.visibility = View.GONE
+                btnSkip.visibility = View.GONE
+            } else {
+                btnTaken.visibility = View.VISIBLE
+                btnSkip.visibility = View.VISIBLE
+                btnTaken.setOnClickListener { onTakenClicked(record) }
+                btnSkip.setOnClickListener { onSkippedClicked(record) }
+            }
+
             itemView.setOnClickListener { onItemClicked?.invoke(record) }
         }
-    }
-
-    companion object DiffCallback : DiffUtil.ItemCallback<DoseRecord>() {
-        override fun areItemsTheSame(oldItem: DoseRecord, newItem: DoseRecord): Boolean =
-            oldItem.id == newItem.id
-
-        override fun areContentsTheSame(oldItem: DoseRecord, newItem: DoseRecord): Boolean =
-            oldItem == newItem
     }
 }

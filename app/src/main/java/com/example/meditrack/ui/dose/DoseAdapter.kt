@@ -15,27 +15,84 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-data class DoseUiItem(
-    val dose: DoseRecord,
-    val scheduleName: String
-)
+sealed class DoseListItem {
+    data class ScheduleHeader(
+        val scheduleId: Long,
+        val scheduleName: String,
+        val count: Int
+    ) : DoseListItem()
+
+    data class DoseEntry(
+        val dose: DoseRecord,
+        val scheduleName: String
+    ) : DoseListItem()
+}
 
 class DoseAdapter(
     private val onItemClicked: (DoseRecord) -> Unit,
     private val onTakenClicked: (DoseRecord) -> Unit,
     private val onSkippedClicked: (DoseRecord) -> Unit
-) : ListAdapter<DoseUiItem, DoseAdapter.DoseViewHolder>(DiffCallback) {
+) : ListAdapter<DoseListItem, RecyclerView.ViewHolder>(DiffCallback) {
 
     private val timeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DoseViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_dose_card, parent, false)
-        return DoseViewHolder(view)
+    companion object {
+        private const val TYPE_HEADER = 0
+        private const val TYPE_DOSE = 1
+
+        object DiffCallback : DiffUtil.ItemCallback<DoseListItem>() {
+            override fun areItemsTheSame(oldItem: DoseListItem, newItem: DoseListItem): Boolean {
+                return when {
+                    oldItem is DoseListItem.ScheduleHeader && newItem is DoseListItem.ScheduleHeader ->
+                        oldItem.scheduleId == newItem.scheduleId
+                    oldItem is DoseListItem.DoseEntry && newItem is DoseListItem.DoseEntry ->
+                        oldItem.dose.id == newItem.dose.id
+                    else -> false
+                }
+            }
+
+            override fun areContentsTheSame(oldItem: DoseListItem, newItem: DoseListItem): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: DoseViewHolder, position: Int) {
-        holder.bind(getItem(position))
+    override fun getItemViewType(position: Int): Int {
+        return when (getItem(position)) {
+            is DoseListItem.ScheduleHeader -> TYPE_HEADER
+            is DoseListItem.DoseEntry -> TYPE_DOSE
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        return when (viewType) {
+            TYPE_HEADER -> {
+                val view = inflater.inflate(R.layout.item_schedule_group_header, parent, false)
+                HeaderViewHolder(view)
+            }
+            else -> {
+                val view = inflater.inflate(R.layout.item_dose_card, parent, false)
+                DoseViewHolder(view)
+            }
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (val item = getItem(position)) {
+            is DoseListItem.ScheduleHeader -> (holder as HeaderViewHolder).bind(item)
+            is DoseListItem.DoseEntry -> (holder as DoseViewHolder).bind(item)
+        }
+    }
+
+    inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val tvTitle: TextView = itemView.findViewById(R.id.tv_schedule_group_title)
+        private val tvCount: TextView = itemView.findViewById(R.id.tv_schedule_group_count)
+
+        fun bind(header: DoseListItem.ScheduleHeader) {
+            tvTitle.text = header.scheduleName
+            tvCount.text = "${header.count} ${if (header.count == 1) "Dose" else "Doses"}"
+        }
     }
 
     inner class DoseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -50,15 +107,19 @@ class DoseAdapter(
         private val btnTake: MaterialButton = itemView.findViewById(R.id.btn_dose_take)
         private val btnSkip: MaterialButton = itemView.findViewById(R.id.btn_dose_skip)
 
-        fun bind(item: DoseUiItem) {
+        fun bind(item: DoseListItem.DoseEntry) {
             val dose = item.dose
             val context = itemView.context
+            val now = System.currentTimeMillis()
+            val isUpcoming = dose.scheduledAt > now
 
             tvScheduleName.text = item.scheduleName
             tvMedicineName.text = dose.medicineName
 
             val formattedTime = timeFormat.format(Date(dose.scheduledAt))
-            val periodLabel = dose.period.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+            val periodLabel = dose.period.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+            }
             tvScheduledTime.text = "$formattedTime • $periodLabel"
 
             if (dose.foodInstruction.isNotEmpty()) {
@@ -91,15 +152,14 @@ class DoseAdapter(
                     tvStatusBadge.setTextColor(ContextCompat.getColor(context, R.color.status_unconfirmed))
                 }
                 else -> {
-                    val isUpcoming = dose.scheduledAt > System.currentTimeMillis()
                     tvStatusBadge.text = if (isUpcoming) context.getString(R.string.status_upcoming) else context.getString(R.string.status_pending)
                     tvStatusBadge.setBackgroundResource(R.drawable.bg_status_pill_pending)
                     tvStatusBadge.setTextColor(ContextCompat.getColor(context, R.color.status_pending))
                 }
             }
 
-            // Late Warning Badge
-            if (dose.isLate && dose.recordedAt != null) {
+            // Late Warning Badge (only valid if dose is completed/recorded and actually late)
+            if (dose.isLate && dose.recordedAt != null && !isUpcoming) {
                 tvLateBadge.visibility = View.VISIBLE
                 val diffMinutes = (dose.recordedAt - dose.scheduledAt) / (60 * 1000)
                 if (diffMinutes >= 60) {
@@ -113,8 +173,8 @@ class DoseAdapter(
                 tvLateBadge.visibility = View.GONE
             }
 
-            // Recorded info timestamp
-            if (dose.recordedAt != null) {
+            // Recorded info timestamp (only for completed doses with valid recorded timestamp)
+            if (dose.recordedAt != null && dose.recordedAt > 0 && !isUpcoming) {
                 tvRecordedInfo.visibility = View.VISIBLE
                 val recordedTime = timeFormat.format(Date(dose.recordedAt))
                 tvRecordedInfo.text = "Submitted at $recordedTime (User-recorded)"
@@ -122,8 +182,9 @@ class DoseAdapter(
                 tvRecordedInfo.visibility = View.GONE
             }
 
-            // Action row for Pending or Unconfirmed doses
-            if (dose.status == DoseRecord.STATUS_PENDING || dose.status == DoseRecord.STATUS_UNCONFIRMED) {
+            // Action row: STRICTLY PREVENT marking future doses as taken or skipped!
+            // Only allow taking/skipping when dose is past or due (scheduledAt <= now) and status is PENDING or UNCONFIRMED
+            if (!isUpcoming && (dose.status == DoseRecord.STATUS_PENDING || dose.status == DoseRecord.STATUS_UNCONFIRMED)) {
                 layoutActions.visibility = View.VISIBLE
                 btnTake.setOnClickListener { onTakenClicked(dose) }
                 btnSkip.setOnClickListener { onSkippedClicked(dose) }
@@ -134,16 +195,6 @@ class DoseAdapter(
             itemView.setOnClickListener {
                 onItemClicked(dose)
             }
-        }
-    }
-
-    companion object DiffCallback : DiffUtil.ItemCallback<DoseUiItem>() {
-        override fun areItemsTheSame(oldItem: DoseUiItem, newItem: DoseUiItem): Boolean {
-            return oldItem.dose.id == newItem.dose.id
-        }
-
-        override fun areContentsTheSame(oldItem: DoseUiItem, newItem: DoseUiItem): Boolean {
-            return oldItem.dose == newItem.dose && oldItem.scheduleName == newItem.scheduleName
         }
     }
 }

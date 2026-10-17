@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.meditrack.MediTrackApplication
 import com.example.meditrack.R
+import com.example.meditrack.data.local.entity.Caregiver
 import com.example.meditrack.data.local.model.DateRangeType
 import com.example.meditrack.data.local.model.ScheduleDetailedReport
 import com.example.meditrack.report.PdfReportGenerator
@@ -46,6 +48,8 @@ class ScheduleReportFragment : Fragment() {
 
     private val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
     private val dateTimeFormat = SimpleDateFormat("MMM dd, yyyy • hh:mm a", Locale.getDefault())
+    private val dateFormatHeading = SimpleDateFormat("EEEE • MMM dd, yyyy", Locale.getDefault())
+    private val dayGroupFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
 
     private val createDocumentLauncher = registerForActivityResult(
         ActivityResultContracts.CreateDocument("application/pdf")
@@ -89,7 +93,7 @@ class ScheduleReportFragment : Fragment() {
                     findNavController().currentBackStackEntry?.savedStateHandle?.remove<Boolean>("caregiver_saved_for_report")
                     Toast.makeText(
                         requireContext(),
-                        "Caregiver designated. Tap Share PDF whenever you are ready to share.",
+                        "Caregiver updated. Tap Send to Caregiver to share.",
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -108,7 +112,7 @@ class ScheduleReportFragment : Fragment() {
         medicineAdapter = MedicineReportAdapter()
         rvMeds.adapter = medicineAdapter
 
-        // Chronological doses recycler
+        // Date-grouped doses recycler
         val rvDoses = view.findViewById<RecyclerView>(R.id.rv_report_doses)
         rvDoses.layoutManager = LinearLayoutManager(requireContext())
         doseAdapter = ReportDoseAdapter()
@@ -182,35 +186,107 @@ class ScheduleReportFragment : Fragment() {
         val cardFutureNotice = view.findViewById<MaterialCardView>(R.id.card_future_doses_notice)
         val tvEmptyDoses = view.findViewById<TextView>(R.id.tv_empty_doses)
 
+        // Caregiver Card Views
+        val tvCaregiverBadge = view.findViewById<TextView>(R.id.tv_caregiver_badge)
+        val tvCaregiverName = view.findViewById<TextView>(R.id.tv_caregiver_name)
+        val tvCaregiverDetails = view.findViewById<TextView>(R.id.tv_caregiver_details)
+        val btnSendToCaregiver = view.findViewById<MaterialButton>(R.id.btn_send_to_caregiver)
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.report.collect { report ->
-                    if (report == null) return@collect
-                    bindReportData(
-                        report,
-                        tvTopScheduleName,
-                        tvRegimenBadge,
-                        tvReportScheduleName,
-                        tvReportPeriod,
-                        tvReportGenTime,
-                        tvOverallPct,
-                        barTaken,
-                        barSkipped,
-                        barUnconf,
-                        tvBarTakenPct,
-                        tvBarSkippedPct,
-                        tvBarUnconfPct,
-                        tvTotalScheduled,
-                        tvConfirmedTaken,
-                        tvUserSkipped,
-                        tvUnconfirmed,
-                        tvLateDoses,
-                        cardFutureNotice,
-                        tvEmptyDoses
-                    )
+                // Actively collect caregiver state to recognize saved caregiver immediately
+                launch {
+                    viewModel.caregiver.collect { caregiver ->
+                        bindCaregiverData(
+                            caregiver = caregiver,
+                            tvCaregiverBadge = tvCaregiverBadge,
+                            tvCaregiverName = tvCaregiverName,
+                            tvCaregiverDetails = tvCaregiverDetails,
+                            btnSendToCaregiver = btnSendToCaregiver
+                        )
+                    }
+                }
+
+                // Collect report state
+                launch {
+                    viewModel.report.collect { report ->
+                        if (report == null) return@collect
+                        bindReportData(
+                            report,
+                            tvTopScheduleName,
+                            tvRegimenBadge,
+                            tvReportScheduleName,
+                            tvReportPeriod,
+                            tvReportGenTime,
+                            tvOverallPct,
+                            barTaken,
+                            barSkipped,
+                            barUnconf,
+                            tvBarTakenPct,
+                            tvBarSkippedPct,
+                            tvBarUnconfPct,
+                            tvTotalScheduled,
+                            tvConfirmedTaken,
+                            tvUserSkipped,
+                            tvUnconfirmed,
+                            tvLateDoses,
+                            cardFutureNotice,
+                            tvEmptyDoses
+                        )
+                    }
                 }
             }
         }
+    }
+
+    private fun bindCaregiverData(
+        caregiver: Caregiver?,
+        tvCaregiverBadge: TextView,
+        tvCaregiverName: TextView,
+        tvCaregiverDetails: TextView,
+        btnSendToCaregiver: MaterialButton
+    ) {
+        val context = requireContext()
+        if (caregiver != null) {
+            tvCaregiverBadge.text = "Designated Caregiver"
+            tvCaregiverBadge.setTextColor(ContextCompat.getColor(context, R.color.primary))
+            tvCaregiverBadge.setBackgroundResource(R.drawable.bg_status_pill_taken)
+
+            tvCaregiverName.text = caregiver.fullName
+
+            val details = buildString {
+                append(caregiver.relationship)
+                if (caregiver.phone.isNotBlank()) append(" • ").append(caregiver.phone)
+                if (caregiver.email.isNotBlank()) append(" • ").append(caregiver.email)
+            }
+            tvCaregiverDetails.text = details
+
+            btnSendToCaregiver.text = "Send to Caregiver (${caregiver.fullName})"
+            btnSendToCaregiver.setOnClickListener {
+                executeShare()
+            }
+        } else {
+            tvCaregiverBadge.text = "Not Designated"
+            tvCaregiverBadge.setTextColor(ContextCompat.getColor(context, R.color.outline))
+            tvCaregiverBadge.setBackgroundResource(R.drawable.bg_status_pill_unconfirmed)
+
+            tvCaregiverName.text = "No Caregiver Designated"
+            tvCaregiverDetails.text = "Assign a caregiver to enable one-tap personalized report sharing and notifications."
+
+            btnSendToCaregiver.text = "+ Designate Caregiver"
+            btnSendToCaregiver.setOnClickListener {
+                navigateToCaregiverForm()
+            }
+        }
+    }
+
+    private fun navigateToCaregiverForm() {
+        val bundle = Bundle().apply {
+            putBoolean("isEdit", false)
+            putBoolean("fromReportShare", true)
+            putLong("reportScheduleId", scheduleId)
+        }
+        findNavController().navigate(R.id.action_scheduleReport_to_caregiverForm, bundle)
     }
 
     private fun bindReportData(
@@ -274,15 +350,45 @@ class ScheduleReportFragment : Fragment() {
 
         cardFutureNotice.visibility = if (report.hasFutureScheduledDoses) View.VISIBLE else View.GONE
 
-        // Submit lists
+        // Submit medicine breakdown
         medicineAdapter.submitList(report.medicineSummaries)
 
+        // Group dose records by scheduled date with separate upcoming section
         if (report.doseRecords.isEmpty()) {
             tvEmptyDoses.visibility = View.VISIBLE
+            doseAdapter.submitList(emptyList())
         } else {
             tvEmptyDoses.visibility = View.GONE
+            val now = System.currentTimeMillis()
+            val pastDoses = report.doseRecords.filter { it.scheduledAt <= now }
+            val futureDoses = report.doseRecords.filter { it.scheduledAt > now }
+
+            val groupedItems = mutableListOf<ReportDoseListItem>()
+
+            // Past/due doses grouped by scheduled day (newest date first, within each day sorted by time)
+            val groupedByDay = pastDoses.groupBy { dayGroupFormat.format(Date(it.scheduledAt)) }
+            val sortedDayKeys = groupedByDay.keys.sortedDescending()
+
+            for (dayKey in sortedDayKeys) {
+                val dosesForDay = groupedByDay[dayKey].orEmpty().sortedBy { it.scheduledAt }
+                val headingDate = dateFormatHeading.format(Date(dosesForDay.first().scheduledAt))
+                groupedItems.add(ReportDoseListItem.DateHeader(headingDate, dosesForDay.size))
+                for (dose in dosesForDay) {
+                    groupedItems.add(ReportDoseListItem.DoseItem(dose))
+                }
+            }
+
+            // Future scheduled doses in a separate Upcoming section
+            if (futureDoses.isNotEmpty()) {
+                val sortedFuture = futureDoses.sortedBy { it.scheduledAt }
+                groupedItems.add(ReportDoseListItem.UpcomingHeader(sortedFuture.size))
+                for (dose in sortedFuture) {
+                    groupedItems.add(ReportDoseListItem.DoseItem(dose))
+                }
+            }
+
+            doseAdapter.submitList(groupedItems)
         }
-        doseAdapter.submitList(report.doseRecords)
     }
 
     private fun setBarWeight(view: View, weight: Float) {
@@ -329,15 +435,10 @@ class ScheduleReportFragment : Fragment() {
         val caregiver = viewModel.caregiver.value
         if (caregiver == null) {
             com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Share with Caregiver")
-                .setMessage("You haven't designated a caregiver yet. Would you like to add caregiver details to personalize this report, or share directly via other apps?")
-                .setPositiveButton("Add Caregiver") { _, _ ->
-                    val bundle = Bundle().apply {
-                        putBoolean("isEdit", false)
-                        putBoolean("fromReportShare", true)
-                        putLong("reportScheduleId", scheduleId)
-                    }
-                    findNavController().navigate(R.id.action_scheduleReport_to_caregiverForm, bundle)
+                .setTitle("Share Compliance Report")
+                .setMessage("You haven't designated a caregiver yet. Would you like to designate one to personalize this report, or share directly via other apps?")
+                .setPositiveButton("Designate Caregiver") { _, _ ->
+                    navigateToCaregiverForm()
                 }
                 .setNegativeButton("Share Directly") { _, _ ->
                     executeShare()

@@ -132,17 +132,23 @@ class DashboardFragment : Fragment() {
                 }
 
                 launch {
-                    viewModel.pendingReminders.collect { reminders ->
-                        if (reminders.isEmpty()) {
+                    viewModel.groupedReminders.collect { items ->
+                        if (items.isEmpty()) {
                             layoutEmptyReminders.visibility = View.VISIBLE
                             rvReminders.visibility = View.GONE
                             tvGreetingSubtitle.text = getString(R.string.no_upcoming_reminders)
                         } else {
                             layoutEmptyReminders.visibility = View.GONE
                             rvReminders.visibility = View.VISIBLE
-                            val count = reminders.size
+                            reminderAdapter.submitList(items)
+                        }
+                    }
+                }
+
+                launch {
+                    viewModel.totalPendingCount.collect { count ->
+                        if (count > 0) {
                             tvGreetingSubtitle.text = "You have $count ${if (count == 1) "dose" else "doses"} scheduled for today."
-                            reminderAdapter.submitList(reminders)
                         }
                     }
                 }

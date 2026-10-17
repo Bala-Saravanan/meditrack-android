@@ -175,7 +175,7 @@ class DoseFragment : Fragment() {
                 }
 
                 launch {
-                    viewModel.filteredDoseItems.collect { items ->
+                    viewModel.groupedDoseItems.collect { items ->
                         if (items.isEmpty()) {
                             rvDoses.visibility = View.GONE
                             layoutEmpty.visibility = View.VISIBLE
@@ -184,9 +184,14 @@ class DoseFragment : Fragment() {
                             rvDoses.visibility = View.VISIBLE
                             layoutEmpty.visibility = View.GONE
                             tvCountHeader.visibility = View.VISIBLE
-                            tvCountHeader.text = "${items.size} ${if (items.size == 1) "Dose Scheduled" else "Doses Scheduled"}"
                             doseAdapter.submitList(items)
                         }
+                    }
+                }
+
+                launch {
+                    viewModel.totalDoseCount.collect { count ->
+                        tvCountHeader.text = "$count ${if (count == 1) "Dose Scheduled" else "Doses Scheduled"}"
                     }
                 }
             }

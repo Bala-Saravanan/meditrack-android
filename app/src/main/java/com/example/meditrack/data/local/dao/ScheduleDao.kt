@@ -101,6 +101,10 @@ interface ScheduleDao {
             if (existing.medicineId !in newMedicineIds) {
                 disableScheduleMedicine(existing.id)
                 disableScheduleMedicineTimes(existing.id)
+                val times = getScheduleMedicineTimesOnce(existing.id)
+                for (t in times) {
+                    deletePendingDosesForTime(t.id)
+                }
             }
         }
 
@@ -125,12 +129,18 @@ interface ScheduleDao {
             for (time in existingTimes) {
                 if (time.period !in newPeriods) {
                     updateScheduleMedicineTime(time.copy(isEnabled = false))
+                    deletePendingDosesForTime(time.id)
                 }
             }
 
             for (timeDraft in timesDraft) {
                 val existingTime = existingTimes.find { it.period == timeDraft.period }
                 if (existingTime != null) {
+                    val timeChanged = existingTime.minutesSinceMidnight != timeDraft.minutesSinceMidnight
+                    val becameDisabled = existingTime.isEnabled && !timeDraft.isEnabled
+                    if (timeChanged || becameDisabled) {
+                        deletePendingDosesForTime(existingTime.id)
+                    }
                     updateScheduleMedicineTime(
                         existingTime.copy(
                             minutesSinceMidnight = timeDraft.minutesSinceMidnight,
@@ -157,4 +167,7 @@ interface ScheduleDao {
 
     @Query("UPDATE schedules SET status = :newStatus WHERE id = :scheduleId")
     suspend fun updateScheduleStatus(scheduleId: Long, newStatus: String)
+
+    @Query("DELETE FROM dose_records WHERE scheduleMedicineTimeId = :timeId AND status = 'PENDING' AND recordedAt IS NULL")
+    suspend fun deletePendingDosesForTime(timeId: Long)
 }

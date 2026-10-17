@@ -64,6 +64,10 @@ class DoseRepository(
     suspend fun recordDoseTaken(doseId: Long) {
         val dose = doseRecordDao.getDoseRecordById(doseId) ?: return
         val now = System.currentTimeMillis()
+        if (dose.scheduledAt > now) {
+            // Future scheduled doses must remain upcoming and cannot be marked taken
+            return
+        }
         val isLate = DoseRecord.calculateIsLate(dose.scheduledAt, now, DoseRecord.STATUS_TAKEN)
         doseRecordDao.updateStatus(
             id = doseId,
@@ -76,6 +80,10 @@ class DoseRepository(
     suspend fun recordDoseSkipped(doseId: Long) {
         val dose = doseRecordDao.getDoseRecordById(doseId) ?: return
         val now = System.currentTimeMillis()
+        if (dose.scheduledAt > now) {
+            // Future scheduled doses must remain upcoming and cannot be marked skipped
+            return
+        }
         val isLate = DoseRecord.calculateIsLate(dose.scheduledAt, now, DoseRecord.STATUS_SKIPPED)
         doseRecordDao.updateStatus(
             id = doseId,
@@ -83,6 +91,10 @@ class DoseRepository(
             recordedAt = now,
             isLate = isLate
         )
+    }
+
+    suspend fun reconcileFutureDoses(now: Long = System.currentTimeMillis()) {
+        doseRecordDao.reconcileFutureCompletedDoses(now)
     }
 
     suspend fun markExpiredPendingAsUnconfirmed(windowMs: Long = DoseRecord.LATE_THRESHOLD_MS) {
@@ -278,6 +290,37 @@ class DoseRepository(
     }
 
     /**
+     * Centralized adherence calculation to guarantee 100% metric consistency across
+     * Report Card, Detailed Report Screen, and PDF export.
+     */
+    fun computeScheduleAdherenceSummary(
+        scheduleId: Long,
+        scheduleName: String,
+        doses: List<DoseRecord>,
+        now: Long = System.currentTimeMillis()
+    ): ScheduleAdherenceSummary {
+        val pastOrDueDoses = doses.filter { it.scheduledAt <= now }
+        val futureDoses = doses.filter { it.scheduledAt > now }
+
+        val taken = pastOrDueDoses.count { it.status == DoseRecord.STATUS_TAKEN }
+        val skipped = pastOrDueDoses.count { it.status == DoseRecord.STATUS_SKIPPED }
+        val unconfirmed = pastOrDueDoses.count { it.status == DoseRecord.STATUS_UNCONFIRMED }
+        val pending = pastOrDueDoses.count { it.status == DoseRecord.STATUS_PENDING } + futureDoses.size
+        val late = pastOrDueDoses.count { it.isLate && it.status == DoseRecord.STATUS_TAKEN }
+
+        return ScheduleAdherenceSummary(
+            scheduleId = scheduleId,
+            scheduleName = scheduleName,
+            totalScheduled = doses.size,
+            takenCount = taken,
+            skippedCount = skipped,
+            unconfirmedCount = unconfirmed,
+            pendingCount = pending,
+            lateCount = late
+        )
+    }
+
+    /**
      * Emits a reactive list of schedule report card items for all schedules in Room.
      */
     fun getAllScheduleReportCards(): Flow<List<ScheduleReportCardItem>> {
@@ -285,25 +328,12 @@ class DoseRepository(
             scheduleDao.getAllSchedules(),
             doseRecordDao.getAllDoses()
         ) { schedules, allDoses ->
+            val now = System.currentTimeMillis()
             val dosesBySchedule = allDoses.groupBy { it.scheduleId }
             schedules.map { schedule ->
-                val doses = dosesBySchedule[schedule.id].orEmpty()
-                val taken = doses.count { it.status == DoseRecord.STATUS_TAKEN }
-                val skipped = doses.count { it.status == DoseRecord.STATUS_SKIPPED }
-                val unconfirmed = doses.count { it.status == DoseRecord.STATUS_UNCONFIRMED }
-                val pending = doses.count { it.status == DoseRecord.STATUS_PENDING }
-                val late = doses.count { it.isLate }
-
-                val summary = ScheduleAdherenceSummary(
-                    scheduleId = schedule.id,
-                    scheduleName = schedule.name,
-                    totalScheduled = doses.size,
-                    takenCount = taken,
-                    skippedCount = skipped,
-                    unconfirmedCount = unconfirmed,
-                    pendingCount = pending,
-                    lateCount = late
-                )
+                val (start30, end30) = calculateDateRangeBounds(schedule, DateRangeType.LAST_30_DAYS)
+                val doses = dosesBySchedule[schedule.id].orEmpty().filter { it.scheduledAt in start30..end30 }
+                val summary = computeScheduleAdherenceSummary(schedule.id, schedule.name, doses, now)
 
                 ScheduleReportCardItem(
                     scheduleId = schedule.id,
@@ -423,35 +453,20 @@ class DoseRepository(
             } else {
                 val (startTime, endTime) = calculateDateRangeBounds(schedule, rangeType, customStart, customEnd)
                 doseRecordDao.getDosesForScheduleAndDateRange(scheduleId, startTime, endTime).map { doses ->
-                    val taken = doses.count { it.status == DoseRecord.STATUS_TAKEN }
-                    val skipped = doses.count { it.status == DoseRecord.STATUS_SKIPPED }
-                    val unconfirmed = doses.count { it.status == DoseRecord.STATUS_UNCONFIRMED }
-                    val pending = doses.count { it.status == DoseRecord.STATUS_PENDING }
-                    val late = doses.count { it.isLate }
-
-                    val summary = ScheduleAdherenceSummary(
-                        scheduleId = schedule.id,
-                        scheduleName = schedule.name,
-                        totalScheduled = doses.size,
-                        takenCount = taken,
-                        skippedCount = skipped,
-                        unconfirmedCount = unconfirmed,
-                        pendingCount = pending,
-                        lateCount = late
-                    )
+                    val now = System.currentTimeMillis()
+                    val summary = computeScheduleAdherenceSummary(schedule.id, schedule.name, doses, now)
 
                     val medicineSummaries = doses.groupBy { it.medicineName }.map { (medName, medDoses) ->
                         MedicineAdherenceSummary(
                             medicineName = medName,
                             totalScheduled = medDoses.size,
-                            takenCount = medDoses.count { it.status == DoseRecord.STATUS_TAKEN },
-                            skippedCount = medDoses.count { it.status == DoseRecord.STATUS_SKIPPED },
-                            unconfirmedCount = medDoses.count { it.status == DoseRecord.STATUS_UNCONFIRMED },
-                            lateCount = medDoses.count { it.isLate }
+                            takenCount = medDoses.count { it.status == DoseRecord.STATUS_TAKEN && it.scheduledAt <= now },
+                            skippedCount = medDoses.count { it.status == DoseRecord.STATUS_SKIPPED && it.scheduledAt <= now },
+                            unconfirmedCount = medDoses.count { it.status == DoseRecord.STATUS_UNCONFIRMED && it.scheduledAt <= now },
+                            lateCount = medDoses.count { it.isLate && it.status == DoseRecord.STATUS_TAKEN }
                         )
                     }
 
-                    val now = System.currentTimeMillis()
                     val hasFutureScheduledDoses = doses.any { it.scheduledAt > now }
 
                     ScheduleDetailedReport(
@@ -488,35 +503,20 @@ class DoseRepository(
         val (startTime, endTime) = calculateDateRangeBounds(schedule, rangeType, customStart, customEnd)
         val doses = doseRecordDao.getDosesForScheduleAndDateRangeOnce(scheduleId, startTime, endTime)
 
-        val taken = doses.count { it.status == DoseRecord.STATUS_TAKEN }
-        val skipped = doses.count { it.status == DoseRecord.STATUS_SKIPPED }
-        val unconfirmed = doses.count { it.status == DoseRecord.STATUS_UNCONFIRMED }
-        val pending = doses.count { it.status == DoseRecord.STATUS_PENDING }
-        val late = doses.count { it.isLate }
-
-        val summary = ScheduleAdherenceSummary(
-            scheduleId = schedule.id,
-            scheduleName = schedule.name,
-            totalScheduled = doses.size,
-            takenCount = taken,
-            skippedCount = skipped,
-            unconfirmedCount = unconfirmed,
-            pendingCount = pending,
-            lateCount = late
-        )
+        val now = System.currentTimeMillis()
+        val summary = computeScheduleAdherenceSummary(schedule.id, schedule.name, doses, now)
 
         val medicineSummaries = doses.groupBy { it.medicineName }.map { (medName, medDoses) ->
             MedicineAdherenceSummary(
                 medicineName = medName,
                 totalScheduled = medDoses.size,
-                takenCount = medDoses.count { it.status == DoseRecord.STATUS_TAKEN },
-                skippedCount = medDoses.count { it.status == DoseRecord.STATUS_SKIPPED },
-                unconfirmedCount = medDoses.count { it.status == DoseRecord.STATUS_UNCONFIRMED },
-                lateCount = medDoses.count { it.isLate }
+                takenCount = medDoses.count { it.status == DoseRecord.STATUS_TAKEN && it.scheduledAt <= now },
+                skippedCount = medDoses.count { it.status == DoseRecord.STATUS_SKIPPED && it.scheduledAt <= now },
+                unconfirmedCount = medDoses.count { it.status == DoseRecord.STATUS_UNCONFIRMED && it.scheduledAt <= now },
+                lateCount = medDoses.count { it.isLate && it.status == DoseRecord.STATUS_TAKEN }
             )
         }
 
-        val now = System.currentTimeMillis()
         val hasFutureScheduledDoses = doses.any { it.scheduledAt > now }
 
         return ScheduleDetailedReport(

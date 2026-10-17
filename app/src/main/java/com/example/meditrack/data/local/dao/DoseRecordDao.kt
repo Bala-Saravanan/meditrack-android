@@ -60,4 +60,10 @@ interface DoseRecordDao {
 
     @Query("SELECT * FROM dose_records ORDER BY scheduledAt DESC LIMIT :limit")
     fun getRecentDoses(limit: Int): Flow<List<DoseRecord>>
+
+    @Query("DELETE FROM dose_records WHERE scheduleMedicineTimeId = :timeId AND status = 'PENDING' AND recordedAt IS NULL")
+    suspend fun deletePendingDosesForTime(timeId: Long)
+
+    @Query("UPDATE dose_records SET status = 'PENDING', recordedAt = NULL, isLate = 0 WHERE scheduledAt > :now AND (status = 'TAKEN' OR status = 'SKIPPED')")
+    suspend fun reconcileFutureCompletedDoses(now: Long)
 }

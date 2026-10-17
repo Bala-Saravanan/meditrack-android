@@ -126,8 +126,9 @@ class DoseHistoryAdapter(
                 layoutRecorded.visibility = View.GONE
             }
 
-            // Action row for Pending or Unconfirmed doses (allows late logging!)
-            if (record.status == DoseRecord.STATUS_PENDING || record.status == DoseRecord.STATUS_UNCONFIRMED) {
+            // Action row for Pending or Unconfirmed doses (strictly prevent marking future doses taken/skipped)
+            val isUpcoming = record.scheduledAt > System.currentTimeMillis()
+            if (!isUpcoming && (record.status == DoseRecord.STATUS_PENDING || record.status == DoseRecord.STATUS_UNCONFIRMED)) {
                 layoutActions.visibility = View.VISIBLE
                 btnTake.setOnClickListener { onTakenClicked(record) }
                 btnSkip.setOnClickListener { onSkippedClicked(record) }

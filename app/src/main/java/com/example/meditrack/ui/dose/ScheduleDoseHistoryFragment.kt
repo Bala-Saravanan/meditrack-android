@@ -187,12 +187,14 @@ class ScheduleDoseHistoryFragment : Fragment() {
                                 DoseRecord.STATUS_UNCONFIRMED -> {
                                     tvHighlightStatus.setBackgroundResource(R.drawable.bg_status_pill_unconfirmed)
                                     tvHighlightStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.status_unconfirmed))
-                                    layoutHighlightActions.visibility = View.VISIBLE
+                                    layoutHighlightActions.visibility = if (dose.scheduledAt <= System.currentTimeMillis()) View.VISIBLE else View.GONE
                                 }
                                 else -> {
+                                    val isUpcoming = dose.scheduledAt > System.currentTimeMillis()
+                                    tvHighlightStatus.text = if (isUpcoming) getString(R.string.status_upcoming) else getString(R.string.status_pending)
                                     tvHighlightStatus.setBackgroundResource(R.drawable.bg_status_pill_pending)
                                     tvHighlightStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.status_pending))
-                                    layoutHighlightActions.visibility = View.VISIBLE
+                                    layoutHighlightActions.visibility = if (!isUpcoming) View.VISIBLE else View.GONE
                                 }
                             }
 

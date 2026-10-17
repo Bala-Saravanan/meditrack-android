@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingTop="16dp"
+    android:paddingBottom="8dp">
+
+    <ImageView
+        android:id="@+id/iv_header_icon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_calendar"
+        app:tint="@color/primary" />
+
+    <TextView
+        android:id="@+id/tv_report_date_heading"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:fontFamily="sans-serif-bold"
+        android:textColor="@color/on_surface"
+        android:textSize="14sp"
+        tools:text="Today • Oct 17, 2026" />
+
+    <TextView
+        android:id="@+id/tv_report_date_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_status_pill_due"
+        android:backgroundTint="@color/surface_container"
+        android:fontFamily="sans-serif-medium"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="2dp"
+        android:textColor="@color/on_surface_variant"
+        android:textSize="11sp"
+        tools:text="3 Doses" />
+</LinearLayout>
