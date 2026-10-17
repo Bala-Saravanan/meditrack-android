@@ -11,65 +11,41 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Top App Bar -->
-        <LinearLayout
+        <!-- Top App Bar (56dp standard) -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_dose"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/surface_container_lowest"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="14dp"
-            android:paddingBottom="12dp">
+            android:layout_height="56dp"
+            android:background="@color/surface"
+            android:elevation="0dp"
+            app:contentInsetStart="16dp"
+            app:contentInsetEnd="16dp">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-bold"
                     android:text="@string/dose_history_heading"
                     android:textColor="@color/on_surface"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <View
-                        android:layout_width="6dp"
-                        android:layout_height="6dp"
-                        android:background="@drawable/bg_status_pill_taken"
-                        android:backgroundTint="@color/primary" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:fontFamily="sans-serif"
-                        android:text="@string/all_medication_schedules"
-                        android:textColor="@color/on_surface_variant"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                <ImageButton
+                    android:id="@+id/btn_calendar_picker"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Pick Date"
+                    android:src="@drawable/ic_calendar"
+                    app:tint="@color/primary" />
             </LinearLayout>
-
-            <ImageButton
-                android:id="@+id/btn_calendar_picker"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Pick Date"
-                android:src="@drawable/ic_calendar"
-                app:tint="@color/primary" />
-        </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
 
         <View
             android:layout_width="match_parent"
@@ -94,7 +70,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_status_pill_pending"
+                    android:background="@drawable/bg_banner_info"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingHorizontal="12dp"
@@ -179,49 +155,45 @@
                         android:id="@+id/cg_dose_filters"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:chipSpacingHorizontal="6dp"
                         app:singleLine="true"
                         app:singleSelection="true">
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chip_filter_all"
-                            style="@style/Widget.Material3.Chip.Filter"
+                            style="@style/Widget.MediTrack.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="true"
-                            android:text="@string/filter_all_doses"
-                            app:chipBackgroundColor="@color/surface_container_lowest" />
+                            android:text="@string/filter_all_doses" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chip_filter_upcoming"
-                            style="@style/Widget.Material3.Chip.Filter"
+                            style="@style/Widget.MediTrack.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/filter_upcoming"
-                            app:chipBackgroundColor="@color/surface_container_lowest" />
+                            android:text="@string/filter_upcoming" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chip_filter_taken"
-                            style="@style/Widget.Material3.Chip.Filter"
+                            style="@style/Widget.MediTrack.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/filter_taken"
-                            app:chipBackgroundColor="@color/surface_container_lowest" />
+                            android:text="@string/filter_taken" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chip_filter_skipped"
-                            style="@style/Widget.Material3.Chip.Filter"
+                            style="@style/Widget.MediTrack.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/filter_skipped"
-                            app:chipBackgroundColor="@color/surface_container_lowest" />
+                            android:text="@string/filter_skipped" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chip_filter_unconfirmed"
-                            style="@style/Widget.Material3.Chip.Filter"
+                            style="@style/Widget.MediTrack.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/filter_unconfirmed"
-                            app:chipBackgroundColor="@color/surface_container_lowest" />
+                            android:text="@string/filter_unconfirmed" />
 
                     </com.google.android.material.chip.ChipGroup>
                 </HorizontalScrollView>

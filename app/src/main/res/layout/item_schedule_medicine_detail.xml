@@ -1,237 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/ClinicalCard"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp">
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="10dp">
 
-        <!-- Medicine Name & Food Instruction Header -->
+        <!-- Column 1: Medicine Name & Subtext (140dp) -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="12dp">
+
+            <TextView
+                android:id="@+id/tv_detail_med_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-bold"
+                android:textColor="@color/on_surface"
+                android:textSize="14sp"
+                tools:text="Atorvastatin 20mg" />
+
+            <TextView
+                android:id="@+id/tv_detail_med_form"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/primary"
+                android:textSize="11sp"
+                tools:text="● Lipid Management" />
+
+            <!-- Hidden/optional instructions placeholder for ID compatibility -->
+            <TextView
+                android:id="@+id/tv_detail_instructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- Column 2: Food Requirement (100dp) -->
+        <LinearLayout
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:paddingHorizontal="6dp">
 
-            <FrameLayout
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:background="@drawable/ic_launcher_background"
-                android:backgroundTint="@color/primary_fixed">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_medication"
-                    app:tint="@color/primary" />
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_detail_med_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-bold"
-                    android:textColor="@color/on_surface"
-                    android:textSize="16sp"
-                    tools:text="Atorvastatin 20mg" />
-
-                <TextView
-                    android:id="@+id/tv_detail_med_form"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/on_surface_variant"
-                    android:textSize="12sp"
-                    tools:text="Oral Tablet • Lipid Management" />
-            </LinearLayout>
-
-            <!-- Food Instruction Badge -->
             <TextView
                 android:id="@+id/tv_detail_food_instruction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_launcher_background"
-                android:backgroundTint="@color/surface_container_high"
+                android:background="@drawable/bg_pill_status_default"
+                android:ellipsize="end"
                 android:fontFamily="sans-serif-medium"
-                android:paddingHorizontal="10dp"
+                android:maxLines="2"
+                android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
                 android:textColor="@color/primary"
-                android:textSize="12sp"
-                tools:text="Before Food" />
+                android:textSize="11sp"
+                tools:text="Yes (30m before)" />
         </LinearLayout>
 
-        <!-- Prescribed Instructions Note if any -->
-        <TextView
-            android:id="@+id/tv_detail_instructions"
-            android:layout_width="match_parent"
+        <!-- Column 3: Morning (80dp) -->
+        <FrameLayout
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/ic_launcher_background"
-            android:backgroundTint="@color/surface_container_low"
-            android:padding="8dp"
-            android:textColor="@color/on_surface_variant"
-            android:textSize="12sp"
-            tools:text="Take with a full glass of water. Avoid grapefruit." />
+            android:paddingHorizontal="4dp">
 
-        <!-- 4-Slot Time Timetable Row -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Configured Time Slots"
-            android:textColor="@color/on_surface_variant"
-            android:textSize="11sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal">
-
-            <!-- Morning -->
             <LinearLayout
                 android:id="@+id/layout_slot_morning"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="3dp"
-                android:layout_weight="1"
-                android:background="@drawable/ic_launcher_background"
-                android:backgroundTint="@color/surface_container_low"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Morning"
-                    android:textColor="@color/on_surface_variant"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_slot_active"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/tv_slot_morning_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
                     android:fontFamily="sans-serif-medium"
-                    android:textColor="@color/on_surface"
+                    android:textColor="@color/on_tertiary_fixed"
                     android:textSize="11sp"
-                    tools:text="08:00 AM" />
+                    android:textStyle="bold"
+                    tools:text="✓ 08:00 AM" />
             </LinearLayout>
+        </FrameLayout>
 
-            <!-- Afternoon -->
+        <!-- Column 4: Afternoon (80dp) -->
+        <FrameLayout
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="4dp">
+
             <LinearLayout
                 android:id="@+id/layout_slot_afternoon"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="3dp"
-                android:layout_weight="1"
-                android:background="@drawable/ic_launcher_background"
-                android:backgroundTint="@color/surface_container_low"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Afternoon"
-                    android:textColor="@color/on_surface_variant"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_slot_box"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/tv_slot_afternoon_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
                     android:fontFamily="sans-serif-medium"
-                    android:textColor="@color/on_surface_variant"
-                    android:textSize="11sp"
+                    android:textColor="@color/outline"
+                    android:textSize="12sp"
                     tools:text="—" />
             </LinearLayout>
+        </FrameLayout>
 
-            <!-- Evening -->
+        <!-- Column 5: Evening (80dp) -->
+        <FrameLayout
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="4dp">
+
             <LinearLayout
                 android:id="@+id/layout_slot_evening"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="3dp"
-                android:layout_weight="1"
-                android:background="@drawable/ic_launcher_background"
-                android:backgroundTint="@color/surface_container_low"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Evening"
-                    android:textColor="@color/on_surface_variant"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_slot_box"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/tv_slot_evening_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
                     android:fontFamily="sans-serif-medium"
-                    android:textColor="@color/on_surface"
-                    android:textSize="11sp"
-                    tools:text="08:00 PM" />
+                    android:textColor="@color/outline"
+                    android:textSize="12sp"
+                    tools:text="—" />
             </LinearLayout>
+        </FrameLayout>
 
-            <!-- Night -->
+        <!-- Column 6: Night (80dp) -->
+        <FrameLayout
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="4dp">
+
             <LinearLayout
                 android:id="@+id/layout_slot_night"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:layout_weight="1"
-                android:background="@drawable/ic_launcher_background"
-                android:backgroundTint="@color/surface_container_low"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Night"
-                    android:textColor="@color/on_surface_variant"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_slot_box"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/tv_slot_night_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
                     android:fontFamily="sans-serif-medium"
-                    android:textColor="@color/on_surface_variant"
-                    android:textSize="11sp"
+                    android:textColor="@color/outline"
+                    android:textSize="12sp"
                     tools:text="—" />
             </LinearLayout>
-        </LinearLayout>
+        </FrameLayout>
 
     </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+
+    <!-- Row Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/outline_variant" />
+
+</LinearLayout>

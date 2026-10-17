@@ -96,6 +96,9 @@ class Phase9VerificationTest {
         override fun getDosesForDateRange(startTime: Long, endTime: Long): Flow<List<DoseRecord>> =
             flowOf(records.filter { it.scheduledAt in startTime until endTime })
 
+        override fun getActiveScheduleDosesForDateRange(startTime: Long, endTime: Long): Flow<List<DoseRecord>> =
+            flowOf(records.filter { it.scheduledAt in startTime until endTime })
+
         override suspend fun getDosesForDateRangeOnce(startTime: Long, endTime: Long): List<DoseRecord> =
             records.filter { it.scheduledAt in startTime until endTime }
 

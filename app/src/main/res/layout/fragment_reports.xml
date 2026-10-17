@@ -6,23 +6,24 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <!-- Top App Bar (56dp standard) -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_reports"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="96dp">
+            android:layout_height="56dp"
+            android:background="@color/surface"
+            android:elevation="0dp"
+            app:contentInsetStart="16dp"
+            app:contentInsetEnd="16dp">
 
-            <!-- Top Header Row -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -30,23 +31,42 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="sans-serif-bold"
                     android:text="MediTrack"
                     android:textColor="@color/on_surface"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/tv_user_avatar"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:background="@drawable/bg_status_pill_due"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/bg_pill_offline"
                     android:backgroundTint="@color/primary_fixed"
+                    android:fontFamily="sans-serif-bold"
                     android:gravity="center"
                     android:text="U"
                     android:textColor="@color/on_primary_fixed"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textSize="15sp" />
             </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/outline_variant" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="96dp">
 
             <!-- Offline Sync Status Ribbon -->
             <com.google.android.material.card.MaterialCardView
@@ -153,7 +173,7 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_all"
-                        style="@style/Widget.Material3.Chip.Filter"
+                        style="@style/Widget.MediTrack.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
@@ -161,21 +181,21 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_active"
-                        style="@style/Widget.Material3.Chip.Filter"
+                        style="@style/Widget.MediTrack.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Active" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_completed"
-                        style="@style/Widget.Material3.Chip.Filter"
+                        style="@style/Widget.MediTrack.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Completed" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_discontinued"
-                        style="@style/Widget.Material3.Chip.Filter"
+                        style="@style/Widget.MediTrack.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Discontinued" />
@@ -240,5 +260,7 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

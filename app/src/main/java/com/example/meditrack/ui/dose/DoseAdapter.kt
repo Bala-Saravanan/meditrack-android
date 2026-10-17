@@ -96,7 +96,6 @@ class DoseAdapter(
     }
 
     inner class DoseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val tvScheduleName: TextView = itemView.findViewById(R.id.tv_dose_schedule_name)
         private val tvStatusBadge: TextView = itemView.findViewById(R.id.tv_dose_status_badge)
         private val tvMedicineName: TextView = itemView.findViewById(R.id.tv_dose_medicine_name)
         private val tvScheduledTime: TextView = itemView.findViewById(R.id.tv_dose_scheduled_time)
@@ -113,7 +112,6 @@ class DoseAdapter(
             val now = System.currentTimeMillis()
             val isUpcoming = dose.scheduledAt > now
 
-            tvScheduleName.text = item.scheduleName
             tvMedicineName.text = dose.medicineName
 
             val formattedTime = timeFormat.format(Date(dose.scheduledAt))

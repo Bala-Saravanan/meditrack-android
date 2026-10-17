@@ -221,6 +221,8 @@ object DatabaseInitializer {
     }
 
     suspend fun clearAllData(database: MediTrackDatabase) {
-        database.clearAllTables()
+        kotlinx.coroutines.withContext(Dispatchers.IO) {
+            database.clearAllTables()
+        }
     }
 }

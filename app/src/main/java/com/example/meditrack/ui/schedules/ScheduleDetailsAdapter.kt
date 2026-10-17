@@ -45,23 +45,22 @@ class ScheduleDetailsAdapter :
             val med = item.medicine
             val scheduleMed = item.scheduleMedicine
             tvName.text = med.name
-            tvForm.text = "${med.form} • ${scheduleMed.doseQuantity}"
+
+            val subtext = if (med.instructions.isNotBlank()) med.instructions else "${med.form} • ${scheduleMed.doseQuantity}"
+            tvForm.text = "● $subtext"
 
             // Food instruction
             val foodDisplayName = when (scheduleMed.foodInstruction) {
-                ScheduleMedicine.FOOD_BEFORE, "Before Food" -> itemView.context.getString(R.string.food_before)
-                ScheduleMedicine.FOOD_WITH, "With Food" -> itemView.context.getString(R.string.food_with)
-                ScheduleMedicine.FOOD_AFTER, "After Food" -> itemView.context.getString(R.string.food_after)
-                else -> itemView.context.getString(R.string.food_no_restriction)
+                ScheduleMedicine.FOOD_BEFORE, "Before Food" -> "Yes (30m before)"
+                ScheduleMedicine.FOOD_WITH, "With Food" -> "Yes (with food)"
+                ScheduleMedicine.FOOD_AFTER, "After Food" -> "Yes (after food)"
+                else -> "No"
             }
             tvFood.text = foodDisplayName
 
-            // Instructions
+            // Instructions placeholder (hidden)
             if (med.instructions.isNotBlank()) {
                 tvInstructions.text = med.instructions
-                tvInstructions.visibility = View.VISIBLE
-            } else {
-                tvInstructions.visibility = View.GONE
             }
 
             // Time slots
@@ -79,13 +78,15 @@ class ScheduleDetailsAdapter :
 
         private fun bindSlot(layout: View, textView: TextView, time: ScheduleMedicineTime?) {
             if (time != null && time.isEnabled) {
-                textView.text = ScheduleMedicineTime.formatTime(time.minutesSinceMidnight)
-                textView.setTextColor(ContextCompat.getColor(itemView.context, R.color.on_surface))
-                layout.backgroundTintList = ContextCompat.getColorStateList(itemView.context, R.color.tertiary_fixed)
+                textView.text = "✓ " + ScheduleMedicineTime.formatTime(time.minutesSinceMidnight)
+                textView.setTextColor(ContextCompat.getColor(itemView.context, R.color.on_tertiary_fixed))
+                layout.setBackgroundResource(R.drawable.bg_slot_active)
+                layout.backgroundTintList = null
             } else {
                 textView.text = "—"
-                textView.setTextColor(ContextCompat.getColor(itemView.context, R.color.on_surface_variant))
-                layout.backgroundTintList = ContextCompat.getColorStateList(itemView.context, R.color.surface_container_low)
+                textView.setTextColor(ContextCompat.getColor(itemView.context, R.color.outline))
+                layout.setBackgroundResource(R.drawable.bg_slot_box)
+                layout.backgroundTintList = null
             }
         }
     }

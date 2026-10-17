@@ -55,11 +55,6 @@ class SchedulesFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        val btnSearch = view.findViewById<ImageButton>(R.id.btn_schedules_search)
-        btnSearch?.setOnClickListener {
-            Toast.makeText(requireContext(), "Search filters active", Toast.LENGTH_SHORT).show()
-        }
-
         val btnLayout = view.findViewById<ImageButton>(R.id.btn_schedules_layout)
         btnLayout?.setOnClickListener {
             findNavController().navigate(R.id.dashboardFragment)

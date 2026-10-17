@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <color android:color="@color/surface_container_high" />
+    </item>
+    <item android:state_focused="true">
+        <color android:color="@color/primary_light_pill" />
+    </item>
+    <item android:state_selected="true">
+        <color android:color="@color/primary_light_pill" />
+    </item>
+    <item android:state_activated="true">
+        <color android:color="@color/primary_light_pill" />
+    </item>
+    <item>
+        <color android:color="@color/surface_container_lowest" />
+    </item>
+</selector>

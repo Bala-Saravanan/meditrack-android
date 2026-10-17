@@ -125,6 +125,24 @@ object ReminderScheduler {
         }
     }
 
+    fun cancelRemindersForSchedule(
+        context: Context,
+        fullSchedule: com.example.meditrack.data.local.model.FullScheduleDetails
+    ) {
+        for (med in fullSchedule.medicinesWithTimes) {
+            for (time in med.times) {
+                cancelReminder(context, time.id)
+            }
+        }
+    }
+
+    suspend fun cancelAllAlarms(context: Context, scheduleDao: ScheduleDao) {
+        val activeSchedules = scheduleDao.getAllActiveFullSchedulesOnce()
+        for (sched in activeSchedules) {
+            cancelRemindersForSchedule(context, sched)
+        }
+    }
+
     suspend fun scheduleAllActiveReminders(context: Context, scheduleDao: ScheduleDao) {
         val activeFullSchedules = scheduleDao.getAllActiveFullSchedulesOnce()
         for (fullSchedule in activeFullSchedules) {

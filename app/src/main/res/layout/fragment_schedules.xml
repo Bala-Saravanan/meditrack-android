@@ -13,7 +13,7 @@
         android:layout_height="56dp"
         android:background="@color/surface"
         android:elevation="0dp"
-        app:contentInsetStart="12dp"
+        app:contentInsetStart="16dp"
         app:contentInsetEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,26 +37,17 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-bold"
                 android:text="@string/schedules_heading"
                 android:textColor="@color/on_surface"
-                android:textSize="18sp" />
-
-            <ImageButton
-                android:id="@+id/btn_schedules_search"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Search"
-                android:src="@drawable/ic_search"
-                app:tint="@color/on_surface_variant" />
+                android:textSize="20sp" />
 
             <ImageButton
                 android:id="@+id/btn_schedules_layout"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Dashboard"
                 android:src="@drawable/ic_dashboard"
@@ -65,9 +56,9 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_schedules_avatar"
                 style="@style/Widget.Material3.Button.IconButton.Filled"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="4dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="6dp"
                 android:backgroundTint="@color/primary_fixed"
                 android:fontFamily="sans-serif-bold"
                 android:insetBottom="0dp"
@@ -76,7 +67,7 @@
                 android:insetTop="0dp"
                 android:textColor="@color/on_primary_fixed"
                 android:textSize="15sp"
-                app:cornerRadius="18dp"
+                app:cornerRadius="19dp"
                 tools:text="J" />
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
@@ -313,42 +304,34 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_filter_all"
-                        style="@style/Widget.Material3.Chip.Filter"
+                        style="@style/Widget.MediTrack.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
                         android:text="All"
-                        android:textSize="12sp"
                         app:chipIcon="@drawable/ic_layers"
-                        app:chipIconSize="14dp"
-                        app:chipMinTouchTargetSize="0dp" />
+                        app:chipIconSize="14dp" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_filter_active"
-                        style="@style/Widget.Material3.Chip.Filter"
+                        style="@style/Widget.MediTrack.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Active"
-                        android:textSize="12sp"
-                        app:chipMinTouchTargetSize="0dp" />
+                        android:text="Active" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_filter_completed"
-                        style="@style/Widget.Material3.Chip.Filter"
+                        style="@style/Widget.MediTrack.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Completed"
-                        android:textSize="12sp"
-                        app:chipMinTouchTargetSize="0dp" />
+                        android:text="Completed" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_filter_discontinued"
-                        style="@style/Widget.Material3.Chip.Filter"
+                        style="@style/Widget.MediTrack.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Discontinued"
-                        android:textSize="12sp"
-                        app:chipMinTouchTargetSize="0dp" />
+                        android:text="Discontinued" />
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
 

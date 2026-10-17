@@ -37,17 +37,20 @@ interface DoseRecordDao {
     @Query("SELECT * FROM dose_records WHERE scheduleId = :scheduleId AND scheduledAt >= :startTime AND scheduledAt < :endTime ORDER BY scheduledAt ASC")
     suspend fun getDosesForScheduleAndDateRangeOnce(scheduleId: Long, startTime: Long, endTime: Long): List<DoseRecord>
 
-    @Query("SELECT * FROM dose_records WHERE scheduleId = :scheduleId ORDER BY scheduledAt DESC")
+    @Query("SELECT * FROM dose_records WHERE scheduleId = :scheduleId ORDER BY scheduledAt ASC, id ASC")
     fun getDosesForSchedule(scheduleId: Long): Flow<List<DoseRecord>>
 
-    @Query("SELECT * FROM dose_records WHERE scheduleId = :scheduleId ORDER BY scheduledAt DESC")
+    @Query("SELECT * FROM dose_records WHERE scheduleId = :scheduleId ORDER BY scheduledAt ASC, id ASC")
     suspend fun getDosesForScheduleOnce(scheduleId: Long): List<DoseRecord>
 
-    @Query("SELECT * FROM dose_records ORDER BY scheduledAt DESC")
+    @Query("SELECT * FROM dose_records ORDER BY scheduledAt ASC, id ASC")
     fun getAllDoses(): Flow<List<DoseRecord>>
 
-    @Query("SELECT * FROM dose_records WHERE status = 'PENDING' AND scheduledAt >= :startTime AND scheduledAt < :endTime ORDER BY scheduledAt ASC")
+    @Query("SELECT d.* FROM dose_records d INNER JOIN schedules s ON d.scheduleId = s.id WHERE s.status = 'ACTIVE' AND d.status = 'PENDING' AND d.scheduledAt >= :startTime AND d.scheduledAt < :endTime ORDER BY d.scheduledAt ASC, d.id ASC")
     fun getPendingRemindersForToday(startTime: Long, endTime: Long): Flow<List<DoseRecord>>
+
+    @Query("SELECT d.* FROM dose_records d INNER JOIN schedules s ON d.scheduleId = s.id WHERE s.status = 'ACTIVE' AND d.scheduledAt >= :startTime AND d.scheduledAt < :endTime ORDER BY d.scheduledAt ASC, d.id ASC")
+    fun getActiveScheduleDosesForDateRange(startTime: Long, endTime: Long): Flow<List<DoseRecord>>
 
     @Query("SELECT * FROM dose_records WHERE status = 'PENDING' AND scheduledAt < :thresholdTime")
     suspend fun getExpiredPendingDoses(thresholdTime: Long): List<DoseRecord>

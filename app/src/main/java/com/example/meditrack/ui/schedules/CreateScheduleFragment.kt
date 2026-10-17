@@ -252,7 +252,7 @@ class CreateScheduleFragment : Fragment() {
                     viewModel.allMedicines.collect { list ->
                         availableMedicinesList = list
                         val names = list.map { "${it.name} (${it.form})" }
-                        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, names)
+                        val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, names)
                         actvSelectMed.setAdapter(adapter)
                     }
                 }

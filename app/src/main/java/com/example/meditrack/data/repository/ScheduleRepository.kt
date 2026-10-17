@@ -7,7 +7,13 @@ import com.example.meditrack.data.local.entity.ScheduleMedicineTime
 import com.example.meditrack.data.local.model.FullScheduleDetails
 import kotlinx.coroutines.flow.Flow
 
-class ScheduleRepository(private val scheduleDao: ScheduleDao) {
+import android.content.Context
+import com.example.meditrack.reminder.ReminderScheduler
+
+class ScheduleRepository(
+    private val scheduleDao: ScheduleDao,
+    private val context: Context? = null
+) {
 
     val allSchedules: Flow<List<Schedule>> = scheduleDao.getAllSchedules()
     val activeSchedulesCount: Flow<Int> = scheduleDao.getActiveSchedulesCount()
@@ -34,10 +40,22 @@ class ScheduleRepository(private val scheduleDao: ScheduleDao) {
 
     suspend fun updateScheduleStatus(scheduleId: Long, status: String) {
         scheduleDao.updateScheduleStatus(scheduleId, status)
+        if (status != Schedule.STATUS_ACTIVE && context != null) {
+            val fullDetails = scheduleDao.getFullScheduleDetailsOnce(scheduleId)
+            if (fullDetails != null) {
+                ReminderScheduler.cancelRemindersForSchedule(context, fullDetails)
+            }
+        }
     }
 
     suspend fun updateSchedule(schedule: Schedule) {
         scheduleDao.updateSchedule(schedule)
+        if (schedule.status != Schedule.STATUS_ACTIVE && context != null) {
+            val fullDetails = scheduleDao.getFullScheduleDetailsOnce(schedule.id)
+            if (fullDetails != null) {
+                ReminderScheduler.cancelRemindersForSchedule(context, fullDetails)
+            }
+        }
     }
 
     suspend fun getScheduleByIdOnce(id: Long): Schedule? {

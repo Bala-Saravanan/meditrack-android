@@ -19,6 +19,10 @@ class CaregiverRepository(private val caregiverDao: CaregiverDao) {
         email: String,
         isEmergencyContact: Boolean
     ): Long {
+        require(fullName.isNotBlank()) { "Full name is required" }
+        require(relationship.isNotBlank()) { "Relationship is required" }
+        require(phone.isNotBlank()) { "Phone is required" }
+        require(email.isNotBlank()) { "Email is required" }
         val existing = caregiverDao.getCaregiverOnce()
         val caregiver = if (existing != null) {
             existing.copy(

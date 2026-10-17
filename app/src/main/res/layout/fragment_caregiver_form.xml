@@ -191,6 +191,7 @@
                             android:id="@+id/actv_relationship"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
                             android:inputType="text"
                             android:textColor="@color/on_surface" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -228,13 +229,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14dp"
-                        android:hint="Email Address (Optional)"
+                        android:hint="Email Address *"
                         app:boxCornerRadiusBottomEnd="12dp"
                         app:boxCornerRadiusBottomStart="12dp"
                         app:boxCornerRadiusTopEnd="12dp"
                         app:boxCornerRadiusTopStart="12dp"
                         app:boxStrokeColor="@color/primary"
-                        app:helperText="Recipient address when sharing PDF reports"
+                        app:helperText="Required recipient address when sending PDF reports"
                         app:startIconDrawable="@drawable/ic_mail"
                         app:startIconTint="@color/primary">
 

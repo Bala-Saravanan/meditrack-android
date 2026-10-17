@@ -46,7 +46,7 @@ class AddMedicineFragment : Fragment() {
 
         // Setup Forms Dropdown
         val forms = arrayOf("Oral Tablet", "Capsule", "Liquid / Syrup", "Injection", "Inhaler", "Topical Cream", "Drops", "Other")
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, forms)
+        val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, forms)
         actvForm.setAdapter(adapter)
 
         val navigateBack = {

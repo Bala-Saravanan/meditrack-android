@@ -79,7 +79,9 @@ class CaregiverFormViewModel(
             }
         }
 
-        if (trimmedEmail.isNotBlank()) {
+        if (trimmedEmail.isBlank()) {
+            emailErr = "Email address is required."
+        } else {
             val emailPattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$".toRegex()
             if (!emailPattern.matches(trimmedEmail)) {
                 emailErr = "Please enter a valid email address."

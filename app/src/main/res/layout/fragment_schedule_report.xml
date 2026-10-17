@@ -201,14 +201,14 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_range_7_days"
-                        style="@style/Widget.Material3.Chip.Filter"
+                        style="@style/Widget.MediTrack.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Last 7 Days" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_range_30_days"
-                        style="@style/Widget.Material3.Chip.Filter"
+                        style="@style/Widget.MediTrack.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
@@ -216,14 +216,14 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_range_entire"
-                        style="@style/Widget.Material3.Chip.Filter"
+                        style="@style/Widget.MediTrack.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Entire Schedule Period" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_range_custom"
-                        style="@style/Widget.Material3.Chip.Filter"
+                        style="@style/Widget.MediTrack.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Custom"

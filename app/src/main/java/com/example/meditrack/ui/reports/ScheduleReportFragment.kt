@@ -1,6 +1,7 @@
 package com.example.meditrack.ui.reports
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -263,7 +264,7 @@ class ScheduleReportFragment : Fragment() {
 
             btnSendToCaregiver.text = "Send to Caregiver (${caregiver.fullName})"
             btnSendToCaregiver.setOnClickListener {
-                executeShare()
+                sendReportToCaregiver(caregiver)
             }
         } else {
             tvCaregiverBadge.text = "Not Designated"
@@ -496,6 +497,107 @@ class ScheduleReportFragment : Fragment() {
                     Toast.makeText(requireContext(), "Failed to prepare PDF for sharing: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
+        }
+    }
+
+    private fun sendReportToCaregiver(caregiver: Caregiver) {
+        val trimmedEmail = caregiver.email.trim()
+        val emailPattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$".toRegex()
+        if (trimmedEmail.isBlank() || !emailPattern.matches(trimmedEmail)) {
+            com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Caregiver Email Required")
+                .setMessage("A valid email address is required to send reports to ${caregiver.fullName}. Would you like to update their email address now?")
+                .setPositiveButton("Update Caregiver") { _, _ ->
+                    val bundle = Bundle().apply {
+                        putBoolean("isEdit", true)
+                        putBoolean("fromReportShare", true)
+                        putLong("reportScheduleId", scheduleId)
+                    }
+                    findNavController().navigate(R.id.action_scheduleReport_to_caregiverForm, bundle)
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
+            return
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+            val currentReport = viewModel.getReportOnce()
+            if (currentReport == null) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "No report data available to share.", Toast.LENGTH_SHORT).show()
+                }
+                return@launch
+            }
+
+            try {
+                val file = PdfReportGenerator.generatePdfReportToFile(requireContext(), currentReport)
+                val uri = FileProvider.getUriForFile(
+                    requireContext(),
+                    "${requireContext().packageName}.fileprovider",
+                    file
+                )
+
+                val shareSubject = "MediTrack Compliance Report: ${currentReport.scheduleName}"
+                val shareBody = buildString {
+                    append("Hello ${caregiver.fullName},\n\n")
+                    append("Here is the latest MediTrack medication adherence report for ${currentReport.scheduleName}.\n\n")
+                    append("Report Period: ${dateFormat.format(Date(currentReport.startTimestamp))} – ${dateFormat.format(Date(currentReport.endTimestamp))}\n")
+                    append("Self-Reported Adherence Rate: ${currentReport.adherenceSummary.adherencePercentage}%\n\n")
+                    append("Please review the attached official medication compliance report (PDF).\n\n")
+                    append("Regards,\nMediTrack")
+                }
+
+                withContext(Dispatchers.Main) {
+                    val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+                        data = Uri.parse("mailto:${Uri.encode(trimmedEmail)}")
+                        putExtra(Intent.EXTRA_EMAIL, arrayOf(trimmedEmail))
+                        putExtra(Intent.EXTRA_SUBJECT, shareSubject)
+                        putExtra(Intent.EXTRA_TEXT, shareBody)
+                        putExtra(Intent.EXTRA_STREAM, uri)
+                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    }
+
+                    val pm = requireContext().packageManager
+                    val resolved = pm.queryIntentActivities(emailIntent, PackageManager.MATCH_DEFAULT_ONLY)
+                    for (resolveInfo in resolved) {
+                        requireContext().grantUriPermission(
+                            resolveInfo.activityInfo.packageName,
+                            uri,
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        )
+                    }
+
+                    if (resolved.isNotEmpty()) {
+                        try {
+                            startActivity(Intent.createChooser(emailIntent, "Send Report to Caregiver"))
+                        } catch (e: Exception) {
+                            fallbackShareSheet(uri, trimmedEmail, shareSubject, shareBody)
+                        }
+                    } else {
+                        fallbackShareSheet(uri, trimmedEmail, shareSubject, shareBody)
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Failed to prepare PDF for sending: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
+    private fun fallbackShareSheet(uri: Uri, email: String, subject: String, body: String) {
+        val fallbackIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "application/pdf"
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+            putExtra(Intent.EXTRA_STREAM, uri)
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+            putExtra(Intent.EXTRA_TEXT, body)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        try {
+            startActivity(Intent.createChooser(fallbackIntent, "Send Report via..."))
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "No application found to share the report.", Toast.LENGTH_LONG).show()
         }
     }
 }

@@ -112,15 +112,22 @@ class ScheduleDetailsFragment : Fragment() {
     }
 
     private fun observeViewModel(view: View) {
+        val tvProtocolId = view.findViewById<TextView>(R.id.tv_detail_protocol_id)
         val tvName = view.findViewById<TextView>(R.id.tv_detail_schedule_name)
         val tvStatus = view.findViewById<TextView>(R.id.tv_detail_status)
         val tvDates = view.findViewById<TextView>(R.id.tv_detail_date_range)
         val tvNotes = view.findViewById<TextView>(R.id.tv_detail_notes)
+        val layoutPhysician = view.findViewById<View>(R.id.layout_detail_physician)
         val tvPhysician = view.findViewById<TextView>(R.id.tv_detail_physician)
+        val layoutAdherence = view.findViewById<View>(R.id.layout_detail_adherence)
+        val tvAdherence = view.findViewById<TextView>(R.id.tv_detail_adherence)
+        val tvPrescriptionsCount = view.findViewById<TextView>(R.id.tv_detail_prescriptions_count)
         val tvNoMeds = view.findViewById<TextView>(R.id.tv_detail_no_medicines)
         val ivNotifications = view.findViewById<ImageView>(R.id.iv_detail_notifications_check)
         val tvNotificationsTitle = view.findViewById<TextView>(R.id.tv_detail_notifications_title)
         val tvNotificationsDesc = view.findViewById<TextView>(R.id.tv_detail_notifications_desc)
+
+        val app = requireActivity().application as MediTrackApplication
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -128,21 +135,22 @@ class ScheduleDetailsFragment : Fragment() {
                     if (details == null) return@collect
                     val schedule = details.schedule
 
+                    tvProtocolId.text = "CARE PROTOCOL #CV-${schedule.id}"
                     tvName.text = schedule.name
 
                     // Status
-                    tvStatus.text = schedule.status
+                    tvStatus.text = "✔ ${schedule.status}"
                     when (schedule.status) {
                         Schedule.STATUS_ACTIVE -> {
-                            tvStatus.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.tertiary_fixed)
-                            tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.tertiary))
+                            tvStatus.setBackgroundResource(R.drawable.bg_pill_status_active)
+                            tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.on_tertiary_fixed))
                         }
                         Schedule.STATUS_COMPLETED -> {
-                            tvStatus.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.primary_fixed)
+                            tvStatus.setBackgroundResource(R.drawable.bg_pill_status_completed)
                             tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.primary))
                         }
                         else -> {
-                            tvStatus.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.surface_container_high)
+                            tvStatus.setBackgroundResource(R.drawable.bg_pill_status_default)
                             tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.on_surface_variant))
                         }
                     }
@@ -166,20 +174,36 @@ class ScheduleDetailsFragment : Fragment() {
 
                     // Physician
                     if (schedule.physicianName.isNotBlank()) {
-                        tvPhysician.text = "Prescribed by: Dr. ${schedule.physicianName}"
-                        tvPhysician.visibility = View.VISIBLE
+                        tvPhysician.text = if (schedule.physicianName.startsWith("Dr.", ignoreCase = true)) {
+                            schedule.physicianName
+                        } else {
+                            "Dr. ${schedule.physicianName}"
+                        }
+                        layoutPhysician.visibility = View.VISIBLE
                     } else {
-                        tvPhysician.visibility = View.GONE
+                        layoutPhysician.visibility = View.GONE
+                    }
+
+                    // Calculate real adherence score for this schedule
+                    try {
+                        val doses = app.database.doseRecordDao().getDosesForScheduleOnce(schedule.id)
+                        val total = doses.size
+                        val taken = doses.count { it.status == com.example.meditrack.data.local.entity.DoseRecord.STATUS_TAKEN }
+                        val adherencePct = if (total > 0) (taken * 100) / total else 100
+                        tvAdherence.text = "$adherencePct% (30 Days)"
+                        layoutAdherence.visibility = View.VISIBLE
+                    } catch (e: Exception) {
+                        layoutAdherence.visibility = View.GONE
                     }
 
                     // Notifications
                     if (schedule.notificationsEnabled) {
-                        tvNotificationsTitle.text = "Notification Reminders Active"
-                        tvNotificationsDesc.text = getString(R.string.notifications_active_desc)
+                        tvNotificationsTitle.text = "Notification Status"
+                        tvNotificationsDesc.text = "Alarms active (device local notifications enabled)"
                         ivNotifications.setImageResource(R.drawable.ic_check_circle)
                         ivNotifications.setColorFilter(ContextCompat.getColor(requireContext(), R.color.tertiary))
                     } else {
-                        tvNotificationsTitle.text = "Notification Reminders Muted"
+                        tvNotificationsTitle.text = "Notification Status"
                         tvNotificationsDesc.text = "Alarms disabled for this schedule"
                         ivNotifications.setImageResource(R.drawable.ic_close)
                         ivNotifications.setColorFilter(ContextCompat.getColor(requireContext(), R.color.on_surface_variant))
@@ -187,12 +211,16 @@ class ScheduleDetailsFragment : Fragment() {
 
                     // Medicines
                     val activeMedicines = details.medicinesWithTimes.filter { it.scheduleMedicine.isActive }
+                    tvPrescriptionsCount.text = "${activeMedicines.size} ${if (activeMedicines.size == 1) "Prescription" else "Prescriptions"}"
+
                     if (activeMedicines.isEmpty()) {
                         tvNoMeds.visibility = View.VISIBLE
                     } else {
                         tvNoMeds.visibility = View.GONE
                     }
-                    adapter.submitList(activeMedicines)
+                    adapter.submitList(activeMedicines) {
+                        view.findViewById<androidx.core.widget.NestedScrollView>(R.id.scroll_schedule_details)?.scrollTo(0, 0)
+                    }
                 }
             }
         }

@@ -23,8 +23,7 @@
             <FrameLayout
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/ic_launcher_background"
-                android:backgroundTint="@color/primary_fixed">
+                android:background="@drawable/bg_icon_box">
 
                 <ImageView
                     android:layout_width="22dp"
@@ -94,7 +93,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_food_before"
-                    style="@style/Widget.Material3.Chip.Filter"
+                    style="@style/Widget.MediTrack.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
@@ -102,21 +101,21 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_food_with"
-                    style="@style/Widget.Material3.Chip.Filter"
+                    style="@style/Widget.MediTrack.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/food_with" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_food_after"
-                    style="@style/Widget.Material3.Chip.Filter"
+                    style="@style/Widget.MediTrack.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/food_after" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_food_none"
-                    style="@style/Widget.Material3.Chip.Filter"
+                    style="@style/Widget.MediTrack.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/food_no_restriction" />

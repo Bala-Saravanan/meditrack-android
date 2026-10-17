@@ -18,7 +18,7 @@ class MediTrackApplication : Application() {
     val database: MediTrackDatabase by lazy { MediTrackDatabase.getDatabase(this) }
     val userRepository: UserRepository by lazy { UserRepository(database.userDao()) }
     val medicineRepository: MedicineRepository by lazy { MedicineRepository(database.medicineDao()) }
-    val scheduleRepository: ScheduleRepository by lazy { ScheduleRepository(database.scheduleDao()) }
+    val scheduleRepository: ScheduleRepository by lazy { ScheduleRepository(database.scheduleDao(), this) }
     val doseRepository: DoseRepository by lazy { DoseRepository(database.doseRecordDao(), database.scheduleDao()) }
     val caregiverRepository: CaregiverRepository by lazy { CaregiverRepository(database.caregiverDao()) }
 

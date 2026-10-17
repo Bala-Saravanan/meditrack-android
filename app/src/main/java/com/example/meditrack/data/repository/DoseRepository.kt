@@ -171,7 +171,7 @@ class DoseRepository(
         cal.set(Calendar.MILLISECOND, 0)
         val startTime = cal.timeInMillis
 
-        return doseRecordDao.getDosesForDateRange(startTime, endOfToday).map { doses ->
+        return doseRecordDao.getActiveScheduleDosesForDateRange(startTime, endOfToday).map { doses ->
             val groupedBySchedule = doses.groupBy { it.scheduleId }
             groupedBySchedule.map { (scheduleId, scheduleDoses) ->
                 val schedule = scheduleDao.getScheduleByIdOnce(scheduleId)

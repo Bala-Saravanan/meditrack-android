@@ -108,6 +108,7 @@ class Phase7VerificationTest {
     fun testValidation_phoneNumberLengthRequirement() {
         viewModel.fullName = "Robert Doe"
         viewModel.relationship = "Son"
+        viewModel.email = "son@example.com"
 
         // Fewer than 7 digits
         viewModel.phone = "123-45"
@@ -142,9 +143,11 @@ class Phase7VerificationTest {
         viewModel.email = "emma.watson@hospital.org"
         assertTrue(viewModel.validate())
 
-        // Blank email is allowed (optional field)
+        // Blank email is required (Phase 10 requirement)
         viewModel.email = ""
-        assertTrue(viewModel.validate())
+        assertFalse(viewModel.validate())
+        state = viewModel.validationState.value as FormValidationResult.Invalid
+        assertEquals("Email address is required.", state.emailError)
     }
 
     @Test
@@ -254,7 +257,7 @@ class Phase7VerificationTest {
             fullName = "Alice Cooper",
             relationship = "Guardian",
             phone = "555-000-1111",
-            email = "",
+            email = "alice@example.com",
             isEmergencyContact = false
         )
 

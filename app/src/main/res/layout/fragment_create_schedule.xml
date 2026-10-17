@@ -86,8 +86,7 @@
                     <FrameLayout
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="@drawable/ic_launcher_background"
-                        android:backgroundTint="@color/primary_fixed">
+                        android:background="@drawable/bg_icon_box">
 
                         <ImageView
                             android:layout_width="20dp"
@@ -321,7 +320,10 @@
                             android:id="@+id/actv_select_medicine"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:dropDownSelector="@drawable/bg_dropdown_item_selector"
                             android:inputType="none"
+                            android:popupBackground="@drawable/bg_dropdown_popup"
                             android:textColor="@color/on_surface" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -370,8 +372,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/ic_launcher_background"
-                android:backgroundTint="@color/surface_container_low"
+                android:background="@drawable/bg_slot_box"
                 android:gravity="center"
                 android:padding="16dp"
                 android:text="No medicines assigned yet. Select or add a medicine above."
@@ -404,8 +405,7 @@
                     <FrameLayout
                         android:layout_width="38dp"
                         android:layout_height="38dp"
-                        android:background="@drawable/ic_launcher_background"
-                        android:backgroundTint="@color/primary_fixed">
+                        android:background="@drawable/bg_icon_box">
 
                         <ImageView
                             android:layout_width="20dp"

@@ -71,10 +71,21 @@ class DashboardViewModel(
         }
     }
 
+    private val _isResetting = kotlinx.coroutines.flow.MutableStateFlow(false)
+    val isResetting: kotlinx.coroutines.flow.StateFlow<Boolean> = _isResetting
+
     fun clearAllData(onComplete: () -> Unit) {
+        if (_isResetting.value) return
+        _isResetting.value = true
         viewModelScope.launch {
-            DatabaseInitializer.clearAllData(database)
-            onComplete()
+            try {
+                DatabaseInitializer.clearAllData(database)
+                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                    onComplete()
+                }
+            } finally {
+                _isResetting.value = false
+            }
         }
     }
 }
