@@ -145,4 +145,5 @@
     <string name="no_history_for_schedule">No dose history recorded for this schedule yet.</string>
     <string name="toast_dose_taken">%1$s recorded as Taken</string>
     <string name="toast_dose_skipped">%1$s marked as Skipped</string>
+    <string name="btn_back">Go back</string>
 </resources>

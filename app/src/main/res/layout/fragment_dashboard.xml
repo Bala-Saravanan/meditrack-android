@@ -12,7 +12,9 @@
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:background="@color/surface"
-        android:elevation="1dp"
+        android:elevation="0dp"
+        app:contentInsetStart="16dp"
+        app:contentInsetEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,8 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingEnd="16dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -36,10 +37,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:background="@drawable/ic_launcher_background"
-                android:backgroundTint="@color/primary_fixed"
+                android:background="@drawable/bg_pill_offline"
                 android:paddingHorizontal="8dp"
-                android:paddingVertical="2dp"
+                android:paddingVertical="3dp"
                 android:text="Offline"
                 android:textColor="@color/on_primary_fixed"
                 android:textSize="11sp"
@@ -53,8 +53,8 @@
             <!-- Reset / Clear Demo Data Action Icon -->
             <ImageButton
                 android:id="@+id/btn_reset_data"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:layout_marginEnd="6dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/btn_clear_data"
@@ -65,8 +65,8 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_avatar"
                 style="@style/Widget.Material3.Button.IconButton.Filled"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:backgroundTint="@color/primary_container"
                 android:fontFamily="sans-serif-bold"
                 android:insetBottom="0dp"
@@ -74,8 +74,8 @@
                 android:insetRight="0dp"
                 android:insetTop="0dp"
                 android:textColor="@color/on_primary"
-                android:textSize="16sp"
-                app:cornerRadius="20dp"
+                android:textSize="15sp"
+                app:cornerRadius="19dp"
                 tools:text="J" />
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
@@ -95,7 +95,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingHorizontal="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="24dp">
 
             <!-- Personalized Greeting Header -->
             <LinearLayout
@@ -132,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:fontFamily="sans-serif-medium"
-                        android:text="@string/offline_active"
+                        android:text="Synced"
                         android:textColor="@color/primary"
                         android:textSize="11sp" />
                 </LinearLayout>
@@ -172,28 +174,27 @@
                     android:fontFamily="sans-serif-bold"
                     android:text="@string/upcoming_reminders"
                     android:textColor="@color/on_surface"
-                    android:textSize="17sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_today_badge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_launcher_background"
-                    android:backgroundTint="@color/surface_container_high"
+                    android:background="@drawable/bg_pill_date_chip"
+                    android:fontFamily="sans-serif-medium"
                     android:paddingHorizontal="10dp"
-                    android:paddingVertical="3dp"
+                    android:paddingVertical="4dp"
                     android:textColor="@color/on_surface"
                     android:textSize="12sp"
-                    tools:text="Today, Oct 17" />
+                    tools:text="Today, Oct 14" />
             </LinearLayout>
 
             <!-- Verified Notice Banner -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/ic_launcher_background"
-                android:backgroundTint="@color/surface_container_low"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_banner_info"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingHorizontal="12dp"
@@ -266,7 +267,7 @@
                 android:fontFamily="sans-serif-bold"
                 android:text="@string/recent_dose_summary"
                 android:textColor="@color/on_surface"
-                android:textSize="17sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -318,10 +319,10 @@
                 android:layout_marginTop="10dp"
                 android:nestedScrollingEnabled="false" />
 
-            <!-- Bottom spacing so items aren't obscured -->
+            <!-- Bottom spacing for clear scrolling -->
             <View
                 android:layout_width="match_parent"
-                android:layout_height="48dp" />
+                android:layout_height="24dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -18,7 +20,9 @@ import com.example.meditrack.MediTrackApplication
 import com.example.meditrack.R
 import com.example.meditrack.data.local.entity.Schedule
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 class SchedulesFragment : Fragment() {
@@ -38,7 +42,7 @@ class SchedulesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val app = requireActivity().application as MediTrackApplication
-        val factory = SchedulesViewModelFactory(app.scheduleRepository)
+        val factory = SchedulesViewModelFactory(app.scheduleRepository, app.doseRepository)
         viewModel = ViewModelProvider(this, factory)[SchedulesViewModel::class.java]
 
         setupViews(view)
@@ -46,6 +50,21 @@ class SchedulesFragment : Fragment() {
     }
 
     private fun setupViews(view: View) {
+        val btnBack = view.findViewById<ImageButton>(R.id.btn_schedules_back)
+        btnBack?.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        val btnSearch = view.findViewById<ImageButton>(R.id.btn_schedules_search)
+        btnSearch?.setOnClickListener {
+            Toast.makeText(requireContext(), "Search filters active", Toast.LENGTH_SHORT).show()
+        }
+
+        val btnLayout = view.findViewById<ImageButton>(R.id.btn_schedules_layout)
+        btnLayout?.setOnClickListener {
+            findNavController().navigate(R.id.dashboardFragment)
+        }
+
         val btnCreate = view.findViewById<MaterialButton>(R.id.btn_create_schedule)
         btnCreate.setOnClickListener {
             findNavController().navigate(
@@ -85,12 +104,27 @@ class SchedulesFragment : Fragment() {
 
     private fun observeViewModel(view: View) {
         val tvActiveCount = view.findViewById<TextView>(R.id.tv_active_schedules_count)
-        val tvTotalCount = view.findViewById<TextView>(R.id.tv_total_schedules_count)
+        val tvDailyAdherence = view.findViewById<TextView>(R.id.tv_daily_adherence_percent)
+        val btnAvatar = view.findViewById<MaterialButton>(R.id.btn_schedules_avatar)
         val layoutEmpty = view.findViewById<View>(R.id.layout_empty_schedules)
         val rvSchedules = view.findViewById<RecyclerView>(R.id.rv_schedules)
 
+        val chipAll = view.findViewById<Chip>(R.id.chip_filter_all)
+        val chipActive = view.findViewById<Chip>(R.id.chip_filter_active)
+        val chipCompleted = view.findViewById<Chip>(R.id.chip_filter_completed)
+        val chipDiscontinued = view.findViewById<Chip>(R.id.chip_filter_discontinued)
+
+        val app = requireActivity().application as MediTrackApplication
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    app.userRepository.userProfile.collect { user ->
+                        val initial = user?.fullName?.firstOrNull()?.uppercase() ?: "J"
+                        btnAvatar?.text = initial
+                    }
+                }
+
                 launch {
                     viewModel.activeCount.collect { count ->
                         tvActiveCount.text = count.toString()
@@ -98,9 +132,23 @@ class SchedulesFragment : Fragment() {
                 }
 
                 launch {
-                    viewModel.totalCount.collect { count ->
-                        tvTotalCount.text = count.toString()
+                    viewModel.dailyAdherencePercent.collect { percent ->
+                        tvDailyAdherence.text = "$percent%"
                     }
+                }
+
+                launch {
+                    combine(
+                        viewModel.totalCount,
+                        viewModel.activeCount,
+                        viewModel.completedCount,
+                        viewModel.discontinuedCount
+                    ) { total, active, completed, discontinued ->
+                        chipAll.text = "All ($total)"
+                        chipActive.text = "Active ($active)"
+                        chipCompleted.text = "Completed ($completed)"
+                        chipDiscontinued.text = "Discontinued ($discontinued)"
+                    }.collect {}
                 }
 
                 launch {

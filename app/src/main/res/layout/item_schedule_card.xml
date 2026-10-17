@@ -2,19 +2,23 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/ClinicalCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_marginBottom="10dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?attr/selectableItemBackground">
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/surface_container_lowest"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/outline_variant"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="14dp">
 
         <!-- Top Header: Icon, Schedule Name & Status Badge -->
         <LinearLayout
@@ -26,8 +30,7 @@
             <FrameLayout
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/ic_launcher_background"
-                android:backgroundTint="@color/primary_fixed">
+                android:background="@drawable/bg_icon_box">
 
                 <ImageView
                     android:id="@+id/iv_schedule_icon"
@@ -35,7 +38,7 @@
                     android:layout_height="20dp"
                     android:layout_gravity="center"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_calendar"
+                    android:src="@drawable/ic_favorite"
                     app:tint="@color/primary" />
             </FrameLayout>
 
@@ -52,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-bold"
                     android:textColor="@color/on_surface"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     tools:text="Cardiovascular Care" />
 
                 <LinearLayout
@@ -63,35 +66,34 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_calendar"
-                        app:tint="@color/on_surface_variant" />
+                        app:tint="@color/outline" />
 
                     <TextView
                         android:id="@+id/tv_schedule_dates"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:textColor="@color/on_surface_variant"
+                        android:textColor="@color/outline"
                         android:textSize="12sp"
                         tools:text="Oct 01, 2024 – Ongoing" />
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Status Badge -->
+            <!-- Compact Status Badge -->
             <TextView
                 android:id="@+id/tv_schedule_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_launcher_background"
-                android:backgroundTint="@color/tertiary_fixed"
-                android:fontFamily="sans-serif-medium"
+                android:background="@drawable/bg_pill_status_active"
+                android:fontFamily="sans-serif-bold"
                 android:paddingHorizontal="10dp"
-                android:paddingVertical="4dp"
+                android:paddingVertical="3dp"
                 android:textColor="@color/tertiary"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 tools:text="Active" />
         </LinearLayout>
 
@@ -99,9 +101,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/ic_launcher_background"
-            android:backgroundTint="@color/surface_container_low"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_subtle_container"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -112,8 +113,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:contentDescription="@null"
                     android:src="@drawable/ic_medication"
                     app:tint="@color/primary" />
@@ -124,50 +125,73 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:layout_weight="1"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="sans-serif-bold"
                     android:textColor="@color/primary"
-                    android:textSize="13sp"
+                    android:textSize="12sp"
                     tools:text="3 Medicines (Atorvastatin, Lisinopril, Aspirin)" />
+
+                <TextView
+                    android:id="@+id/tv_schedule_frequency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/outline"
+                    android:textSize="11sp"
+                    tools:text="Twice Daily" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_schedule_notes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="3dp"
                 android:textColor="@color/on_surface_variant"
                 android:textSize="12sp"
                 tools:text="Twice daily routine for cardiovascular maintenance." />
         </LinearLayout>
 
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/outline_variant" />
+
         <!-- Card Footer -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
+
+            <View
+                android:id="@+id/view_next_dose_dot"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bg_pill_offline"
+                android:backgroundTint="@color/primary" />
 
             <TextView
                 android:id="@+id/tv_physician_note"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
                 android:layout_weight="1"
-                android:textColor="@color/on_surface_variant"
-                android:textSize="11sp"
-                tools:text="Dr. Ronald Vance" />
+                android:textColor="@color/outline"
+                android:textSize="12sp"
+                tools:text="Next dose due at 20:00" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="sans-serif-bold"
                 android:text="@string/view_details"
                 android:textColor="@color/primary"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
                 android:layout_marginStart="2dp"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_chevron_right"

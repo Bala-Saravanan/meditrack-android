@@ -116,8 +116,15 @@ class UpcomingReminderAdapter(
             val now = System.currentTimeMillis()
             val isUpcoming = record.scheduledAt > now
 
-            tvTime.text = timeFormat.format(Date(record.scheduledAt))
-            tvStatus.text = if (isUpcoming) itemView.context.getString(R.string.status_upcoming) else itemView.context.getString(R.string.status_pending)
+            tvTime.text = timeFormat.format(Date(record.scheduledAt)).uppercase()
+
+            if (isUpcoming) {
+                tvStatus.text = "⏱ " + itemView.context.getString(R.string.status_upcoming)
+                tvStatus.setBackgroundResource(R.drawable.bg_pill_reminder_upcoming)
+            } else {
+                tvStatus.text = "• " + itemView.context.getString(R.string.status_pending)
+                tvStatus.setBackgroundResource(R.drawable.bg_pill_reminder_pending)
+            }
 
             tvScheduleName.text = item.scheduleName
             tvMedicineName.text = record.medicineName

@@ -39,27 +39,46 @@ class SchedulesAdapter(
         private val tvNotes: TextView = itemView.findViewById(R.id.tv_schedule_notes)
         private val tvPhysician: TextView = itemView.findViewById(R.id.tv_physician_note)
 
+        private val ivIcon: android.widget.ImageView = itemView.findViewById(R.id.iv_schedule_icon)
+        private val tvFrequency: TextView? = itemView.findViewById(R.id.tv_schedule_frequency)
+
         fun bind(item: FullScheduleDetails) {
             val schedule = item.schedule
             tvName.text = schedule.name
 
             // Status styling
-            tvStatus.text = schedule.status
             when (schedule.status) {
                 Schedule.STATUS_ACTIVE -> {
-                    tvStatus.setBackgroundResource(R.drawable.ic_launcher_background)
-                    tvStatus.backgroundTintList = ContextCompat.getColorStateList(itemView.context, R.color.tertiary_fixed)
+                    tvStatus.text = "✔ Active"
+                    tvStatus.setBackgroundResource(R.drawable.bg_pill_status_active)
+                    tvStatus.backgroundTintList = null
                     tvStatus.setTextColor(ContextCompat.getColor(itemView.context, R.color.tertiary))
                 }
                 Schedule.STATUS_COMPLETED -> {
-                    tvStatus.setBackgroundResource(R.drawable.ic_launcher_background)
-                    tvStatus.backgroundTintList = ContextCompat.getColorStateList(itemView.context, R.color.primary_fixed)
-                    tvStatus.setTextColor(ContextCompat.getColor(itemView.context, R.color.primary))
+                    tvStatus.text = "✔ Completed"
+                    tvStatus.setBackgroundResource(R.drawable.bg_pill_status_completed)
+                    tvStatus.backgroundTintList = null
+                    tvStatus.setTextColor(ContextCompat.getColor(itemView.context, R.color.secondary))
                 }
                 else -> {
-                    tvStatus.setBackgroundResource(R.drawable.ic_launcher_background)
-                    tvStatus.backgroundTintList = ContextCompat.getColorStateList(itemView.context, R.color.surface_container_high)
+                    tvStatus.text = schedule.status
+                    tvStatus.setBackgroundResource(R.drawable.bg_pill_status_default)
+                    tvStatus.backgroundTintList = null
                     tvStatus.setTextColor(ContextCompat.getColor(itemView.context, R.color.on_surface_variant))
+                }
+            }
+
+            // Schedule icon based on name
+            val lowerName = schedule.name.lowercase(Locale.ROOT)
+            when {
+                lowerName.contains("heart") || lowerName.contains("cardio") || lowerName.contains("bp") -> {
+                    ivIcon.setImageResource(R.drawable.ic_favorite)
+                }
+                lowerName.contains("ulcer") || lowerName.contains("stomach") || lowerName.contains("diabetes") -> {
+                    ivIcon.setImageResource(R.drawable.ic_medication)
+                }
+                else -> {
+                    ivIcon.setImageResource(R.drawable.ic_calendar)
                 }
             }
 
@@ -76,10 +95,21 @@ class SchedulesAdapter(
             val activeMeds = item.medicinesWithTimes.filter { it.scheduleMedicine.isActive }
             if (activeMeds.isEmpty()) {
                 tvSummary.text = "No medicines configured"
+                tvFrequency?.visibility = View.GONE
             } else {
                 val names = activeMeds.map { it.medicine.name }.joinToString(", ")
                 val count = activeMeds.size
                 tvSummary.text = "$count ${if (count == 1) "Medicine" else "Medicines"} ($names)"
+                
+                // Frequency
+                val totalTimes = activeMeds.sumOf { it.times.size }
+                tvFrequency?.visibility = View.VISIBLE
+                tvFrequency?.text = when {
+                    totalTimes >= 3 -> "3x Daily"
+                    totalTimes == 2 -> "Twice Daily"
+                    totalTimes == 1 -> "Daily"
+                    else -> "Scheduled"
+                }
             }
 
             // Notes
@@ -90,12 +120,17 @@ class SchedulesAdapter(
                 tvNotes.visibility = View.GONE
             }
 
-            // Physician
+            // Physician / Status Note
             if (schedule.physicianName.isNotBlank()) {
-                tvPhysician.text = "Physician: ${schedule.physicianName}"
+                tvPhysician.text = if (schedule.physicianName.startsWith("Dr.", ignoreCase = true)) {
+                    schedule.physicianName
+                } else {
+                    "Dr. ${schedule.physicianName}"
+                }
                 tvPhysician.visibility = View.VISIBLE
             } else {
-                tvPhysician.visibility = View.GONE
+                tvPhysician.text = if (schedule.status == Schedule.STATUS_ACTIVE) "Active regimen" else "Completed regimen"
+                tvPhysician.visibility = View.VISIBLE
             }
 
             itemView.setOnClickListener {
