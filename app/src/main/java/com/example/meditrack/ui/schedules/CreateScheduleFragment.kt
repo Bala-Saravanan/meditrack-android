@@ -24,6 +24,7 @@ import com.example.meditrack.MediTrackApplication
 import com.example.meditrack.R
 import com.example.meditrack.data.local.entity.Medicine
 import com.example.meditrack.data.local.entity.ScheduleMedicineTime
+import com.example.meditrack.reminder.ReminderScheduler
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.textfield.TextInputEditText
@@ -116,6 +117,9 @@ class CreateScheduleFragment : Fragment() {
         etNotes.doAfterTextChanged { viewModel.notes = it?.toString().orEmpty() }
         switchNotifications.setOnCheckedChangeListener { _, isChecked ->
             viewModel.notificationsEnabled = isChecked
+            if (isChecked) {
+                (activity as? com.example.meditrack.MainActivity)?.requestNotificationPermission(force = true)
+            }
         }
 
         // Date Pickers
@@ -196,6 +200,8 @@ class CreateScheduleFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope.launch {
                 val result = viewModel.validateAndSave()
                 result.onSuccess {
+                    val app = requireActivity().application as MediTrackApplication
+                    ReminderScheduler.scheduleAllActiveReminders(app, app.database.scheduleDao())
                     Toast.makeText(requireContext(), "Schedule saved successfully", Toast.LENGTH_SHORT).show()
                     findNavController().popBackStack()
                 }.onFailure { ex ->

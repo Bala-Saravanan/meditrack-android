@@ -7,6 +7,11 @@ import com.example.meditrack.data.repository.DoseRepository
 import com.example.meditrack.data.repository.MedicineRepository
 import com.example.meditrack.data.repository.ScheduleRepository
 import com.example.meditrack.data.repository.UserRepository
+import com.example.meditrack.reminder.NotificationHelper
+import com.example.meditrack.reminder.ReminderScheduler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MediTrackApplication : Application() {
 
@@ -19,7 +24,12 @@ class MediTrackApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        // Initialize database and trigger initial seed callback
-        database
+        // Initialize notification channels
+        NotificationHelper.createNotificationChannels(this)
+
+        // Initialize database and schedule active reminders in background
+        CoroutineScope(Dispatchers.IO).launch {
+            ReminderScheduler.scheduleAllActiveReminders(this@MediTrackApplication, database.scheduleDao())
+        }
     }
 }

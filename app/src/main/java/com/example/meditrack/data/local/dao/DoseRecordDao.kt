@@ -22,6 +22,9 @@ interface DoseRecordDao {
     @Query("SELECT * FROM dose_records WHERE id = :id")
     suspend fun getDoseRecordById(id: Long): DoseRecord?
 
+    @Query("SELECT * FROM dose_records WHERE scheduleMedicineTimeId = :timeId AND scheduledAt = :scheduledAt LIMIT 1")
+    suspend fun getDoseByTimeAndScheduledAt(timeId: Long, scheduledAt: Long): DoseRecord?
+
     @Query("SELECT * FROM dose_records WHERE scheduledAt >= :startTime AND scheduledAt < :endTime ORDER BY scheduledAt ASC")
     fun getDosesForDateRange(startTime: Long, endTime: Long): Flow<List<DoseRecord>>
 

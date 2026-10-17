@@ -102,6 +102,38 @@ class DoseRepository(
         return scheduleDao.getScheduleByIdOnce(scheduleId)?.name ?: "Schedule #$scheduleId"
     }
 
+    suspend fun getOrCreateDoseRecord(
+        scheduleId: Long,
+        scheduleMedicineId: Long,
+        scheduleMedicineTimeId: Long,
+        medicineName: String,
+        period: String,
+        scheduledAt: Long,
+        foodInstruction: String
+    ): DoseRecord {
+        val existing = doseRecordDao.getDoseByTimeAndScheduledAt(scheduleMedicineTimeId, scheduledAt)
+        if (existing != null) return existing
+
+        val newRecord = DoseRecord(
+            scheduleId = scheduleId,
+            scheduleMedicineId = scheduleMedicineId,
+            scheduleMedicineTimeId = scheduleMedicineTimeId,
+            medicineName = medicineName,
+            period = period,
+            scheduledAt = scheduledAt,
+            recordedAt = null,
+            status = DoseRecord.STATUS_PENDING,
+            isLate = false,
+            foodInstruction = foodInstruction
+        )
+        val id = doseRecordDao.insertDoseRecord(newRecord)
+        return if (id > 0) {
+            newRecord.copy(id = id)
+        } else {
+            doseRecordDao.getDoseByTimeAndScheduledAt(scheduleMedicineTimeId, scheduledAt) ?: newRecord
+        }
+    }
+
     /**
      * Recent Dose Summary (Past N Days) grouped by Schedule
      */

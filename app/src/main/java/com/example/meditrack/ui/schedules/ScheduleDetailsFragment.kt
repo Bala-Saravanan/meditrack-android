@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.meditrack.MediTrackApplication
 import com.example.meditrack.R
 import com.example.meditrack.data.local.entity.Schedule
+import com.example.meditrack.reminder.ReminderScheduler
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -83,12 +84,24 @@ class ScheduleDetailsFragment : Fragment() {
         // Status update buttons
         view.findViewById<MaterialButton>(R.id.btn_status_active).setOnClickListener {
             viewModel.updateStatus(Schedule.STATUS_ACTIVE)
+            val app = requireActivity().application as MediTrackApplication
+            viewLifecycleOwner.lifecycleScope.launch {
+                ReminderScheduler.scheduleAllActiveReminders(app, app.database.scheduleDao())
+            }
         }
         view.findViewById<MaterialButton>(R.id.btn_status_completed).setOnClickListener {
             viewModel.updateStatus(Schedule.STATUS_COMPLETED)
+            val app = requireActivity().application as MediTrackApplication
+            viewLifecycleOwner.lifecycleScope.launch {
+                ReminderScheduler.scheduleAllActiveReminders(app, app.database.scheduleDao())
+            }
         }
         view.findViewById<MaterialButton>(R.id.btn_status_discontinued).setOnClickListener {
             viewModel.updateStatus(Schedule.STATUS_DISCONTINUED)
+            val app = requireActivity().application as MediTrackApplication
+            viewLifecycleOwner.lifecycleScope.launch {
+                ReminderScheduler.scheduleAllActiveReminders(app, app.database.scheduleDao())
+            }
         }
 
         // RecyclerView
