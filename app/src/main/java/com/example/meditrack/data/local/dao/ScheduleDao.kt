@@ -81,6 +81,71 @@ interface ScheduleDao {
     @Update
     suspend fun updateScheduleMedicineTime(time: ScheduleMedicineTime)
 
+    @Query("SELECT * FROM schedule_medicines WHERE scheduleId = :scheduleId")
+    suspend fun getScheduleMedicinesForScheduleOnce(scheduleId: Long): List<ScheduleMedicine>
+
+    @Query("SELECT * FROM schedule_medicine_times WHERE scheduleMedicineId = :scheduleMedicineId")
+    suspend fun getScheduleMedicineTimesOnce(scheduleMedicineId: Long): List<ScheduleMedicineTime>
+
+    @Transaction
+    suspend fun updateScheduleWithMedicinesAndTimes(
+        schedule: Schedule,
+        medicinesWithTimes: List<Pair<ScheduleMedicine, List<ScheduleMedicineTime>>>
+    ) {
+        updateSchedule(schedule)
+        val existingMedicines = getScheduleMedicinesForScheduleOnce(schedule.id)
+        val newMedicineIds = medicinesWithTimes.map { it.first.medicineId }.toSet()
+
+        // Deactivate medicines no longer assigned
+        for (existing in existingMedicines) {
+            if (existing.medicineId !in newMedicineIds) {
+                disableScheduleMedicine(existing.id)
+                disableScheduleMedicineTimes(existing.id)
+            }
+        }
+
+        // Insert or update medicines and times
+        for ((medDraft, timesDraft) in medicinesWithTimes) {
+            val existing = existingMedicines.find { it.medicineId == medDraft.medicineId }
+            val scheduleMedicineId = if (existing != null) {
+                val updated = existing.copy(
+                    foodInstruction = medDraft.foodInstruction,
+                    doseQuantity = medDraft.doseQuantity,
+                    isActive = true
+                )
+                updateScheduleMedicine(updated)
+                existing.id
+            } else {
+                insertScheduleMedicine(medDraft.copy(scheduleId = schedule.id, isActive = true))
+            }
+
+            val existingTimes = getScheduleMedicineTimesOnce(scheduleMedicineId)
+            val newPeriods = timesDraft.map { it.period }.toSet()
+
+            for (time in existingTimes) {
+                if (time.period !in newPeriods) {
+                    updateScheduleMedicineTime(time.copy(isEnabled = false))
+                }
+            }
+
+            for (timeDraft in timesDraft) {
+                val existingTime = existingTimes.find { it.period == timeDraft.period }
+                if (existingTime != null) {
+                    updateScheduleMedicineTime(
+                        existingTime.copy(
+                            minutesSinceMidnight = timeDraft.minutesSinceMidnight,
+                            isEnabled = timeDraft.isEnabled
+                        )
+                    )
+                } else {
+                    insertScheduleMedicineTime(
+                        timeDraft.copy(scheduleMedicineId = scheduleMedicineId)
+                    )
+                }
+            }
+        }
+    }
+
     @Query("DELETE FROM schedule_medicine_times WHERE scheduleMedicineId = :scheduleMedicineId")
     suspend fun deleteScheduleMedicineTimes(scheduleMedicineId: Long)
 

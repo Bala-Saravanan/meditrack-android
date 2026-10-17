@@ -38,6 +38,7 @@ data class ScheduleMedicine(
     companion object {
         const val FOOD_BEFORE = "BEFORE_FOOD"
         const val FOOD_WITH = "WITH_FOOD"
+        const val FOOD_AFTER = "AFTER_FOOD"
         const val FOOD_NO_RESTRICTION = "NO_RESTRICTION"
     }
 }

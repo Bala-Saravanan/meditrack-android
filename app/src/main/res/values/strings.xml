@@ -62,4 +62,60 @@
     <string name="clear_demo_data_confirm">Clear all demo data and reset MediTrack to an empty state?</string>
     <string name="clear_data_action">Reset Database</string>
     <string name="cancel">Cancel</string>
+
+    <!-- Phase 3: Schedules & Medicine Management -->
+    <string name="schedules_heading">Medication Schedules</string>
+    <string name="active_regimens">Active Regimens</string>
+    <string name="btn_create_schedule">Create New Schedule</string>
+    <string name="filter_all">All</string>
+    <string name="filter_active">Active</string>
+    <string name="filter_completed">Completed</string>
+    <string name="filter_discontinued">Discontinued</string>
+    <string name="ongoing">Ongoing</string>
+    <string name="no_schedules_found">No medication schedules found</string>
+    <string name="no_schedules_desc">Tap + Create New Schedule to configure your first medication routine.</string>
+    <string name="view_details">View Details</string>
+
+    <!-- Schedule Details -->
+    <string name="schedule_details">Schedule Details</string>
+    <string name="edit_schedule">Edit Schedule</string>
+    <string name="btn_edit_this_schedule">Edit This Schedule</string>
+    <string name="structured_schedule">Structured Medicine Schedule</string>
+    <string name="daily_timetable_desc">Daily timetable and meal requirements</string>
+    <string name="food_before">Before Food</string>
+    <string name="food_with">With Food</string>
+    <string name="food_after">After Food</string>
+    <string name="food_no_restriction">No Restriction</string>
+    <string name="notifications_active_desc">Alarms active (device local notifications enabled)</string>
+
+    <!-- Create / Edit Schedule -->
+    <string name="new_schedule">New Schedule</string>
+    <string name="schedule_name_label">Schedule Name</string>
+    <string name="schedule_name_hint">e.g., Blood Pressure, Daily Maintenance</string>
+    <string name="start_date_label">Start Date</string>
+    <string name="end_date_label">End Date (Optional)</string>
+    <string name="physician_name_label">Physician Name (Optional)</string>
+    <string name="notes_label">Schedule Notes (Optional)</string>
+    <string name="add_medicines_section">Assigned Medicines</string>
+    <string name="btn_add_another_medicine">+ Add Another Medicine</string>
+    <string name="btn_add_new_medicine_form">+ Add New Medicine to System</string>
+    <string name="food_instruction_label">Meal Instruction</string>
+    <string name="daily_slots_label">Daily Schedule Slots</string>
+    <string name="enable_notifications_label">Enable Local Notification Reminders</string>
+    <string name="btn_save_schedule">Save Schedule</string>
+    <string name="error_schedule_name_required">Please enter a schedule name</string>
+    <string name="error_no_medicines_configured">Please assign at least one medicine</string>
+    <string name="error_no_slots_enabled">Please select at least one time slot for each assigned medicine</string>
+    <string name="error_end_date_before_start">End date cannot be earlier than start date</string>
+    <string name="error_duplicate_medicine">This medicine is already assigned to this schedule</string>
+
+    <!-- Add New Medicine -->
+    <string name="add_new_medicine_title">Add New Medicine</string>
+    <string name="medicine_name_label">Medicine Name</string>
+    <string name="medicine_name_hint">e.g., Metformin 500mg, Lisinopril 10mg</string>
+    <string name="instructions_label">Prescribed Instructions or Notes (Optional)</string>
+    <string name="instructions_hint">e.g., Take with a full glass of water. Avoid grapefruit.</string>
+    <string name="form_label">Medicine Form</string>
+    <string name="btn_save_medicine">Save Medicine</string>
+    <string name="error_medicine_name_required">Please enter medicine name</string>
 </resources>

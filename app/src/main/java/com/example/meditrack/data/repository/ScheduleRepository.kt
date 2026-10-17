@@ -40,6 +40,17 @@ class ScheduleRepository(private val scheduleDao: ScheduleDao) {
         scheduleDao.updateSchedule(schedule)
     }
 
+    suspend fun getScheduleByIdOnce(id: Long): Schedule? {
+        return scheduleDao.getScheduleByIdOnce(id)
+    }
+
+    suspend fun updateScheduleWithMedicines(
+        schedule: Schedule,
+        medicinesWithTimes: List<Pair<ScheduleMedicine, List<ScheduleMedicineTime>>>
+    ) {
+        scheduleDao.updateScheduleWithMedicinesAndTimes(schedule, medicinesWithTimes)
+    }
+
     suspend fun getAllActiveFullSchedulesOnce(): List<FullScheduleDetails> {
         return scheduleDao.getAllActiveFullSchedulesOnce()
     }

@@ -33,7 +33,11 @@ class MainActivity : AppCompatActivity() {
         // Show/hide bottom navigation based on active destination
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.welcomeFragment, R.id.registrationFragment -> {
+                R.id.welcomeFragment,
+                R.id.registrationFragment,
+                R.id.scheduleDetailsFragment,
+                R.id.createScheduleFragment,
+                R.id.addMedicineFragment -> {
                     bottomNav.visibility = View.GONE
                 }
                 else -> {
