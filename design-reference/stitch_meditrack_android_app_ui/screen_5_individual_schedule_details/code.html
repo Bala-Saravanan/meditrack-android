@@ -370,24 +370,27 @@
 </main>
 <!-- PERSISTENT BOTTOM NAVIGATION BAR (Shared Components Token Matching) -->
 <!-- Label Texts: Schedules (Active), Dose, Reports, Caregiver -->
-<nav class="fixed bottom-0 left-0 w-full z-50 flex items-center justify-around px-margin h-20 bg-surface-container-lowest shadow-sm pb-safe">
+<nav class="fixed bottom-0 left-0 w-full z-50 flex items-center justify-around px-margin h-20 bg-surface-container-lowest shadow-sm pb-safe"><button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+<span class="text-label-sm font-label-sm mt-0.5">Dashboard</span>
+</button>
 <!-- Item 1: Schedules (ACTIVE) -->
-<button class="flex flex-col items-center justify-center bg-primary-fixed text-on-primary-fixed rounded-full px-5 py-1 active:scale-95 transition-transform duration-150" type="button">
+<button class="flex flex-col items-center justify-center bg-primary-fixed text-on-primary-fixed rounded-full py-1 active:scale-95 transition-transform duration-150 px-3" type="button">
 <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: &quot;FILL&quot; 1;">calendar_today</span>
 <span class="text-label-sm font-label-sm mt-0.5 font-bold">Schedules</span>
 </button>
 <!-- Item 2: Dose -->
-<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<button class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150 px-3" type="button">
 <span class="material-symbols-outlined text-[24px]">medication</span>
 <span class="text-label-sm font-label-sm mt-0.5">Dose</span>
 </button>
 <!-- Item 3: Reports -->
-<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<button class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150 px-3" type="button">
 <span class="material-symbols-outlined text-[24px]">bar_chart</span>
 <span class="text-label-sm font-label-sm mt-0.5">Reports</span>
 </button>
 <!-- Item 4: Caregiver -->
-<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<button class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150 px-3" type="button">
 <span class="material-symbols-outlined text-[24px]">supervised_user_circle</span>
 <span class="text-label-sm font-label-sm mt-0.5">Caregiver</span>
 </button>

@@ -1,18 +1,16 @@
-<!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>MediTrack - Caregiver Profile</title>
 <!-- Tailwind CSS v3 with Plugins -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <!-- Material Symbols Outlined Font Link -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <!-- Fonts: Inter -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <!-- Tailwind Theme Configuration injected verbatim -->
 <script id="tailwind-config">
     tailwind.config = {
@@ -175,7 +173,7 @@
 <div class="inline-flex items-center mt-1">
 <span class="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-label-sm font-semibold">
 <span class="material-symbols-outlined text-tertiary" data-icon="check_circle" style="font-size: 14px;">check_circle</span>
-<span>Daughter / Primary Contact</span>
+<span class="">Daughter / Primary Contact</span>
 </span>
 </div>
 </div>
@@ -219,12 +217,12 @@
 <!-- Call Button (Tonal teal 48dp height minimum touch) -->
 <button class="w-full h-12 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg flex items-center justify-center space-x-2 shadow-sm active:bg-primary-container active:scale-[0.99] transition-all" id="callCaregiverBtn" type="button">
 <span class="material-symbols-outlined" data-icon="call">call</span>
-<span>Call Caregiver</span>
+<span class="">Call Caregiver</span>
 </button>
 <!-- Quick Action Share Latest Report -->
 <button class="w-full h-12 rounded-xl bg-surface-container text-primary font-label-lg text-label-lg border border-outline-variant flex items-center justify-center space-x-2 hover:bg-surface-container-high active:scale-[0.99] transition-all" type="button">
 <span class="material-symbols-outlined" data-icon="picture_as_pdf">picture_as_pdf</span>
-<span>Share Latest Medication Report</span>
+<span class="">Share Latest Medication Report</span>
 </button>
 </div>
 </section>
@@ -232,7 +230,7 @@
 <section class="bg-surface-container-lowest rounded-2xl p-space-md border border-outline-variant shadow-sm space-y-4">
 <h3 class="font-label-lg text-label-lg font-bold text-on-surface tracking-wide flex items-center space-x-2">
 <span class="material-symbols-outlined text-primary" data-icon="shield" style="font-size: 20px;">shield</span>
-<span>Caregiver Access &amp; Roles</span>
+<span class="">Caregiver Access &amp; Roles</span>
 </h3>
 <!-- Toggle Row: Emergency Contact Check-in -->
 <div class="flex items-center justify-between py-1">
@@ -242,7 +240,7 @@
 </div>
 <!-- Tactile Material Switch Component -->
 <label class="relative inline-flex items-center cursor-pointer min-w-[52px] h-12 justify-center">
-<input checked="" class="sr-only peer" id="emergencyToggle" type="checkbox"/>
+<input checked="" class="sr-only peer" id="emergencyToggle" type="checkbox">
 <div class="w-12 h-7 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[12.5px] after:left-[4px] after:bg-on-primary after:border-outline-variant after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
 </label>
 </div>
@@ -264,39 +262,42 @@
 <!-- Edit Caregiver Details (Outlined Button) -->
 <button class="w-full h-12 rounded-xl bg-transparent border-[1.5px] border-primary text-primary font-label-lg text-label-lg flex items-center justify-center space-x-2 hover:bg-surface-container-low active:scale-[0.99] transition-all" type="button">
 <span class="material-symbols-outlined" data-icon="badge">badge</span>
-<span>Edit Caregiver Details</span>
+<span class="">Edit Caregiver Details</span>
 </button>
 <!-- Remove Caregiver (Destructive Button) -->
 <button class="w-full h-12 rounded-xl bg-error-container/40 text-error font-label-lg text-label-lg flex items-center justify-center space-x-2 hover:bg-error-container/70 active:scale-[0.99] transition-all" id="openRemoveModalBtn" type="button">
 <span class="material-symbols-outlined" data-icon="delete">delete</span>
-<span>Remove Caregiver</span>
+<span class="">Remove Caregiver</span>
 </button>
 </section>
 </main>
 <!-- Bottom Navigation Bar (Docked full-width, JSON configured) -->
 <!-- Destination: 'Caregiver' highlighted as active -->
-<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[440px] z-50 bg-surface-container-lowest flex items-center justify-around px-margin h-20 border-t border-outline-variant shadow-sm pb-safe">
-<!-- Tab 1: Schedules (Inactive) -->
-<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[440px] z-50 bg-surface-container-lowest flex items-center justify-around h-20 border-t border-outline-variant shadow-sm pb-safe px-2"><!-- Tab 1: Dashboard (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-2 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-sm text-label-sm mt-0.5">Dashboard</span>
+</button>
+<!-- Tab 2: Schedules (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-2 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
 <span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
 <span class="font-label-sm text-label-sm mt-0.5">Schedules</span>
 </button>
-<!-- Tab 2: Dose (Inactive) -->
-<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<!-- Tab 3: Dose (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-2 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
 <span class="material-symbols-outlined" data-icon="medication">medication</span>
 <span class="font-label-sm text-label-sm mt-0.5">Dose</span>
 </button>
-<!-- Tab 3: Reports (Inactive) -->
-<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<!-- Tab 4: Reports (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-2 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
 <span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
 <span class="font-label-sm text-label-sm mt-0.5">Reports</span>
 </button>
-<!-- Tab 4: Caregiver (ACTIVE - Styled strictly by JSON style_active_navigation) -->
-<button aria-current="page" class="flex flex-col items-center justify-center bg-primary-fixed text-on-primary-fixed rounded-full px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<!-- Tab 5: Caregiver (ACTIVE - Styled strictly by JSON style_active_navigation) -->
+<button aria-current="page" class="flex flex-col items-center justify-center bg-primary-fixed text-on-primary-fixed rounded-full px-3 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
 <span class="material-symbols-outlined fill" data-icon="supervised_user_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">supervised_user_circle</span>
 <span class="font-label-sm text-label-sm font-semibold mt-0.5">Caregiver</span>
-</button>
-</nav>
+</button></nav>
 <!-- Confirmation Modal / Dialog (Level 3 Surface) for Remove Caregiver -->
 <div class="fixed inset-0 z-50 bg-inverse-surface/60 backdrop-blur-[2px] hidden items-center justify-center px-4 transition-opacity duration-200" id="removeModal">
 <div class="w-full max-w-sm bg-surface-container-lowest rounded-2xl p-6 shadow-2xl border border-outline-variant space-y-4 animate-in fade-in zoom-in-95 duration-150">
@@ -396,4 +397,6 @@
       });
     });
   </script>
+
+
 </body></html>

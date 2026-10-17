@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>MediTrack - Add Caregiver Details</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
     tailwind.config = {
@@ -168,7 +166,7 @@
 </label>
 <div class="relative flex items-center">
 <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none" data-icon="person">person</span>
-<input class="w-full h-14 pl-11 pr-4 bg-surface-container-lowest text-on-surface text-body-lg font-body-lg rounded-xl border border-outline-variant focus:border-2 focus:border-primary transition-all duration-150" id="caregiver-name" name="fullName" placeholder="e.g., Sarah Davis, Dr. Marcus Vance" required="" type="text" value="Sarah Davis"/>
+<input class="w-full h-14 pl-11 pr-4 bg-surface-container-lowest text-on-surface text-body-lg font-body-lg rounded-xl border border-outline-variant focus:border-2 focus:border-primary transition-all duration-150" id="caregiver-name" name="fullName" placeholder="e.g., Sarah Davis, Dr. Marcus Vance" required="" type="text" value="Sarah Davis">
 </div>
 <span class="block mt-1 text-label-sm font-label-sm text-outline">Stored locally with AES-256</span>
 </div>
@@ -208,7 +206,7 @@
 </label>
 <div class="relative flex items-center">
 <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none" data-icon="call">call</span>
-<input class="w-full h-14 pl-11 pr-4 bg-surface-container-lowest text-on-surface text-body-lg font-body-lg rounded-xl border border-outline-variant focus:border-2 focus:border-primary transition-all duration-150" id="caregiver-phone" name="phone" placeholder="(555) 019-2834" required="" type="tel" value="(555) 019-2834"/>
+<input class="w-full h-14 pl-11 pr-4 bg-surface-container-lowest text-on-surface text-body-lg font-body-lg rounded-xl border border-outline-variant focus:border-2 focus:border-primary transition-all duration-150" id="caregiver-phone" name="phone" placeholder="(555) 019-2834" required="" type="tel" value="(555) 019-2834">
 </div>
 <p class="mt-1 text-label-sm font-label-sm text-outline flex items-center gap-1">
 <span class="material-symbols-outlined text-[14px]" data-icon="info">info</span>
@@ -222,7 +220,7 @@
           </label>
 <div class="relative flex items-center">
 <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none" data-icon="mail">mail</span>
-<input class="w-full h-14 pl-11 pr-4 bg-surface-container-lowest text-on-surface text-body-lg font-body-lg rounded-xl border border-outline-variant focus:border-2 focus:border-primary transition-all duration-150" id="caregiver-email" name="email" placeholder="sarah.davis@example.com" type="email"/>
+<input class="w-full h-14 pl-11 pr-4 bg-surface-container-lowest text-on-surface text-body-lg font-body-lg rounded-xl border border-outline-variant focus:border-2 focus:border-primary transition-all duration-150" id="caregiver-email" name="email" placeholder="sarah.davis@example.com" type="email">
 </div>
 <p class="mt-1 text-label-sm font-label-sm text-outline">Target for exporting monthly PDF compliance reports.</p>
 </div>
@@ -256,28 +254,31 @@
 </section>
 </main>
 <!-- BOTTOM NAVIGATION BAR (Mandatory Shared Component: Caregiver active) -->
-<nav class="fixed bottom-0 left-0 w-full z-50 flex items-center justify-around px-margin h-20 bg-surface-container-lowest border-t border-outline-variant shadow-sm">
-<!-- Item 1: Schedules (Inactive) -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" href="#schedules">
+<nav class="fixed bottom-0 left-0 w-full z-50 flex items-center justify-around px-margin h-20 bg-surface-container-lowest border-t border-outline-variant shadow-sm"><!-- Item 1: Dashboard (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" href="#dashboard">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-label-sm font-label-sm mt-0.5">Dashboard</span>
+</a>
+<!-- Item 2: Schedules (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" href="#schedules">
 <span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
 <span class="text-label-sm font-label-sm mt-0.5">Schedules</span>
 </a>
-<!-- Item 2: Dose (Inactive) -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" href="#dose">
+<!-- Item 3: Dose (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" href="#dose">
 <span class="material-symbols-outlined" data-icon="medication">medication</span>
 <span class="text-label-sm font-label-sm mt-0.5">Dose</span>
 </a>
-<!-- Item 3: Reports (Inactive) -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" href="#reports">
+<!-- Item 4: Reports (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" href="#reports">
 <span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
 <span class="text-label-sm font-label-sm mt-0.5">Reports</span>
 </a>
-<!-- Item 4: Caregiver (Active) -->
-<a aria-current="page" class="flex flex-col items-center justify-center bg-primary-fixed text-on-primary-fixed rounded-full px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" href="#caregiver">
+<!-- Item 5: Caregiver (Active) -->
+<a aria-current="page" class="flex flex-col items-center justify-center bg-primary-fixed text-on-primary-fixed rounded-full px-3.5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" href="#caregiver">
 <span class="material-symbols-outlined" data-icon="supervised_user_circle" style="font-variation-settings: 'FILL' 1;">supervised_user_circle</span>
 <span class="text-label-sm font-label-sm font-bold mt-0.5">Caregiver</span>
-</a>
-</nav>
+</a></nav>
 <script>
     // Micro-interaction for relationship chip radio state
     document.querySelectorAll('[role="radio"]').forEach(button => {
@@ -301,4 +302,6 @@
       });
     });
   </script>
+
+
 </body></html>

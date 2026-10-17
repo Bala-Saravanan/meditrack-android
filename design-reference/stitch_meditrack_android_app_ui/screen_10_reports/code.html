@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-
-<html class="h-full" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!DOCTYPE html><html class="h-full" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>MediTrack - Compliance Reports</title>
 <!-- Material Symbols Outlined -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <!-- Inter Font -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
@@ -181,15 +179,15 @@
 <!-- Filter Tabs / Chips Container -->
 <div aria-label="Schedule status filters" class="flex items-center gap-2 overflow-x-auto pb-1 mb-5 no-scrollbar" role="tablist">
 <button aria-selected="true" class="h-10 px-4 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg flex items-center gap-1.5 shadow-sm shrink-0 active:scale-95 transition-transform" role="tab">
-<span>All Schedules</span>
+<span class="">All Schedules</span>
 <span class="px-1.5 py-0.2 bg-primary-container text-on-primary-container rounded-full text-label-sm font-label-sm font-bold">3</span>
 </button>
 <button aria-selected="false" class="h-10 px-4 rounded-xl bg-surface-container-lowest border border-outline-variant text-on-surface-variant font-label-lg text-label-lg flex items-center gap-1.5 hover:bg-surface-container shrink-0 active:scale-95 transition-transform" role="tab">
-<span>Active</span>
+<span class="">Active</span>
 <span class="px-1.5 py-0.2 bg-surface-container-high text-on-surface-variant rounded-full text-label-sm font-label-sm font-bold">2</span>
 </button>
 <button aria-selected="false" class="h-10 px-4 rounded-xl bg-surface-container-lowest border border-outline-variant text-on-surface-variant font-label-lg text-label-lg flex items-center gap-1.5 hover:bg-surface-container shrink-0 active:scale-95 transition-transform" role="tab">
-<span>Completed</span>
+<span class="">Completed</span>
 <span class="px-1.5 py-0.2 bg-surface-container-high text-on-surface-variant rounded-full text-label-sm font-label-sm font-bold">1</span>
 </button>
 </div>
@@ -253,7 +251,7 @@
 <div class="pt-1">
 <button aria-label="View Full Report for Cardiovascular Care" class="w-full h-12 rounded-xl border-[1.5px] border-primary text-primary hover:bg-primary/5 font-label-lg text-label-lg flex items-center justify-center gap-2 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary/20">
 <span class="material-symbols-outlined text-[20px]" data-icon="insert_chart">insert_chart</span>
-<span>View Full Report</span>
+<span class="">View Full Report</span>
 <span class="material-symbols-outlined text-[18px] ml-0.5" data-icon="arrow_forward">arrow_forward</span>
 </button>
 </div>
@@ -316,7 +314,7 @@
 <div class="pt-1">
 <button aria-label="View Full Report for Diabetes Maintenance" class="w-full h-12 rounded-xl border-[1.5px] border-primary text-primary hover:bg-primary/5 font-label-lg text-label-lg flex items-center justify-center gap-2 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary/20">
 <span class="material-symbols-outlined text-[20px]" data-icon="insert_chart">insert_chart</span>
-<span>View Full Report</span>
+<span class="">View Full Report</span>
 <span class="material-symbols-outlined text-[18px] ml-0.5" data-icon="arrow_forward">arrow_forward</span>
 </button>
 </div>
@@ -357,7 +355,7 @@
 <!-- Detail Note -->
 <div class="flex items-center gap-1.5 text-body-sm font-body-sm text-on-surface-variant mt-2.5 pt-2 border-t border-outline-variant">
 <span class="material-symbols-outlined text-[16px] text-tertiary" data-icon="verified">verified</span>
-<span>All <strong class="text-on-surface">20 of 20 doses</strong> successfully taken on schedule</span>
+<span class="">All <strong class="text-on-surface">20 of 20 doses</strong> successfully taken on schedule</span>
 </div>
 </div>
 </div>
@@ -365,7 +363,7 @@
 <div class="pt-1">
 <button aria-label="View Full Report for Antibiotic Course" class="w-full h-12 rounded-xl border-[1.5px] border-outline text-on-surface hover:bg-surface-container font-label-lg text-label-lg flex items-center justify-center gap-2 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-outline/20">
 <span class="material-symbols-outlined text-[20px]" data-icon="description">description</span>
-<span>View Full Report</span>
+<span class="">View Full Report</span>
 <span class="material-symbols-outlined text-[18px] ml-0.5" data-icon="arrow_forward">arrow_forward</span>
 </button>
 </div>
@@ -381,27 +379,32 @@
 </main>
 <!-- Bottom Navigation Bar (Shared Components standard implementation) -->
 <!-- Destination 3 'Reports' is active: strict execution of style_active_navigation -->
-<nav aria-label="Global navigation" class="fixed bottom-0 left-0 w-full max-w-[430px] z-50 flex items-center justify-around px-margin h-20 pb-safe bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant shadow-sm dark:shadow-none">
+<nav aria-label="Global navigation" class="fixed bottom-0 left-0 w-full max-w-[430px] z-50 flex items-center justify-around px-margin h-20 pb-safe bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant shadow-sm dark:shadow-none"><button aria-selected="false" class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-2.5 py-1 hover:bg-surface-container-high transition-transform duration-150 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[24px]" data-icon="dashboard">dashboard</span>
+<span class="text-label-sm font-label-sm mt-0.5">Dashboard</span>
+</button>
 <!-- Destination 1: Schedules -->
-<button aria-selected="false" class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 hover:bg-surface-container-high transition-transform duration-150 active:scale-95" type="button">
+<button aria-selected="false" class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant py-1 hover:bg-surface-container-high transition-transform duration-150 active:scale-95 px-2.5" type="button">
 <span class="material-symbols-outlined text-[24px]" data-icon="calendar_today">calendar_today</span>
 <span class="text-label-sm font-label-sm mt-0.5">Schedules</span>
 </button>
 <!-- Destination 2: Dose -->
-<button aria-selected="false" class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 hover:bg-surface-container-high transition-transform duration-150 active:scale-95" type="button">
+<button aria-selected="false" class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant py-1 hover:bg-surface-container-high transition-transform duration-150 active:scale-95 px-2.5" type="button">
 <span class="material-symbols-outlined text-[24px]" data-icon="medication">medication</span>
 <span class="text-label-sm font-label-sm mt-0.5">Dose</span>
 </button>
 <!-- Destination 3: Reports (ACTIVE - EXACT JSON style_active_navigation) -->
-<button aria-selected="true" class="flex flex-col items-center justify-center bg-primary-fixed dark:bg-primary text-on-primary-fixed dark:text-on-primary rounded-full px-5 py-1 hover:bg-surface-container-high transition-transform duration-150 active:scale-95" type="button">
+<button aria-selected="true" class="flex flex-col items-center justify-center bg-primary-fixed dark:bg-primary text-on-primary-fixed dark:text-on-primary rounded-full py-1 hover:bg-surface-container-high transition-transform duration-150 active:scale-95 px-3" type="button">
 <span class="material-symbols-outlined text-[24px]" data-icon="bar_chart" data-weight="fill" style="font-variation-settings: 'FILL' 1;">bar_chart</span>
 <span class="text-label-sm font-label-sm font-bold mt-0.5">Reports</span>
 </button>
 <!-- Destination 4: Caregiver -->
-<button aria-selected="false" class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 hover:bg-surface-container-high transition-transform duration-150 active:scale-95" type="button">
+<button aria-selected="false" class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant py-1 hover:bg-surface-container-high transition-transform duration-150 active:scale-95 px-2.5" type="button">
 <span class="material-symbols-outlined text-[24px]" data-icon="supervised_user_circle">supervised_user_circle</span>
 <span class="text-label-sm font-label-sm mt-0.5">Caregiver</span>
 </button>
 </nav>
 </div>
+
+
 </body></html>

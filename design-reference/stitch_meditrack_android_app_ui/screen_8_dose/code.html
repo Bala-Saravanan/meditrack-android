@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-
-<html class="h-full" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!DOCTYPE html><html class="h-full" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>MediTrack — Dose History</title>
 <!-- Material Symbols Outlined -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <!-- Google Fonts: Inter -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <!-- Tailwind CSS CDN -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <!-- Tailwind Theme Configuration -->
@@ -211,27 +209,27 @@
 <!-- All (Active) -->
 <button class="min-h-[48px] px-4 py-2 rounded-full bg-primary text-on-primary text-label-md font-label-md flex items-center gap-1.5 shrink-0 shadow-sm active:scale-95 transition-transform" type="button">
 <span class="material-symbols-outlined text-[16px]">tune</span>
-<span>All</span>
+<span class="">All</span>
 </button>
 <!-- Upcoming (2) -->
 <button class="min-h-[48px] px-3.5 py-2 rounded-full bg-surface-container-low text-on-surface border border-outline-variant/70 text-label-md font-label-md flex items-center gap-1.5 shrink-0 hover:bg-surface-container-high active:scale-95 transition-transform" type="button">
 <span class="w-2 h-2 rounded-full bg-secondary"></span>
-<span>Upcoming (2)</span>
+<span class="">Upcoming (2)</span>
 </button>
 <!-- Taken (4) -->
 <button class="min-h-[48px] px-3.5 py-2 rounded-full bg-surface-container-low text-tertiary border border-outline-variant/70 text-label-md font-label-md flex items-center gap-1.5 shrink-0 hover:bg-surface-container-high active:scale-95 transition-transform" type="button">
 <span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
-<span>Taken (4)</span>
+<span class="">Taken (4)</span>
 </button>
 <!-- Skipped (1) -->
 <button class="min-h-[48px] px-3.5 py-2 rounded-full bg-surface-container-low text-error border border-outline-variant/70 text-label-md font-label-md flex items-center gap-1.5 shrink-0 hover:bg-surface-container-high active:scale-95 transition-transform" type="button">
 <span class="material-symbols-outlined text-[16px] text-error">forward</span>
-<span>Skipped (1)</span>
+<span class="">Skipped (1)</span>
 </button>
 <!-- Unconfirmed (1) -->
 <button class="min-h-[48px] px-3.5 py-2 rounded-full bg-surface-container-low text-on-surface-variant border border-outline-variant/70 text-label-md font-label-md flex items-center gap-1.5 shrink-0 hover:bg-surface-container-high active:scale-95 transition-transform" type="button">
 <span class="material-symbols-outlined text-[16px] text-outline">help_outline</span>
-<span>Unconfirmed (1)</span>
+<span class="">Unconfirmed (1)</span>
 </button>
 </div>
 </section>
@@ -343,7 +341,7 @@
 </div>
 <div class="mt-3 text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1.5">
 <span class="material-symbols-outlined text-[16px] text-tertiary">verified</span>
-<span>Completed for today · Vitamin D3 &amp; Omega-3</span>
+<span class="">Completed for today · Vitamin D3 &amp; Omega-3</span>
 </div>
 </article>
 </div>
@@ -361,26 +359,28 @@
 </main>
 <!-- ================= BOTTOM NAVIGATION BAR (from Shared Components JSON) ================= -->
 <!-- Contextual lock: Current Screen is 'Dose', mapping directly to the 'Dose' nav destination -->
-<nav aria-label="Main Navigation" class="fixed bottom-0 left-0 w-full z-50 flex items-center justify-around px-margin h-20 pb-safe bg-surface-container-lowest dark:bg-inverse-surface shadow-sm dark:shadow-none border-t border-outline-variant dark:border-outline">
+<nav aria-label="Main Navigation" class="fixed bottom-0 left-0 w-full z-50 flex items-center justify-around px-margin h-20 pb-safe bg-surface-container-lowest dark:bg-inverse-surface shadow-sm dark:shadow-none border-t border-outline-variant dark:border-outline"><a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-3 py-1 min-h-[48px] hover:bg-surface-container-high dark:hover:bg-surface-container active:scale-95 transition-transform duration-150" href="#dashboard"><span class="material-symbols-outlined text-[24px]">dashboard</span><span class="text-label-sm font-label-sm mt-0.5">Dashboard</span></a>
 <!-- Item 0: Schedules (Inactive) -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 min-h-[48px] hover:bg-surface-container-high dark:hover:bg-surface-container active:scale-95 transition-transform duration-150" href="#schedules">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant py-1 min-h-[48px] hover:bg-surface-container-high dark:hover:bg-surface-container active:scale-95 transition-transform duration-150 px-3" href="#schedules">
 <span class="material-symbols-outlined text-[24px]">calendar_today</span>
 <span class="text-label-sm font-label-sm mt-0.5">Schedules</span>
 </a>
 <!-- Item 1: Dose (ACTIVE DESTINATION) -->
-<a aria-current="page" class="flex flex-col items-center justify-center bg-primary-fixed dark:bg-primary text-on-primary-fixed dark:text-on-primary rounded-full px-5 py-1 min-h-[48px] active:scale-95 transition-transform duration-150 shadow-sm" href="#dose">
+<a aria-current="page" class="flex flex-col items-center justify-center bg-primary-fixed dark:bg-primary text-on-primary-fixed dark:text-on-primary rounded-full py-1 min-h-[48px] active:scale-95 transition-transform duration-150 shadow-sm px-3.5" href="#dose">
 <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">medication</span>
 <span class="text-label-sm font-label-sm mt-0.5 font-bold">Dose</span>
 </a>
 <!-- Item 2: Reports (Inactive) -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 min-h-[48px] hover:bg-surface-container-high dark:hover:bg-surface-container active:scale-95 transition-transform duration-150" href="#reports">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant py-1 min-h-[48px] hover:bg-surface-container-high dark:hover:bg-surface-container active:scale-95 transition-transform duration-150 px-3" href="#reports">
 <span class="material-symbols-outlined text-[24px]">bar_chart</span>
 <span class="text-label-sm font-label-sm mt-0.5">Reports</span>
 </a>
 <!-- Item 3: Caregiver (Inactive) -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 min-h-[48px] hover:bg-surface-container-high dark:hover:bg-surface-container active:scale-95 transition-transform duration-150" href="#caregiver">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant py-1 min-h-[48px] hover:bg-surface-container-high dark:hover:bg-surface-container active:scale-95 transition-transform duration-150 px-3" href="#caregiver">
 <span class="material-symbols-outlined text-[24px]">supervised_user_circle</span>
 <span class="text-label-sm font-label-sm mt-0.5">Caregiver</span>
 </a>
 </nav>
+
+
 </body></html>
