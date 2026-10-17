@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="@color/surface_container_lowest"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/outline_variant"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Top Header Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_status_pill_due"
+                android:backgroundTint="@color/surface_container_low">
+
+                <ImageView
+                    android:id="@+id/iv_card_icon"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_schedule"
+                    app:tint="@color/primary" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_schedule_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/on_surface"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="Cardiovascular Care" />
+
+                <TextView
+                    android:id="@+id/tv_schedule_date_range"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="12sp"
+                    tools:text="Oct 01 – Oct 14, 2024" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_schedule_status_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_status_pill_taken"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:textColor="@color/status_taken"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                tools:text="Active" />
+        </LinearLayout>
+
+        <!-- Adherence Box -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_status_pill_due"
+            android:backgroundTint="@color/surface_container_low"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Overall Intake Rate"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_adherence_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:text="85% Adherence" />
+            </LinearLayout>
+
+            <!-- Segmented Progress Bar -->
+            <LinearLayout
+                android:id="@+id/layout_progress_track"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_date_chip_unselected"
+                android:backgroundTint="@color/outline_variant"
+                android:clipToOutline="true"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <View
+                    android:id="@+id/view_bar_taken"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="85"
+                    android:background="@color/status_taken" />
+
+                <View
+                    android:id="@+id/view_bar_skipped"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="8"
+                    android:background="@color/status_skipped" />
+
+                <View
+                    android:id="@+id/view_bar_unconfirmed"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7"
+                    android:background="@color/status_unconfirmed" />
+            </LinearLayout>
+
+            <!-- Breakdown Stats -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_taken_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="12sp"
+                    tools:text="24 Taken" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="6dp"
+                    android:text="•"
+                    android:textColor="@color/outline" />
+
+                <TextView
+                    android:id="@+id/tv_skipped_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="12sp"
+                    tools:text="2 Skipped" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="6dp"
+                    android:text="•"
+                    android:textColor="@color/outline" />
+
+                <TextView
+                    android:id="@+id/tv_unconfirmed_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="12sp"
+                    tools:text="2 Unconfirmed" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- View Full Report Action -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_view_report"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:text="View Full Report"
+            android:textColor="@color/primary"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_reports"
+            app:iconGravity="textStart"
+            app:iconSize="18dp"
+            app:iconTint="@color/primary"
+            app:strokeColor="@color/primary"
+            app:strokeWidth="1.5dp" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

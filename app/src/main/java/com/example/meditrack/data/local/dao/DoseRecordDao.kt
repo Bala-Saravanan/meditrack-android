@@ -40,6 +40,12 @@ interface DoseRecordDao {
     @Query("SELECT * FROM dose_records WHERE scheduleId = :scheduleId ORDER BY scheduledAt DESC")
     fun getDosesForSchedule(scheduleId: Long): Flow<List<DoseRecord>>
 
+    @Query("SELECT * FROM dose_records WHERE scheduleId = :scheduleId ORDER BY scheduledAt DESC")
+    suspend fun getDosesForScheduleOnce(scheduleId: Long): List<DoseRecord>
+
+    @Query("SELECT * FROM dose_records ORDER BY scheduledAt DESC")
+    fun getAllDoses(): Flow<List<DoseRecord>>
+
     @Query("SELECT * FROM dose_records WHERE status = 'PENDING' AND scheduledAt >= :startTime AND scheduledAt < :endTime ORDER BY scheduledAt ASC")
     fun getPendingRemindersForToday(startTime: Long, endTime: Long): Flow<List<DoseRecord>>
 

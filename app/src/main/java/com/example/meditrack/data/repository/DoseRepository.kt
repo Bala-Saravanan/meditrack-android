@@ -3,9 +3,16 @@ package com.example.meditrack.data.repository
 import com.example.meditrack.data.local.dao.DoseRecordDao
 import com.example.meditrack.data.local.dao.ScheduleDao
 import com.example.meditrack.data.local.entity.DoseRecord
+import com.example.meditrack.data.local.entity.Schedule
+import com.example.meditrack.data.local.model.DateRangeType
 import com.example.meditrack.data.local.model.MedicineAdherenceSummary
 import com.example.meditrack.data.local.model.ScheduleAdherenceSummary
+import com.example.meditrack.data.local.model.ScheduleDetailedReport
+import com.example.meditrack.data.local.model.ScheduleReportCardItem
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import java.util.Calendar
 
@@ -268,5 +275,265 @@ class DoseRepository(
         if (newDoses.isNotEmpty()) {
             doseRecordDao.insertDoseRecords(newDoses)
         }
+    }
+
+    /**
+     * Emits a reactive list of schedule report card items for all schedules in Room.
+     */
+    fun getAllScheduleReportCards(): Flow<List<ScheduleReportCardItem>> {
+        return combine(
+            scheduleDao.getAllSchedules(),
+            doseRecordDao.getAllDoses()
+        ) { schedules, allDoses ->
+            val dosesBySchedule = allDoses.groupBy { it.scheduleId }
+            schedules.map { schedule ->
+                val doses = dosesBySchedule[schedule.id].orEmpty()
+                val taken = doses.count { it.status == DoseRecord.STATUS_TAKEN }
+                val skipped = doses.count { it.status == DoseRecord.STATUS_SKIPPED }
+                val unconfirmed = doses.count { it.status == DoseRecord.STATUS_UNCONFIRMED }
+                val pending = doses.count { it.status == DoseRecord.STATUS_PENDING }
+                val late = doses.count { it.isLate }
+
+                val summary = ScheduleAdherenceSummary(
+                    scheduleId = schedule.id,
+                    scheduleName = schedule.name,
+                    totalScheduled = doses.size,
+                    takenCount = taken,
+                    skippedCount = skipped,
+                    unconfirmedCount = unconfirmed,
+                    pendingCount = pending,
+                    lateCount = late
+                )
+
+                ScheduleReportCardItem(
+                    scheduleId = schedule.id,
+                    scheduleName = schedule.name,
+                    scheduleStatus = schedule.status,
+                    startDate = schedule.startDate,
+                    endDate = schedule.endDate,
+                    adherenceSummary = summary
+                )
+            }
+        }
+    }
+
+    /**
+     * Computes start and end timestamps (inclusive) for a schedule and date range type.
+     */
+    fun calculateDateRangeBounds(
+        schedule: Schedule,
+        rangeType: DateRangeType,
+        customStart: Long? = null,
+        customEnd: Long? = null
+    ): Pair<Long, Long> {
+        val now = System.currentTimeMillis()
+        val cal = Calendar.getInstance()
+
+        return when (rangeType) {
+            DateRangeType.LAST_7_DAYS -> {
+                cal.timeInMillis = now
+                cal.set(Calendar.HOUR_OF_DAY, 23)
+                cal.set(Calendar.MINUTE, 59)
+                cal.set(Calendar.SECOND, 59)
+                cal.set(Calendar.MILLISECOND, 999)
+                val end = cal.timeInMillis
+
+                cal.add(Calendar.DAY_OF_YEAR, -6)
+                cal.set(Calendar.HOUR_OF_DAY, 0)
+                cal.set(Calendar.MINUTE, 0)
+                cal.set(Calendar.SECOND, 0)
+                cal.set(Calendar.MILLISECOND, 0)
+                val start = cal.timeInMillis
+                Pair(start, end)
+            }
+            DateRangeType.LAST_30_DAYS -> {
+                cal.timeInMillis = now
+                cal.set(Calendar.HOUR_OF_DAY, 23)
+                cal.set(Calendar.MINUTE, 59)
+                cal.set(Calendar.SECOND, 59)
+                cal.set(Calendar.MILLISECOND, 999)
+                val end = cal.timeInMillis
+
+                cal.add(Calendar.DAY_OF_YEAR, -29)
+                cal.set(Calendar.HOUR_OF_DAY, 0)
+                cal.set(Calendar.MINUTE, 0)
+                cal.set(Calendar.SECOND, 0)
+                cal.set(Calendar.MILLISECOND, 0)
+                val start = cal.timeInMillis
+                Pair(start, end)
+            }
+            DateRangeType.ENTIRE_PERIOD -> {
+                cal.timeInMillis = schedule.startDate
+                cal.set(Calendar.HOUR_OF_DAY, 0)
+                cal.set(Calendar.MINUTE, 0)
+                cal.set(Calendar.SECOND, 0)
+                cal.set(Calendar.MILLISECOND, 0)
+                val start = cal.timeInMillis
+
+                val endMillis = if (schedule.endDate != null && schedule.endDate > 0) {
+                    schedule.endDate
+                } else {
+                    maxOf(now, schedule.startDate + (30L * 24 * 60 * 60 * 1000L))
+                }
+                cal.timeInMillis = endMillis
+                cal.set(Calendar.HOUR_OF_DAY, 23)
+                cal.set(Calendar.MINUTE, 59)
+                cal.set(Calendar.SECOND, 59)
+                cal.set(Calendar.MILLISECOND, 999)
+                val end = cal.timeInMillis
+                Pair(start, end)
+            }
+            DateRangeType.CUSTOM -> {
+                val s = customStart ?: (now - (7L * 24 * 60 * 60 * 1000L))
+                val e = customEnd ?: now
+                val validStart = minOf(s, e)
+                val validEnd = maxOf(s, e)
+
+                cal.timeInMillis = validStart
+                cal.set(Calendar.HOUR_OF_DAY, 0)
+                cal.set(Calendar.MINUTE, 0)
+                cal.set(Calendar.SECOND, 0)
+                cal.set(Calendar.MILLISECOND, 0)
+                val start = cal.timeInMillis
+
+                cal.timeInMillis = validEnd
+                cal.set(Calendar.HOUR_OF_DAY, 23)
+                cal.set(Calendar.MINUTE, 59)
+                cal.set(Calendar.SECOND, 59)
+                cal.set(Calendar.MILLISECOND, 999)
+                val end = cal.timeInMillis
+                Pair(start, end)
+            }
+        }
+    }
+
+    /**
+     * Returns a reactive Flow of the detailed report for an individual schedule.
+     */
+    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    fun getScheduleDetailedReport(
+        scheduleId: Long,
+        rangeType: DateRangeType,
+        customStart: Long? = null,
+        customEnd: Long? = null
+    ): Flow<ScheduleDetailedReport?> {
+        return scheduleDao.getScheduleById(scheduleId).flatMapLatest { schedule ->
+            if (schedule == null) {
+                flowOf(null)
+            } else {
+                val (startTime, endTime) = calculateDateRangeBounds(schedule, rangeType, customStart, customEnd)
+                doseRecordDao.getDosesForScheduleAndDateRange(scheduleId, startTime, endTime).map { doses ->
+                    val taken = doses.count { it.status == DoseRecord.STATUS_TAKEN }
+                    val skipped = doses.count { it.status == DoseRecord.STATUS_SKIPPED }
+                    val unconfirmed = doses.count { it.status == DoseRecord.STATUS_UNCONFIRMED }
+                    val pending = doses.count { it.status == DoseRecord.STATUS_PENDING }
+                    val late = doses.count { it.isLate }
+
+                    val summary = ScheduleAdherenceSummary(
+                        scheduleId = schedule.id,
+                        scheduleName = schedule.name,
+                        totalScheduled = doses.size,
+                        takenCount = taken,
+                        skippedCount = skipped,
+                        unconfirmedCount = unconfirmed,
+                        pendingCount = pending,
+                        lateCount = late
+                    )
+
+                    val medicineSummaries = doses.groupBy { it.medicineName }.map { (medName, medDoses) ->
+                        MedicineAdherenceSummary(
+                            medicineName = medName,
+                            totalScheduled = medDoses.size,
+                            takenCount = medDoses.count { it.status == DoseRecord.STATUS_TAKEN },
+                            skippedCount = medDoses.count { it.status == DoseRecord.STATUS_SKIPPED },
+                            unconfirmedCount = medDoses.count { it.status == DoseRecord.STATUS_UNCONFIRMED },
+                            lateCount = medDoses.count { it.isLate }
+                        )
+                    }
+
+                    val now = System.currentTimeMillis()
+                    val hasFutureScheduledDoses = doses.any { it.scheduledAt > now }
+
+                    ScheduleDetailedReport(
+                        scheduleId = schedule.id,
+                        scheduleName = schedule.name,
+                        scheduleStatus = schedule.status,
+                        startDate = schedule.startDate,
+                        endDate = schedule.endDate,
+                        physicianName = schedule.physicianName,
+                        notes = schedule.notes,
+                        dateRangeType = rangeType,
+                        startTimestamp = startTime,
+                        endTimestamp = endTime,
+                        adherenceSummary = summary,
+                        medicineSummaries = medicineSummaries,
+                        doseRecords = doses,
+                        hasFutureScheduledDoses = hasFutureScheduledDoses
+                    )
+                }
+            }
+        }
+    }
+
+    /**
+     * Retrieves a one-shot snapshot of the detailed report for background operations (e.g. PDF generation).
+     */
+    suspend fun getScheduleDetailedReportOnce(
+        scheduleId: Long,
+        rangeType: DateRangeType,
+        customStart: Long? = null,
+        customEnd: Long? = null
+    ): ScheduleDetailedReport? {
+        val schedule = scheduleDao.getScheduleByIdOnce(scheduleId) ?: return null
+        val (startTime, endTime) = calculateDateRangeBounds(schedule, rangeType, customStart, customEnd)
+        val doses = doseRecordDao.getDosesForScheduleAndDateRangeOnce(scheduleId, startTime, endTime)
+
+        val taken = doses.count { it.status == DoseRecord.STATUS_TAKEN }
+        val skipped = doses.count { it.status == DoseRecord.STATUS_SKIPPED }
+        val unconfirmed = doses.count { it.status == DoseRecord.STATUS_UNCONFIRMED }
+        val pending = doses.count { it.status == DoseRecord.STATUS_PENDING }
+        val late = doses.count { it.isLate }
+
+        val summary = ScheduleAdherenceSummary(
+            scheduleId = schedule.id,
+            scheduleName = schedule.name,
+            totalScheduled = doses.size,
+            takenCount = taken,
+            skippedCount = skipped,
+            unconfirmedCount = unconfirmed,
+            pendingCount = pending,
+            lateCount = late
+        )
+
+        val medicineSummaries = doses.groupBy { it.medicineName }.map { (medName, medDoses) ->
+            MedicineAdherenceSummary(
+                medicineName = medName,
+                totalScheduled = medDoses.size,
+                takenCount = medDoses.count { it.status == DoseRecord.STATUS_TAKEN },
+                skippedCount = medDoses.count { it.status == DoseRecord.STATUS_SKIPPED },
+                unconfirmedCount = medDoses.count { it.status == DoseRecord.STATUS_UNCONFIRMED },
+                lateCount = medDoses.count { it.isLate }
+            )
+        }
+
+        val now = System.currentTimeMillis()
+        val hasFutureScheduledDoses = doses.any { it.scheduledAt > now }
+
+        return ScheduleDetailedReport(
+            scheduleId = schedule.id,
+            scheduleName = schedule.name,
+            scheduleStatus = schedule.status,
+            startDate = schedule.startDate,
+            endDate = schedule.endDate,
+            physicianName = schedule.physicianName,
+            notes = schedule.notes,
+            dateRangeType = rangeType,
+            startTimestamp = startTime,
+            endTimestamp = endTime,
+            adherenceSummary = summary,
+            medicineSummaries = medicineSummaries,
+            doseRecords = doses,
+            hasFutureScheduledDoses = hasFutureScheduledDoses
+        )
     }
 }

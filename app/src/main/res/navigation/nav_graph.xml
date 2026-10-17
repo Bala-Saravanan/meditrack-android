@@ -130,7 +130,21 @@
         android:id="@+id/reportsFragment"
         android:name="com.example.meditrack.ui.reports.ReportsFragment"
         android:label="Reports"
-        tools:layout="@layout/fragment_placeholder" />
+        tools:layout="@layout/fragment_reports">
+        <action
+            android:id="@+id/action_reports_to_scheduleReport"
+            app:destination="@id/scheduleReportFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/scheduleReportFragment"
+        android:name="com.example.meditrack.ui.reports.ScheduleReportFragment"
+        android:label="Schedule Report"
+        tools:layout="@layout/fragment_schedule_report">
+        <argument
+            android:name="scheduleId"
+            app:argType="long" />
+    </fragment>
 
     <fragment
         android:id="@+id/caregiverInfoFragment"
