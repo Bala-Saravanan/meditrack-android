@@ -16,7 +16,8 @@ import java.util.Locale
 
 class UpcomingReminderAdapter(
     private val onTakenClicked: (DoseRecord) -> Unit,
-    private val onSkippedClicked: (DoseRecord) -> Unit
+    private val onSkippedClicked: (DoseRecord) -> Unit,
+    private val onItemClicked: ((DoseRecord) -> Unit)? = null
 ) : ListAdapter<DoseRecord, UpcomingReminderAdapter.ReminderViewHolder>(DiffCallback) {
 
     private val timeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
@@ -67,6 +68,7 @@ class UpcomingReminderAdapter(
 
             btnTaken.setOnClickListener { onTakenClicked(record) }
             btnSkip.setOnClickListener { onSkippedClicked(record) }
+            itemView.setOnClickListener { onItemClicked?.invoke(record) }
         }
     }
 

@@ -118,4 +118,31 @@
     <string name="form_label">Medicine Form</string>
     <string name="btn_save_medicine">Save Medicine</string>
     <string name="error_medicine_name_required">Please enter medicine name</string>
+
+    <!-- Phase 4: Dose Tracking and Dose History -->
+    <string name="dose_history_heading">Dose History</string>
+    <string name="all_medication_schedules">All Medication Schedules</string>
+    <string name="local_records_synced">Local Records Synced</string>
+    <string name="sqlite_local">SQLite Local</string>
+    <string name="filter_all_doses">All</string>
+    <string name="filter_upcoming">Upcoming</string>
+    <string name="filter_taken">Taken</string>
+    <string name="filter_skipped">Skipped</string>
+    <string name="filter_unconfirmed">Unconfirmed</string>
+    <string name="no_doses_found_title">No Doses Found</string>
+    <string name="no_doses_found_desc">No medication doses scheduled for this date and filter.</string>
+    <string name="dose_log_title">Dose Log</string>
+    <string name="dose_log_subtitle">MediTrack adherence trail</string>
+    <string name="active_regimen">Active Regimen</string>
+    <string name="next_dose_due">Next Dose Due</string>
+    <string name="pending_intake">Pending Intake</string>
+    <string name="historical_log">Historical Log</string>
+    <string name="sorted_by_recent">Sorted by recent</string>
+    <string name="btn_record_late_status">+ Record Late Status</string>
+    <string name="late_submission">Late Submission</string>
+    <string name="on_time">On Time</string>
+    <string name="user_reported_disclaimer">Preserves timestamp upon user tap. Not medically verified.</string>
+    <string name="no_history_for_schedule">No dose history recorded for this schedule yet.</string>
+    <string name="toast_dose_taken">%1$s recorded as Taken</string>
+    <string name="toast_dose_skipped">%1$s marked as Skipped</string>
 </resources>

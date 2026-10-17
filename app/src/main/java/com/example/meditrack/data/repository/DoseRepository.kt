@@ -78,13 +78,28 @@ class DoseRepository(
         )
     }
 
-    suspend fun markExpiredPendingAsUnconfirmed() {
-        // Expired if > 2 hours past scheduled time without user interaction
-        val twoHoursAgo = System.currentTimeMillis() - (2 * 60 * 60 * 1000L)
-        val expired = doseRecordDao.getExpiredPendingDoses(twoHoursAgo)
+    suspend fun markExpiredPendingAsUnconfirmed(windowMs: Long = DoseRecord.LATE_THRESHOLD_MS) {
+        val threshold = System.currentTimeMillis() - windowMs
+        val expired = doseRecordDao.getExpiredPendingDoses(threshold)
         for (dose in expired) {
             doseRecordDao.markAsUnconfirmed(dose.id)
         }
+    }
+
+    suspend fun getDoseById(doseId: Long): DoseRecord? {
+        return doseRecordDao.getDoseRecordById(doseId)
+    }
+
+    suspend fun getScheduleById(scheduleId: Long): com.example.meditrack.data.local.entity.Schedule? {
+        return scheduleDao.getScheduleByIdOnce(scheduleId)
+    }
+
+    suspend fun getFullScheduleDetails(scheduleId: Long): com.example.meditrack.data.local.model.FullScheduleDetails? {
+        return scheduleDao.getFullScheduleDetailsOnce(scheduleId)
+    }
+
+    suspend fun getScheduleName(scheduleId: Long): String {
+        return scheduleDao.getScheduleByIdOnce(scheduleId)?.name ?: "Schedule #$scheduleId"
     }
 
     /**
@@ -170,8 +185,28 @@ class DoseRepository(
 
         for (fullSchedule in activeSchedules) {
             val schedule = fullSchedule.schedule
-            if (schedule.startDate > startOfDay) continue
-            if (schedule.endDate != null && schedule.endDate < startOfDay) continue
+
+            // Normalize start of schedule start date to start of day
+            val scheduleStartCal = Calendar.getInstance().apply {
+                timeInMillis = schedule.startDate
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+            if (startOfDay < scheduleStartCal.timeInMillis) continue
+
+            // Normalize end of schedule end date to end of day
+            if (schedule.endDate != null) {
+                val scheduleEndCal = Calendar.getInstance().apply {
+                    timeInMillis = schedule.endDate
+                    set(Calendar.HOUR_OF_DAY, 23)
+                    set(Calendar.MINUTE, 59)
+                    set(Calendar.SECOND, 59)
+                    set(Calendar.MILLISECOND, 999)
+                }
+                if (startOfDay > scheduleEndCal.timeInMillis) continue
+            }
 
             for (medicineWithTimes in fullSchedule.medicinesWithTimes) {
                 val sm = medicineWithTimes.scheduleMedicine

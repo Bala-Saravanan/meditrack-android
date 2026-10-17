@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_dose"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/surface_container_lowest"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/outline_variant"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header: Schedule Name & Time -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_dose_schedule_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_status_pill_pending"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="3dp"
+                    android:text="Cardiovascular Care"
+                    android:textColor="@color/secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/ic_chevron_right"
+                    app:tint="@color/outline" />
+            </LinearLayout>
+
+            <!-- Status Pill Badge -->
+            <TextView
+                android:id="@+id/tv_dose_status_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_status_pill_taken"
+                android:fontFamily="sans-serif-medium"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="Taken"
+                android:textColor="@color/status_taken"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Medicine Name & Dosage -->
+        <TextView
+            android:id="@+id/tv_dose_medicine_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Atorvastatin 20mg"
+            android:textColor="@color/on_surface"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <!-- Scheduled Time, Period, and Food Instruction -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_time"
+                app:tint="@color/text_muted" />
+
+            <TextView
+                android:id="@+id/tv_dose_scheduled_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="sans-serif"
+                android:text="08:00 AM • Morning"
+                android:textColor="@color/text_muted"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_dose_food_instruction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_status_pill_pending"
+                android:fontFamily="sans-serif"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="2dp"
+                android:text="Before Food"
+                android:textColor="@color/on_surface_variant"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- Late Warning Badge (if applicable) -->
+        <TextView
+            android:id="@+id/tv_dose_late_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_status_pill_due"
+            android:fontFamily="sans-serif-medium"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="3dp"
+            android:text="Late Submission"
+            android:textColor="@color/status_due"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <!-- User Recorded Details (e.g. Submitted at ...) -->
+        <TextView
+            android:id="@+id/tv_dose_recorded_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="sans-serif"
+            android:text="Submitted at 08:15 AM (User-recorded)"
+            android:textColor="@color/text_muted"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <!-- Action Row (for Pending or Unconfirmed doses) -->
+        <LinearLayout
+            android:id="@+id/layout_dose_actions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_dose_take"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/primary"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/btn_taken"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                app:cornerRadius="10dp"
+                app:icon="@drawable/ic_check"
+                app:iconGravity="textStart"
+                app:iconSize="16dp"
+                app:iconTint="@color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_dose_skip"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/btn_skipped"
+                android:textColor="@color/status_skipped"
+                android:textSize="13sp"
+                app:cornerRadius="10dp"
+                app:icon="@drawable/ic_cancel"
+                app:iconGravity="textStart"
+                app:iconSize="16dp"
+                app:iconTint="@color/status_skipped"
+                app:strokeColor="@color/status_skipped_border" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

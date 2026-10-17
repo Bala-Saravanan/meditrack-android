@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_date_chip"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    android:background="@drawable/bg_date_chip_unselected"
+    android:gravity="center"
+    android:minWidth="64dp"
+    android:minHeight="68dp"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tv_day_of_week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="Mon"
+        android:textColor="@color/on_surface_variant"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_day_of_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="14"
+        android:textColor="@color/on_surface"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_today_sublabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Today"
+        android:textColor="@color/primary_fixed"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+</LinearLayout>

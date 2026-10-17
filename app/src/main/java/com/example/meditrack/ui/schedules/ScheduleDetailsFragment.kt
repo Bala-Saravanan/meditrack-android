@@ -73,6 +73,12 @@ class ScheduleDetailsFragment : Fragment() {
 
         view.findViewById<MaterialButton>(R.id.btn_edit_schedule_top).setOnClickListener { navigateToEdit() }
         view.findViewById<MaterialButton>(R.id.btn_edit_schedule_bottom).setOnClickListener { navigateToEdit() }
+        view.findViewById<MaterialButton>(R.id.btn_view_dose_history).setOnClickListener {
+            findNavController().navigate(
+                R.id.action_details_to_history,
+                bundleOf("scheduleId" to scheduleId, "doseId" to -1L)
+            )
+        }
 
         // Status update buttons
         view.findViewById<MaterialButton>(R.id.btn_status_active).setOnClickListener {

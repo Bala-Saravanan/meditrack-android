@@ -44,6 +44,9 @@
             android:id="@+id/action_dashboard_to_doseHistory"
             app:destination="@id/doseFragment" />
         <action
+            android:id="@+id/action_dashboard_to_scheduleDoseHistory"
+            app:destination="@id/scheduleDoseHistoryFragment" />
+        <action
             android:id="@+id/action_dashboard_to_welcome"
             app:destination="@id/welcomeFragment"
             app:popUpTo="@id/nav_graph"
@@ -74,6 +77,9 @@
         <action
             android:id="@+id/action_details_to_edit"
             app:destination="@id/createScheduleFragment" />
+        <action
+            android:id="@+id/action_details_to_history"
+            app:destination="@id/scheduleDoseHistoryFragment" />
     </fragment>
 
     <fragment
@@ -100,7 +106,25 @@
         android:id="@+id/doseFragment"
         android:name="com.example.meditrack.ui.dose.DoseFragment"
         android:label="Dose History"
-        tools:layout="@layout/fragment_placeholder" />
+        tools:layout="@layout/fragment_dose">
+        <action
+            android:id="@+id/action_dose_to_history"
+            app:destination="@id/scheduleDoseHistoryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/scheduleDoseHistoryFragment"
+        android:name="com.example.meditrack.ui.dose.ScheduleDoseHistoryFragment"
+        android:label="Dose Log"
+        tools:layout="@layout/fragment_schedule_dose_history">
+        <argument
+            android:name="scheduleId"
+            app:argType="long" />
+        <argument
+            android:name="doseId"
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
 
     <fragment
         android:id="@+id/reportsFragment"

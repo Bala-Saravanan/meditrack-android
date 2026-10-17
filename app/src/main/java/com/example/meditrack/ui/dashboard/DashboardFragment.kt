@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -84,6 +85,13 @@ class DashboardFragment : Fragment() {
             onSkippedClicked = { record ->
                 viewModel.markDoseSkipped(record.id)
                 Toast.makeText(requireContext(), "${record.medicineName} marked as Skipped", Toast.LENGTH_SHORT).show()
+            },
+            onItemClicked = { record ->
+                val bundle = bundleOf(
+                    "scheduleId" to record.scheduleId,
+                    "doseId" to record.id
+                )
+                findNavController().navigate(R.id.action_dashboard_to_scheduleDoseHistory, bundle)
             }
         )
         rvReminders.adapter = reminderAdapter
@@ -93,8 +101,11 @@ class DashboardFragment : Fragment() {
         rvSummaries.layoutManager = LinearLayoutManager(requireContext())
         summaryAdapter = RecentDoseSummaryAdapter(
             onDetailsClicked = { summary ->
-                // Navigate to schedules tab or report
-                findNavController().navigate(R.id.action_dashboard_to_schedules)
+                val bundle = bundleOf(
+                    "scheduleId" to summary.scheduleId,
+                    "doseId" to -1L
+                )
+                findNavController().navigate(R.id.action_dashboard_to_scheduleDoseHistory, bundle)
             }
         )
         rvSummaries.adapter = summaryAdapter

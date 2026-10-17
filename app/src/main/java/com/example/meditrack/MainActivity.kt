@@ -37,7 +37,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.registrationFragment,
                 R.id.scheduleDetailsFragment,
                 R.id.createScheduleFragment,
-                R.id.addMedicineFragment -> {
+                R.id.addMedicineFragment,
+                R.id.scheduleDoseHistoryFragment -> {
                     bottomNav.visibility = View.GONE
                 }
                 else -> {
