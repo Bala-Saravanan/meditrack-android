@@ -1,0 +1,78 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.MediTrack" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Brand Colors -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+        <item name="colorSecondaryContainer">@color/secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/on_secondary_container</item>
+
+        <!-- Surfaces and Canvas -->
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface_variant</item>
+        <item name="colorOutline">@color/outline</item>
+        <item name="colorOutlineVariant">@color/outline_variant</item>
+
+        <!-- System bars -->
+        <item name="android:statusBarColor">@color/surface</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/surface_container_lowest</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+    </style>
+
+    <style name="Theme.MediTrack" parent="Base.Theme.MediTrack" />
+
+    <!-- Clinical Card Style (Level 1 Surface: 16dp corners, crisp 1px border) -->
+    <style name="ClinicalCard" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">1dp</item>
+        <item name="strokeColor">@color/outline_variant</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardBackgroundColor">@color/surface_container_lowest</item>
+    </style>
+
+    <!-- Clinical Primary Button (48dp min height, 16dp rounded radius) -->
+    <style name="ClinicalButton.Primary" parent="Widget.Material3.Button">
+        <item name="cornerRadius">16dp</item>
+        <item name="backgroundTint">@color/primary</item>
+        <item name="android:textColor">@color/on_primary</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- Clinical Outlined Button -->
+    <style name="ClinicalButton.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="cornerRadius">16dp</item>
+        <item name="strokeColor">@color/primary</item>
+        <item name="strokeWidth">1.5dp</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:minHeight">48dp</item>
+    </style>
+
+    <!-- Clinical Destructive/Skip Button -->
+    <style name="ClinicalButton.Skip" parent="Widget.Material3.Button.TonalButton">
+        <item name="cornerRadius">16dp</item>
+        <item name="backgroundTint">@color/status_skipped_bg</item>
+        <item name="android:textColor">@color/status_skipped</item>
+        <item name="android:minHeight">48dp</item>
+    </style>
+
+    <!-- Bottom Navigation View Styles -->
+    <style name="Widget.MediTrack.BottomNavIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/primary_fixed</item>
+    </style>
+
+    <style name="Widget.MediTrack.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemActiveIndicatorStyle">@style/Widget.MediTrack.BottomNavIndicator</item>
+        <item name="itemIconTint">@color/bottom_nav_item_color</item>
+        <item name="itemTextColor">@color/bottom_nav_item_color</item>
+        <item name="android:background">@color/surface_container_lowest</item>
+        <item name="elevation">8dp</item>
+    </style>
+</resources>

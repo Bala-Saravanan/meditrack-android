@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-surface" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediTrack - Dose Log</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed": "#7ffc97",
+            "secondary": "#006398",
+            "surface": "#f8f9ff",
+            "secondary-container": "#5bb8fe",
+            "on-primary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface-container-high": "#dce9ff",
+            "on-primary-container": "#f4fffc",
+            "surface-tint": "#006a61",
+            "inverse-on-surface": "#eaf1ff",
+            "surface-container-highest": "#d3e4fe",
+            "on-secondary-fixed": "#001d31",
+            "on-secondary": "#ffffff",
+            "on-background": "#0b1c30",
+            "on-tertiary-fixed-variant": "#005320",
+            "on-secondary-container": "#00476e",
+            "primary-fixed-dim": "#6bd8cb",
+            "surface-variant": "#d3e4fe",
+            "secondary-fixed-dim": "#93ccff",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#cbdbf5",
+            "surface-container-low": "#eff4ff",
+            "primary-container": "#008378",
+            "primary-fixed": "#89f5e7",
+            "outline-variant": "#bcc9c6",
+            "on-primary-fixed-variant": "#005049",
+            "error": "#ba1a1a",
+            "primary": "#00685f",
+            "on-secondary-fixed-variant": "#004b73",
+            "error-container": "#ffdad6",
+            "outline": "#6d7a77",
+            "tertiary-container": "#00873a",
+            "inverse-primary": "#6bd8cb",
+            "on-tertiary-container": "#f7fff2",
+            "tertiary": "#006b2c",
+            "on-surface": "#0b1c30",
+            "background": "#f8f9ff",
+            "on-surface-variant": "#3d4947",
+            "surface-container": "#e5eeff",
+            "secondary-fixed": "#cce5ff",
+            "on-tertiary-fixed": "#002109",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00201d",
+            "on-error": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "tertiary-fixed-dim": "#62df7d",
+            "inverse-surface": "#213145"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "margin": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem",
+            "gutter": "1rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "label-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-lg": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body class="h-full bg-surface text-on-surface antialiased flex flex-col font-body-md text-body-md select-none pb-24">
+<!-- Offline Status Ribbon -->
+<div class="w-full bg-[#0284C7] text-white px-margin py-1.5 flex items-center justify-between text-body-sm font-body-sm shadow-sm z-50">
+<div class="flex items-center space-x-1.5">
+<span class="material-symbols-outlined text-[16px]" data-icon="cloud_done">cloud_done</span>
+<span class="font-medium tracking-wide">Local SQLite sync active • 0 queued</span>
+</div>
+<span class="text-[11px] font-medium opacity-90">Encrypted</span>
+</div>
+<!-- Shared Component: TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-40 flex items-center justify-between px-margin h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-none">
+<div class="flex items-center space-x-3">
+<button aria-label="Go back" class="w-12 h-12 -ml-2 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-2xl" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<h1 class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface">Dose Log</h1>
+<span class="text-label-sm font-label-sm text-outline">MediTrack adherence trail</span>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<button aria-label="Search dose history" class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<div class="w-9 h-9 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-bold text-label-lg font-label-lg shadow-sm">
+        J
+      </div>
+</div>
+</header>
+<!-- Main Scrollable Canvas -->
+<main class="flex-1 w-full max-w-lg mx-auto pt-24 px-margin space-y-space-md">
+<!-- Header / Context Strip -->
+<section class="bg-surface-container-lowest rounded-xl p-space-md border border-[#E2E8F0] shadow-sm">
+<div class="flex items-center justify-between gap-2 mb-2">
+<div class="flex items-center space-x-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#16A34A] animate-pulse"></span>
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Active Regimen</span>
+</div>
+<div class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#DCFCE7] text-[#16A34A] text-label-sm font-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+          Active Regimen
+        </div>
+</div>
+<div class="flex items-baseline justify-between">
+<div>
+<h2 class="text-headline-md font-headline-md font-bold text-on-surface">Cardiovascular Care</h2>
+<p class="text-body-sm font-body-sm text-outline mt-0.5">Protocol ID: CV-9042 • Dr. Aris Thorne</p>
+</div>
+</div>
+<!-- Date Filter Bar -->
+<div class="mt-3.5 pt-3 border-t border-[#E2E8F0] flex items-center justify-between">
+<button class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors active:scale-95 duration-150 min-h-[44px]" type="button">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="calendar_today">calendar_today</span>
+<span class="text-label-md font-label-md font-semibold text-on-surface">Today, Oct 14, 2024</span>
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="arrow_drop_down">arrow_drop_down</span>
+</button>
+<div class="flex items-center gap-1">
+<button aria-label="Previous day" class="w-11 h-11 flex items-center justify-center rounded-lg hover:bg-surface-container text-on-surface-variant active:scale-95" type="button">
+<span class="material-symbols-outlined text-xl" data-icon="chevron_left">chevron_left</span>
+</button>
+<button aria-label="Next day" class="w-11 h-11 flex items-center justify-center rounded-lg hover:bg-surface-container text-on-surface-variant active:scale-95" type="button">
+<span class="material-symbols-outlined text-xl" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Highlighted Upcoming / Current Dose Section -->
+<section aria-labelledby="current-dose-title">
+<div class="relative bg-surface-container-lowest rounded-xl border-2 border-primary-container p-space-md shadow-[0px_4px_12px_-2px_rgba(0,104,95,0.12)] overflow-hidden">
+<!-- Top accent banner highlight -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary-fixed"></div>
+<div class="flex items-start justify-between gap-3 pt-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="alarm">alarm</span>
+<span class="text-headline-sm font-headline-sm font-bold text-primary" id="current-dose-title">
+              Next Dose Due • 08:00 PM
+            </span>
+</div>
+<span class="px-2.5 py-1 rounded-md bg-surface-container-high text-on-surface-variant text-label-sm font-label-sm font-semibold tracking-wide flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+            Pending Intake
+          </span>
+</div>
+<div class="mt-3 bg-surface-container-low rounded-lg p-3 border border-[#E2E8F0]">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-headline-sm font-headline-sm font-bold text-on-surface">Lisinopril 10mg</p>
+<p class="text-body-md font-body-md text-on-surface-variant mt-0.5">Oral Tablet • Take with food</p>
+</div>
+<!-- Visual Pill box glyph -->
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest border border-outline-variant flex items-center justify-center text-primary-container shadow-xs">
+<span class="material-symbols-outlined text-2xl" data-icon="pill">pill</span>
+</div>
+</div>
+</div>
+<!-- Quick Action Buttons -->
+<div class="grid grid-cols-2 gap-space-sm mt-space-md">
+<button class="h-12 w-full rounded-xl bg-[#008378] text-white flex items-center justify-center gap-2 font-label-lg text-label-lg hover:bg-primary active:scale-95 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Taken</span>
+</button>
+<button class="h-12 w-full rounded-xl border-1.5 border-[#DC2626] bg-[#FEE2E2] text-[#DC2626] flex items-center justify-center gap-2 font-label-lg text-label-lg hover:bg-[#FECACA] active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-xl" data-icon="cancel">cancel</span>
+<span>Skipped</span>
+</button>
+</div>
+<p class="mt-3 text-label-sm font-label-sm text-outline text-center flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="lock_clock">lock_clock</span>
+          Preserves timestamp upon user tap. Not medically verified.
+        </p>
+</div>
+</section>
+<!-- Historical Dose List (Reverse Chronological Order) -->
+<section aria-labelledby="history-heading" class="space-y-space-sm pt-2">
+<div class="flex items-center justify-between px-1">
+<h2 class="text-headline-sm font-headline-sm font-bold text-on-surface" id="history-heading">
+          Historical Log
+        </h2>
+<span class="text-label-sm font-label-sm text-outline">Sorted by recent</span>
+</div>
+<!-- Item 1: Atorvastatin 20mg -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md border border-[#E2E8F0] shadow-sm hover:border-outline-variant transition-colors">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-body-md font-body-md font-bold text-on-surface">Atorvastatin 20mg</span>
+<span class="inline-flex items-center gap-0.5 text-[#16A34A] text-label-sm font-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified">verified</span>
+                On Time
+              </span>
+</div>
+<p class="text-body-sm font-body-sm text-outline mt-0.5">Scheduled: Today, 08:00 AM</p>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#DCFCE7] text-[#16A34A] text-label-sm font-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]" data-icon="check">check</span>
+            Taken
+          </span>
+</div>
+<div class="mt-3 pt-2.5 border-t border-[#F1F5F9] flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-outline text-[16px]" data-icon="schedule">schedule</span>
+<span>Submitted at 08:12 AM</span>
+</div>
+<span class="text-label-sm font-label-sm text-outline">Device verified</span>
+</div>
+</article>
+<!-- Item 2: Lisinopril 10mg (Late) -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md border border-[#E2E8F0] shadow-sm hover:border-outline-variant transition-colors">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-body-md font-body-md font-bold text-on-surface">Lisinopril 10mg</span>
+</div>
+<p class="text-body-sm font-body-sm text-outline mt-0.5">Scheduled: Yesterday, 08:00 PM</p>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#DCFCE7] text-[#16A34A] text-label-sm font-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]" data-icon="check">check</span>
+            Taken
+          </span>
+</div>
+<!-- Amber Warning Badge showing scheduled and submitted -->
+<div class="mt-2.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#FEF3C7] text-[#D97706] text-label-sm font-label-sm font-semibold">
+<span class="material-symbols-outlined text-[15px]" data-icon="schedule">schedule</span>
+<span>Late Submission (+1h 45m)</span>
+</div>
+<div class="mt-3 pt-2.5 border-t border-[#F1F5F9] flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-outline text-[16px]" data-icon="history">history</span>
+<span>Submitted at 09:45 PM (Sched: 08:00 PM)</span>
+</div>
+<button class="text-primary text-label-sm font-label-sm font-semibold hover:underline" type="button">Details</button>
+</div>
+</article>
+<!-- Item 3: Baby Aspirin 81mg (Skipped) -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md border border-[#E2E8F0] shadow-sm hover:border-outline-variant transition-colors">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-body-md font-body-md font-bold text-on-surface">Baby Aspirin 81mg</span>
+</div>
+<p class="text-body-sm font-body-sm text-outline mt-0.5">Scheduled: Yesterday, 08:00 AM</p>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#FEE2E2] text-[#DC2626] text-label-sm font-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]" data-icon="forward">forward</span>
+            Skipped
+          </span>
+</div>
+<!-- Reason Note Block -->
+<div class="mt-3 p-2.5 rounded-lg bg-[#FFF1F2] border border-[#FECDD3] flex items-start gap-2">
+<span class="material-symbols-outlined text-[#DC2626] text-[18px] shrink-0 mt-0.5" data-icon="error_outline">error_outline</span>
+<p class="text-body-sm font-body-sm text-[#9F1239]">
+            User reported skipped dose • <span class="font-semibold">Reason: Felt nauseous</span>
+</p>
+</div>
+</article>
+<!-- Item 4: Lisinopril 10mg (Unconfirmed) -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md border border-[#E2E8F0] shadow-sm hover:border-outline-variant transition-colors">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-body-md font-body-md font-bold text-on-surface">Lisinopril 10mg</span>
+</div>
+<p class="text-body-sm font-body-sm text-outline mt-0.5">Scheduled: Oct 12, 08:00 PM</p>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#F1F5F9] text-[#64748B] text-label-sm font-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]" data-icon="help_outline">help_outline</span>
+            Unconfirmed
+          </span>
+</div>
+<div class="mt-3 pt-3 border-t border-[#F1F5F9] flex items-center justify-between">
+<span class="text-body-sm font-body-sm text-outline">No intake registered</span>
+<button class="h-10 px-3 rounded-lg border border-primary text-primary hover:bg-surface-container font-label-md text-label-md flex items-center gap-1.5 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="add_circle">add_circle</span>
+            + Record Late Status
+          </button>
+</div>
+</article>
+</section>
+<!-- Audit / Export Banner -->
+<div class="p-space-md rounded-xl bg-surface-container-high border border-outline-variant/40 flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-secondary text-2xl" data-icon="summarize">summarize</span>
+<div>
+<p class="font-label-lg text-label-lg font-bold text-on-surface">Cardiology Adherence Report</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">92% adherence this cycle (30 days)</p>
+</div>
+</div>
+<button aria-label="Export report" class="p-2 rounded-lg bg-surface-container-lowest text-secondary shadow-sm hover:bg-surface-container active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-xl" data-icon="share">share</span>
+</button>
+</div>
+</main>
+<!-- Shared Component: BottomNavBar -->
+<nav aria-label="Main Navigation" class="fixed bottom-0 left-0 w-full z-50 flex items-center justify-around px-margin h-20 pb-safe bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant dark:border-outline shadow-sm dark:shadow-none">
+<!-- Schedules (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container active:scale-95 transition-transform duration-150 rounded-lg min-h-[48px]" type="button">
+<span class="material-symbols-outlined text-2xl" data-icon="calendar_today">calendar_today</span>
+<span class="text-label-sm font-label-sm mt-1">Schedules</span>
+</button>
+<!-- Dose (Active Destination) -->
+<button aria-current="page" class="flex flex-col items-center justify-center bg-primary-fixed dark:bg-primary text-on-primary-fixed dark:text-on-primary rounded-full px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container active:scale-95 transition-transform duration-150 min-h-[48px]" type="button">
+<span class="material-symbols-outlined text-2xl" data-icon="medication" data-weight="fill" style="font-variation-settings: 'FILL' 1;">medication</span>
+<span class="text-label-sm font-label-sm font-bold mt-0.5">Dose</span>
+</button>
+<!-- Reports (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container active:scale-95 transition-transform duration-150 rounded-lg min-h-[48px]" type="button">
+<span class="material-symbols-outlined text-2xl" data-icon="bar_chart">bar_chart</span>
+<span class="text-label-sm font-label-sm mt-1">Reports</span>
+</button>
+<!-- Caregiver (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container active:scale-95 transition-transform duration-150 rounded-lg min-h-[48px]" type="button">
+<span class="material-symbols-outlined text-2xl" data-icon="supervised_user_circle">supervised_user_circle</span>
+<span class="text-label-sm font-label-sm mt-1">Caregiver</span>
+</button>
+</nav>
+</body></html>

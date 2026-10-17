@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediTrack - Schedule Report</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed": "#7ffc97",
+            "secondary": "#006398",
+            "surface": "#f8f9ff",
+            "secondary-container": "#5bb8fe",
+            "on-primary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface-container-high": "#dce9ff",
+            "on-primary-container": "#f4fffc",
+            "surface-tint": "#006a61",
+            "inverse-on-surface": "#eaf1ff",
+            "surface-container-highest": "#d3e4fe",
+            "on-secondary-fixed": "#001d31",
+            "on-secondary": "#ffffff",
+            "on-background": "#0b1c30",
+            "on-tertiary-fixed-variant": "#005320",
+            "on-secondary-container": "#00476e",
+            "primary-fixed-dim": "#6bd8cb",
+            "surface-variant": "#d3e4fe",
+            "secondary-fixed-dim": "#93ccff",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#cbdbf5",
+            "surface-container-low": "#eff4ff",
+            "primary-container": "#008378",
+            "primary-fixed": "#89f5e7",
+            "outline-variant": "#bcc9c6",
+            "on-primary-fixed-variant": "#005049",
+            "error": "#ba1a1a",
+            "primary": "#00685f",
+            "on-secondary-fixed-variant": "#004b73",
+            "error-container": "#ffdad6",
+            "outline": "#6d7a77",
+            "tertiary-container": "#00873a",
+            "inverse-primary": "#6bd8cb",
+            "on-tertiary-container": "#f7fff2",
+            "tertiary": "#006b2c",
+            "on-surface": "#0b1c30",
+            "background": "#f8f9ff",
+            "on-surface-variant": "#3d4947",
+            "surface-container": "#e5eeff",
+            "secondary-fixed": "#cce5ff",
+            "on-tertiary-fixed": "#002109",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00201d",
+            "on-error": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "tertiary-fixed-dim": "#62df7d",
+            "inverse-surface": "#213145"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "margin": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem",
+            "gutter": "1rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "label-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-lg": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col font-body-md select-none">
+<!-- TOP APP BAR -->
+<header class="fixed top-0 left-0 w-full z-40 flex items-center justify-between px-margin h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant shadow-none">
+<div class="flex items-center space-x-3">
+<button aria-label="Go back to Schedule overview" class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-surface-container-high active:scale-95 transition-transform duration-150 text-on-surface" type="button">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">Schedule Report</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant -mt-0.5">Cardiovascular Care</span>
+</div>
+</div>
+<div class="flex items-center space-x-1">
+<button aria-label="Print or Export Report" class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-surface-container-high active:scale-95 transition-transform duration-150 text-primary" type="button">
+<span class="material-symbols-outlined text-[22px]">print</span>
+</button>
+<div class="w-9 h-9 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label-md text-label-md shadow-xs">
+        J
+      </div>
+</div>
+</header>
+<!-- OFFLINE SYNC STATUS RIBBON -->
+<div class="mt-16 bg-secondary-fixed text-on-secondary-fixed px-margin py-1.5 flex items-center justify-between border-b border-outline-variant">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[16px] text-secondary">cloud_done</span>
+<span class="font-label-sm text-label-sm text-on-secondary-fixed">Local device record • Synced SQLite cache</span>
+</div>
+<span class="font-label-sm text-label-sm font-semibold text-secondary">v2.4 Audit</span>
+</div>
+<!-- MAIN SCROLLABLE CONTENT CANVAS -->
+<main class="flex-1 w-full max-w-md mx-auto px-margin pt-4 pb-48">
+<!-- SCHEDULE HEADER SUMMARY CARD -->
+<section class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant shadow-sm mb-space-md">
+<div class="flex items-start justify-between">
+<div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm mb-2 font-medium">
+<span class="material-symbols-outlined text-[14px]">cardiology</span>
+            Active Regimen
+          </span>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface tracking-tight">
+            Cardiovascular Care
+          </h1>
+</div>
+<div class="w-10 h-10 rounded-xl bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">ecg_heart</span>
+</div>
+</div>
+<div class="mt-3 pt-3 border-t border-outline-variant flex flex-col space-y-1.5">
+<div class="flex items-center text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px] text-primary mr-1.5">date_range</span>
+<span class="font-semibold text-on-surface">Report Period:</span>
+<span class="ml-1.5 px-2 py-0.5 rounded-lg bg-surface-container font-medium text-on-surface">Oct 01, 2024 – Oct 14, 2024</span>
+</div>
+<div class="flex items-center text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[15px] text-outline mr-1.5">schedule</span>
+<span>Generated Oct 14, 2024 • 10:30 AM (Device Local Time)</span>
+</div>
+</div>
+</section>
+<!-- DATE RANGE FILTER CHIPS (HORIZONTAL SCROLL) -->
+<div class="flex items-center space-x-2 overflow-x-auto pb-2 mb-space-md no-scrollbar">
+<button class="whitespace-nowrap px-3.5 py-1.5 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button">
+        Last 7 Days
+      </button>
+<button class="whitespace-nowrap px-4 py-1.5 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-xs flex items-center space-x-1.5" type="button">
+<span class="w-2 h-2 rounded-full bg-primary-fixed"></span>
+<span>Last 30 Days</span>
+</button>
+<button class="whitespace-nowrap px-3.5 py-1.5 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button">
+        Entire Schedule Period
+      </button>
+<button class="whitespace-nowrap px-3.5 py-1.5 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors flex items-center space-x-1" type="button">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+<span>Custom</span>
+</button>
+</div>
+<!-- HIGH-IMPACT BENTO METRIC HERO -->
+<section class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant shadow-sm mb-space-md">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Overall Performance</span>
+<div class="flex items-baseline space-x-2">
+<span class="font-headline-lg text-headline-lg font-bold text-primary">88%</span>
+<span class="font-label-lg text-label-lg font-semibold text-tertiary">Overall Compliance</span>
+</div>
+</div>
+<div class="w-14 h-14 rounded-full bg-surface-container-low border-4 border-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[26px] text-primary font-bold">verified</span>
+</div>
+</div>
+<!-- SEGMENTED ADHERENCE VISUAL PROGRESS BAR -->
+<div class="mt-4">
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant mb-1.5">
+<span>Scheduled Dosage Breakdown</span>
+<span class="font-semibold text-on-surface">28 Doses Recorded</span>
+</div>
+<div class="h-3 w-full rounded-full bg-surface-container overflow-hidden flex">
+<!-- 24 Taken (85.7%) -->
+<div class="bg-tertiary-container h-full transition-all duration-300" style="width: 85.7%" title="Confirmed Taken: 85.7%"></div>
+<!-- 2 Skipped (7.1%) -->
+<div class="bg-error h-full transition-all duration-300" style="width: 7.1%" title="User-Reported Skipped: 7.1%"></div>
+<!-- 2 Unconfirmed (7.1%) -->
+<div class="bg-outline h-full transition-all duration-300" style="width: 7.2%" title="Unconfirmed: 7.1%"></div>
+</div>
+<div class="flex items-center justify-between mt-2 font-label-sm text-label-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary-container inline-block"></span> 85.7% Taken
+          </span>
+<span class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-full bg-error inline-block"></span> 7.1% Skipped
+          </span>
+<span class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-full bg-outline inline-block"></span> 7.1% Unconf.
+          </span>
+</div>
+</div>
+<!-- DETAILED METRIC 4-GRID -->
+<div class="grid grid-cols-2 gap-space-sm mt-4">
+<!-- Metric 1: Total Scheduled -->
+<div class="p-3 rounded-lg bg-surface-container-low border border-outline-variant flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant mb-1">
+<span class="font-label-sm text-label-sm">Total Scheduled</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">inventory_2</span>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">28 <span class="font-body-sm text-body-sm text-on-surface-variant font-normal">Doses</span></span>
+</div>
+<!-- Metric 2: Confirmed Taken -->
+<div class="p-3 rounded-lg bg-surface-container-low border border-outline-variant flex flex-col justify-between">
+<div class="flex items-center justify-between text-tertiary mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Confirmed Taken</span>
+<span class="material-symbols-outlined text-[18px] text-tertiary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<div class="flex items-baseline space-x-1">
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">24</span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold">(85.7%)</span>
+</div>
+<div class="w-full bg-outline-variant h-1 rounded-full mt-1.5 overflow-hidden">
+<div class="bg-tertiary h-full w-[85.7%]"></div>
+</div>
+</div>
+</div>
+<!-- Metric 3: User-Reported Skipped -->
+<div class="p-3 rounded-lg bg-surface-container-low border border-outline-variant flex flex-col justify-between">
+<div class="flex items-center justify-between text-error mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">User Skipped</span>
+<span class="material-symbols-outlined text-[18px] text-error" style="font-variation-settings: 'FILL' 1;">cancel</span>
+</div>
+<div class="flex items-baseline space-x-1">
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">2</span>
+<span class="font-label-sm text-label-sm text-error font-medium">(7.1%)</span>
+</div>
+</div>
+<!-- Metric 4: Unconfirmed -->
+<div class="p-3 rounded-lg bg-surface-container-low border border-outline-variant flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Unconfirmed</span>
+<span class="material-symbols-outlined text-[18px] text-outline">help</span>
+</div>
+<div class="flex items-baseline space-x-1">
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">2</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">(7.1%)</span>
+</div>
+</div>
+</div>
+<!-- Late Submissions Callout Badge -->
+<div class="mt-3 p-3 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[20px] text-primary">cloud_upload</span>
+<div>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Late Dose Logging</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Logged &gt;60 mins past scheduled window</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-md bg-secondary-container text-on-secondary-container font-label-md text-label-md font-bold">
+          3 Doses
+        </span>
+</div>
+</section>
+<!-- CLINICAL NOTICE DISCLAIMER -->
+<section class="bg-surface-container-high/40 rounded-xl p-space-md border border-outline-variant mb-space-md flex items-start space-x-3">
+<span class="material-symbols-outlined text-[22px] text-primary mt-0.5 shrink-0">info</span>
+<p class="font-body-sm text-body-sm text-on-surface leading-snug">
+<strong class="font-semibold">Notice:</strong> Figures represent user-entered device records and do not constitute physiological verification of medication intake. Unanswered doses are categorized strictly as <span class="font-semibold text-outline">Unconfirmed</span>, not Skipped.
+      </p>
+</section>
+<!-- PER-MEDICINE BREAKDOWN SECTION -->
+<section class="mb-space-md">
+<div class="flex items-center justify-between mb-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-semibold">
+          Medication Regimen Adherence
+        </h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2 Medications</span>
+</div>
+<div class="space-y-space-sm">
+<!-- Medicine 1: Atorvastatin -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant shadow-sm hover:border-primary transition-colors">
+<div class="flex items-start justify-between">
+<div class="flex items-start space-x-3">
+<!-- Pill Identifier Pillbox -->
+<div class="w-12 h-12 rounded-lg bg-surface-container flex flex-col items-center justify-center border border-outline-variant shrink-0">
+<span class="w-6 h-3 rounded-full bg-surface-container-lowest border-2 border-primary shadow-xs"></span>
+<span class="font-label-sm text-[9px] text-outline mt-1 font-bold">ATV 20</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Atorvastatin</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">20mg • Oral Tablet • 1 daily (Night)</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-outline">Instruction: Bedtime with water</span>
+</div>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed font-label-md text-label-md font-bold flex items-center space-x-1">
+<span class="material-symbols-outlined text-[14px]">check</span>
+<span>100%</span>
+</span>
+</div>
+<!-- Progress track -->
+<div class="mt-3 pt-3 border-t border-outline-variant">
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span class="text-on-surface-variant">Taken Ratio</span>
+<span class="font-semibold text-tertiary">14 of 14 Doses</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-full rounded-full"></div>
+</div>
+<div class="flex justify-between items-center mt-2 text-on-surface-variant font-label-sm text-label-sm">
+<span>0 Missed</span>
+<span>0 Unconfirmed</span>
+<span>1 Late Entry</span>
+</div>
+</div>
+</article>
+<!-- Medicine 2: Lisinopril -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant shadow-sm hover:border-primary transition-colors">
+<div class="flex items-start justify-between">
+<div class="flex items-start space-x-3">
+<!-- Pill Identifier Pillbox -->
+<div class="w-12 h-12 rounded-lg bg-surface-container flex flex-col items-center justify-center border border-outline-variant shrink-0">
+<span class="w-5 h-5 rounded-full bg-secondary-fixed border-2 border-secondary shadow-xs"></span>
+<span class="font-label-sm text-[9px] text-outline mt-1 font-bold">L10</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Lisinopril</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">10mg • Oral Tablet • 1 daily (Morning)</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-outline">Instruction: Take with meal</span>
+</div>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-lg bg-surface-container-high text-secondary font-label-md text-label-md font-bold">
+              71%
+            </span>
+</div>
+<!-- Progress track -->
+<div class="mt-3 pt-3 border-t border-outline-variant">
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span class="text-on-surface-variant">Taken Ratio</span>
+<span class="font-semibold text-secondary">10 of 14 Doses</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full w-[71%] rounded-full"></div>
+</div>
+<div class="flex justify-between items-center mt-2 text-on-surface-variant font-label-sm text-label-sm">
+<span class="text-error font-medium">2 Skipped</span>
+<span class="text-outline">2 Unconfirmed</span>
+<span>2 Late Entries</span>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- REPORT SIGN-OFF SUMMARY FOOTER METADATA -->
+<div class="rounded-lg p-3 bg-surface-container-low border border-outline-variant text-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant">
+        Audit Key: <span class="font-mono text-outline font-semibold">MTRK-RPT-77189-CV</span> • Generated for patient self-tracking.
+      </p>
+</div>
+</main>
+<!-- DOCKED PDF ACTIONS BOTTOM PERSISTENT CONTAINER (Above BottomNavBar) -->
+<div class="fixed bottom-20 left-0 w-full z-40 bg-surface-container-lowest/95 backdrop-blur-md px-margin py-3 border-t border-outline-variant flex flex-col space-y-2">
+<div class="max-w-md mx-auto w-full flex space-x-3">
+<!-- Button 1: Download PDF Report -->
+<button class="flex-1 h-12 rounded-xl border-[1.5px] border-primary text-primary font-label-lg text-label-lg flex items-center justify-center space-x-2 bg-transparent hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span>Download PDF</span>
+</button>
+<!-- Button 2: Share PDF with Caregiver -->
+<button class="flex-1 h-12 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg flex items-center justify-center space-x-2 shadow-sm hover:bg-primary-container active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]">share</span>
+<span>Share PDF</span>
+</button>
+</div>
+</div>
+<!-- BOTTOM NAVIGATION BAR (Reports destination active) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex items-center justify-around px-margin h-20 pb-safe bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant shadow-sm dark:shadow-none">
+<!-- Schedules (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 active:scale-95 transition-transform duration-150 hover:bg-surface-container-high" type="button">
+<span class="material-symbols-outlined text-[24px]">calendar_today</span>
+<span class="font-label-sm text-label-sm mt-0.5">Schedules</span>
+</button>
+<!-- Dose (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 active:scale-95 transition-transform duration-150 hover:bg-surface-container-high" type="button">
+<span class="material-symbols-outlined text-[24px]">medication</span>
+<span class="font-label-sm text-label-sm mt-0.5">Dose</span>
+</button>
+<!-- Reports (ACTIVE as dictated by intent & hierarchy) -->
+<button aria-current="page" class="flex flex-col items-center justify-center bg-primary-fixed dark:bg-primary text-on-primary-fixed dark:text-on-primary rounded-full px-5 py-1 active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">bar_chart</span>
+<span class="font-label-sm text-label-sm mt-0.5 font-bold">Reports</span>
+</button>
+<!-- Caregiver (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 active:scale-95 transition-transform duration-150 hover:bg-surface-container-high" type="button">
+<span class="material-symbols-outlined text-[24px]">supervised_user_circle</span>
+<span class="font-label-sm text-label-sm mt-0.5">Caregiver</span>
+</button>
+</nav>
+<!-- Interactive Mock Logic -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Toggle date filter chips active state
+      const filterButtons = document.querySelectorAll('div.flex.items-center.space-x-2 button');
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterButtons.forEach(b => {
+            b.className = 'whitespace-nowrap px-3.5 py-1.5 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors flex items-center space-x-1';
+          });
+          btn.className = 'whitespace-nowrap px-4 py-1.5 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-xs flex items-center space-x-1.5';
+        });
+      });
+    });
+  </script>
+</body></html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>MediTrack - Welcome</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed": "#7ffc97",
+            "secondary": "#006398",
+            "surface": "#f8f9ff",
+            "secondary-container": "#5bb8fe",
+            "on-primary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface-container-high": "#dce9ff",
+            "on-primary-container": "#f4fffc",
+            "surface-tint": "#006a61",
+            "inverse-on-surface": "#eaf1ff",
+            "surface-container-highest": "#d3e4fe",
+            "on-secondary-fixed": "#001d31",
+            "on-secondary": "#ffffff",
+            "on-background": "#0b1c30",
+            "on-tertiary-fixed-variant": "#005320",
+            "on-secondary-container": "#00476e",
+            "primary-fixed-dim": "#6bd8cb",
+            "surface-variant": "#d3e4fe",
+            "secondary-fixed-dim": "#93ccff",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#cbdbf5",
+            "surface-container-low": "#eff4ff",
+            "primary-container": "#008378",
+            "primary-fixed": "#89f5e7",
+            "outline-variant": "#bcc9c6",
+            "on-primary-fixed-variant": "#005049",
+            "error": "#ba1a1a",
+            "primary": "#00685f",
+            "on-secondary-fixed-variant": "#004b73",
+            "error-container": "#ffdad6",
+            "outline": "#6d7a77",
+            "tertiary-container": "#00873a",
+            "inverse-primary": "#6bd8cb",
+            "on-tertiary-container": "#f7fff2",
+            "tertiary": "#006b2c",
+            "on-surface": "#0b1c30",
+            "background": "#f8f9ff",
+            "on-surface-variant": "#3d4947",
+            "surface-container": "#e5eeff",
+            "secondary-fixed": "#cce5ff",
+            "on-tertiary-fixed": "#002109",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00201d",
+            "on-error": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "tertiary-fixed-dim": "#62df7d",
+            "inverse-surface": "#213145"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "margin": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem",
+            "gutter": "1rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "label-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-lg": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      display: none;
+    }
+    .custom-scroll {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased h-full flex flex-col justify-between selection:bg-primary-fixed selection:text-on-primary-fixed select-none">
+<!-- Mobile Container Mockup Rail -->
+<div class="relative w-full max-w-md mx-auto min-h-screen flex flex-col justify-between bg-surface shadow-2xl overflow-x-hidden">
+<!-- Top System & Header Container -->
+<header class="w-full flex-shrink-0 z-30 bg-surface">
+<!-- Standard Android Status Bar (40px) -->
+<div class="w-full h-10 px-margin flex items-center justify-between text-on-surface-variant font-label-md text-label-md">
+<span class="font-headline-sm text-label-md font-semibold text-on-surface">9:41</span>
+<div class="flex items-center space-x-1.5 text-on-surface">
+<span class="material-symbols-outlined text-[18px]" data-icon="wifi">wifi</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="signal_cellular_alt">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="battery_full">battery_full</span>
+</div>
+</div>
+<!-- Offline Readiness Subtle Indicator Bar -->
+<div class="w-full bg-secondary-fixed/40 px-margin py-1 flex items-center justify-between border-b border-outline-variant/30">
+<div class="flex items-center space-x-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary" data-icon="cloud_off">cloud_off</span>
+<span class="font-label-sm text-label-sm text-secondary font-medium tracking-wide">Offline-First Engine Ready</span>
+</div>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-full bg-surface-container-lowest text-secondary font-label-sm text-[10px] font-semibold border border-outline-variant/40">v2.4</span>
+</div>
+</header>
+<!-- Scrollable Welcoming Content Area -->
+<main class="flex-1 flex flex-col px-margin pt-4 pb-6 overflow-y-auto custom-scroll">
+<!-- Brand & Hero Anchor Section -->
+<section class="flex flex-col items-center text-center mt-2 mb-6">
+<!-- Logo Icon Container (Teal Circular Material Accent) -->
+<div class="relative w-20 h-20 rounded-full bg-primary-fixed flex items-center justify-center shadow-sm mb-4 ring-8 ring-primary-fixed/20 transition-transform active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[38px] text-primary" data-icon="medication" data-weight="fill" style="font-variation-settings: 'FILL' 1;">medication</span>
+<div class="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-primary flex items-center justify-center ring-2 ring-surface shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-on-primary" data-icon="check" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</div>
+<!-- Application Name -->
+<h1 class="font-headline-md text-headline-md font-bold tracking-tight text-primary">MediTrack</h1>
+<p class="font-label-md text-label-md text-on-surface-variant font-medium mt-0.5">Clinical Adherence Companion</p>
+<!-- Main Welcome Headline -->
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-on-surface mt-5 leading-snug tracking-tight max-w-[320px]">
+          Take control of your medication routine.
+        </h2>
+<!-- Short Supporting Narrative -->
+<p class="font-body-md text-body-md text-on-surface-variant mt-2.5 max-w-[330px] leading-relaxed">
+          Manage your medication schedules, track daily doses offline, and review comprehensive compliance history with confidence.
+        </p>
+</section>
+<!-- Reassuring Asymmetric Bento Feature Grid -->
+<section class="grid grid-cols-1 gap-space-sm mb-4">
+<!-- Primary Feature Highlight Card -->
+<div class="bg-surface-container-lowest p-space-md rounded-2xl border border-outline-variant/40 shadow-sm flex items-start space-x-space-md">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary">
+<span class="material-symbols-outlined text-[24px]" data-icon="offline_pin" data-weight="fill" style="font-variation-settings: 'FILL' 1;">offline_pin</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-[16px] font-semibold text-on-surface">100% Offline-First</h3>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed text-[10px] font-label-sm font-bold px-2 py-0.5 rounded-full">Active</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 leading-normal">
+              Zero cloud dependency required. Dose reminders execute locally even when traveling or without cellular connectivity.
+            </p>
+</div>
+</div>
+<!-- Secondary Features Row: 2-Column Split -->
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- Smart Reminders -->
+<div class="bg-surface-container-lowest p-space-md rounded-2xl border border-outline-variant/40 shadow-sm flex flex-col justify-between">
+<div>
+<div class="w-10 h-10 rounded-xl bg-secondary-fixed/50 flex items-center justify-center text-secondary mb-3">
+<span class="material-symbols-outlined text-[22px]" data-icon="alarm" data-weight="fill" style="font-variation-settings: 'FILL' 1;">alarm</span>
+</div>
+<h4 class="font-headline-sm text-[15px] font-semibold text-on-surface">Smart Alerts</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 leading-normal text-[12px]">
+                Gentle, flexible recurring alarms calibrated for motor ease.
+              </p>
+</div>
+<div class="mt-3 flex items-center text-primary font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px] mr-1" data-icon="check_circle">check_circle</span>
+              High Precision
+            </div>
+</div>
+<!-- Secure on Device -->
+<div class="bg-surface-container-lowest p-space-md rounded-2xl border border-outline-variant/40 shadow-sm flex flex-col justify-between">
+<div>
+<div class="w-10 h-10 rounded-xl bg-primary-fixed/40 flex items-center justify-center text-primary mb-3">
+<span class="material-symbols-outlined text-[22px]" data-icon="shield_with_heart" data-weight="fill" style="font-variation-settings: 'FILL' 1;">shield_with_heart</span>
+</div>
+<h4 class="font-headline-sm text-[15px] font-semibold text-on-surface">Private Vault</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 leading-normal text-[12px]">
+                Encrypted on device. No tracking, ads, or profile harvesting.
+              </p>
+</div>
+<div class="mt-3 flex items-center text-primary font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px] mr-1" data-icon="lock">lock</span>
+              Private &amp; Safe
+            </div>
+</div>
+</div>
+<!-- Caregiver & Adherence Reassurance Banner Card -->
+<div class="bg-surface-container-low p-space-md rounded-2xl border border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-9 h-9 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary shadow-xs">
+<span class="material-symbols-outlined text-[20px]" data-icon="auto_graph">auto_graph</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg font-semibold text-on-surface">Reliable Adherence Logs</p>
+<p class="font-body-sm text-[12px] text-on-surface-variant">Exportable PDF logs for doctor checkups</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="chevron_right">chevron_right</span>
+</div>
+</section>
+</main>
+<!-- Bottom Action Footer Dock (No global nav shell because this is Screen 1 / Welcome Journey) -->
+<footer class="w-full bg-surface p-margin pt-2 pb-6 border-t border-outline-variant/30 flex flex-col items-center">
+<!-- Full-Width 52dp / Rounded 16dp Get Started Primary Button -->
+<button class="w-full h-[52px] bg-primary hover:bg-primary-container active:scale-[0.98] text-on-primary rounded-2xl flex items-center justify-center space-x-2 font-label-lg text-label-lg font-semibold shadow-md transition-all duration-150 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/40" onclick="this.classList.add('scale-[0.98]'); setTimeout(() =&gt; this.classList.remove('scale-[0.98]'), 150);" type="button">
+<span>Get Started</span>
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<!-- Secondary Subtle Action for Existing Profiles -->
+<div class="mt-2.5 flex items-center space-x-1.5">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Returning user?</span>
+<button class="font-label-sm text-label-sm font-semibold text-primary hover:underline py-1 px-1.5" type="button">
+          Restore from Backup
+        </button>
+</div>
+<!-- Trust & Compliance Demonstration Note -->
+<div class="mt-3 flex items-center space-x-1.5 text-on-surface-variant/80">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified_user">verified_user</span>
+<p class="font-label-sm text-[11px] font-medium tracking-tight">
+          Sample demonstration app • Local device storage
+        </p>
+</div>
+<!-- Android Gesture Navigation Pill Bar Indicator -->
+<div class="w-32 h-1 bg-on-surface/20 rounded-full mt-4 mb-1"></div>
+</footer>
+</div>
+</body></html>

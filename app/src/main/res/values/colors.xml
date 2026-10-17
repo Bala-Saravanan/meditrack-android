@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Clinical Calm Primary (Teal) -->
+    <color name="primary">#00685F</color>
+    <color name="primary_dark">#005049</color>
+    <color name="primary_container">#008378</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="on_primary_container">#F4FFFC</color>
+    <color name="primary_fixed">#89F5E7</color>
+    <color name="primary_fixed_dim">#6BD8CB</color>
+    <color name="on_primary_fixed">#00201D</color>
+    <color name="primary_light_pill">#CCFBF1</color>
+
+    <!-- Secondary (Slate Cyan) -->
+    <color name="secondary">#006398</color>
+    <color name="secondary_container">#5BB8FE</color>
+    <color name="on_secondary">#FFFFFF</color>
+    <color name="on_secondary_container">#00476E</color>
+    <color name="secondary_fixed">#CCE5FF</color>
+    <color name="secondary_fixed_dim">#93CCFF</color>
+    <color name="secondary_tint_bg">#E0F2FE</color>
+
+    <!-- Tertiary (Success / Health Green from Stitch) -->
+    <color name="tertiary">#006B2C</color>
+    <color name="tertiary_container">#00873A</color>
+    <color name="on_tertiary">#FFFFFF</color>
+    <color name="on_tertiary_container">#F7FFF2</color>
+    <color name="tertiary_fixed">#7FFC97</color>
+    <color name="tertiary_fixed_dim">#62DF7D</color>
+    <color name="on_tertiary_fixed">#002109</color>
+
+    <!-- Background and Surface Canvas -->
+    <color name="background">#F8FAFC</color>
+    <color name="surface">#F8FAFC</color>
+    <color name="surface_container_lowest">#FFFFFF</color>
+    <color name="surface_container_low">#EFF4FF</color>
+    <color name="surface_container">#E5EEFF</color>
+    <color name="surface_container_high">#DCE9FF</color>
+    <color name="surface_container_highest">#D3E4FE</color>
+
+    <!-- Text & Typography Hierarchy -->
+    <color name="on_surface">#0B1C30</color>
+    <color name="on_surface_variant">#3D4947</color>
+    <color name="text_muted">#64748B</color>
+
+    <!-- Borders & Outlines -->
+    <color name="outline">#6D7A77</color>
+    <color name="outline_variant">#E2E8F0</color>
+    <color name="outline_muted">#CBD5E1</color>
+
+    <!-- Semantic Status: Confirmed Taken (Health Success) -->
+    <color name="status_taken">#16A34A</color>
+    <color name="status_taken_bg">#DCFCE7</color>
+    <color name="status_taken_border">#BBF7D0</color>
+
+    <!-- Semantic Status: User Skipped -->
+    <color name="status_skipped">#DC2626</color>
+    <color name="status_skipped_bg">#FEE2E2</color>
+    <color name="status_skipped_border">#FECACA</color>
+
+    <!-- Semantic Status: Attention / Due / Late -->
+    <color name="status_due">#D97706</color>
+    <color name="status_due_bg">#FEF3C7</color>
+
+    <!-- Semantic Status: Pending / Upcoming -->
+    <color name="status_pending">#64748B</color>
+    <color name="status_pending_bg">#F1F5F9</color>
+
+    <!-- Unconfirmed Status -->
+    <color name="status_unconfirmed">#64748B</color>
+    <color name="status_unconfirmed_bg">#E2E8F0</color>
+</resources>

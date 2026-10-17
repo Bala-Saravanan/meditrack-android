@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>MediTrack - Create New Schedule</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed": "#7ffc97",
+            "secondary": "#006398",
+            "surface": "#f8f9ff",
+            "secondary-container": "#5bb8fe",
+            "on-primary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface-container-high": "#dce9ff",
+            "on-primary-container": "#f4fffc",
+            "surface-tint": "#006a61",
+            "inverse-on-surface": "#eaf1ff",
+            "surface-container-highest": "#d3e4fe",
+            "on-secondary-fixed": "#001d31",
+            "on-secondary": "#ffffff",
+            "on-background": "#0b1c30",
+            "on-tertiary-fixed-variant": "#005320",
+            "on-secondary-container": "#00476e",
+            "primary-fixed-dim": "#6bd8cb",
+            "surface-variant": "#d3e4fe",
+            "secondary-fixed-dim": "#93ccff",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#cbdbf5",
+            "surface-container-low": "#eff4ff",
+            "primary-container": "#008378",
+            "primary-fixed": "#89f5e7",
+            "outline-variant": "#bcc9c6",
+            "on-primary-fixed-variant": "#005049",
+            "error": "#ba1a1a",
+            "primary": "#00685f",
+            "on-secondary-fixed-variant": "#004b73",
+            "error-container": "#ffdad6",
+            "outline": "#6d7a77",
+            "tertiary-container": "#00873a",
+            "inverse-primary": "#6bd8cb",
+            "on-tertiary-container": "#f7fff2",
+            "tertiary": "#006b2c",
+            "on-surface": "#0b1c30",
+            "background": "#f8f9ff",
+            "on-surface-variant": "#3d4947",
+            "surface-container": "#e5eeff",
+            "secondary-fixed": "#cce5ff",
+            "on-tertiary-fixed": "#002109",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00201d",
+            "on-error": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "tertiary-fixed-dim": "#62df7d",
+            "inverse-surface": "#213145"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "margin": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem",
+            "gutter": "1rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter", "sans-serif"],
+            "headline-lg-mobile": ["Inter", "sans-serif"],
+            "label-md": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "label-lg": ["Inter", "sans-serif"],
+            "headline-md": ["Inter", "sans-serif"],
+            "headline-sm": ["Inter", "sans-serif"],
+            "headline-lg": ["Inter", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "label-sm": ["Inter", "sans-serif"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Hide spin buttons on number/time inputs for clean appearance */
+    input[type="time"]::-webkit-calendar-picker-indicator {
+      background: transparent;
+      bottom: 0;
+      color: transparent;
+      cursor: pointer;
+      height: auto;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: auto;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased min-h-full flex flex-col selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Offline Status Ribbon (Design System Specification) -->
+<div class="bg-secondary text-on-secondary text-label-sm font-label-sm py-1 px-margin flex items-center justify-between sticky top-0 z-50 shadow-sm">
+<div class="flex items-center space-x-1.5">
+<span class="material-symbols-outlined text-[16px]">cloud_done</span>
+<span>Offline Storage Ready • SQLite Active</span>
+</div>
+<span class="opacity-80">v2.4</span>
+</div>
+<!-- Top App Bar (Task-focused context: Back to Screen 4, New Schedule, Cancel) -->
+<!-- Note: Global navigation shell suppressed per Semantic Shell Mandate (Linear creation task) -->
+<header class="sticky top-[24px] z-40 bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-between px-margin h-16 shadow-[0px_1px_3px_rgba(15,23,42,0.04)]">
+<div class="flex items-center gap-2">
+<!-- Back Action returning to Screen 4 -->
+<button aria-label="Go back to Schedule list" class="w-12 h-12 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">New Schedule</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Step 1 of 2 • Regimen Setup</span>
+</div>
+</div>
+<button class="h-12 px-3 flex items-center text-primary font-label-lg text-label-lg hover:bg-surface-container rounded-lg active:scale-95 transition-transform duration-150" type="button">
+      Cancel
+    </button>
+</header>
+<!-- Main Scrollable Form Canvas -->
+<main class="flex-1 w-full max-w-xl mx-auto px-margin pt-space-md pb-36 space-y-space-lg">
+<!-- Progress & Overview Micro-Card -->
+<div class="p-space-md rounded-xl bg-surface-container-low border border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
+<span class="material-symbols-outlined text-[20px]" data-icon="calendar_today">calendar_today</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm text-on-surface">Medication Regimen</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Configure timing and dosage for daily adherence</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-primary font-label-sm text-label-sm">Draft</span>
+</div>
+<!-- SECTION A: Schedule Details -->
+<section aria-labelledby="section-a-heading" class="space-y-space-md">
+<div class="flex items-center space-x-2">
+<span class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center text-label-sm font-label-sm">A</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface" id="section-a-heading">Schedule Details</h2>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/40 shadow-[0px_1px_3px_rgba(15,23,42,0.04)] space-y-space-md">
+<!-- Schedule Name Input -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-on-surface-variant" for="schedule-name">
+            Schedule Name <span class="text-error">*</span>
+</label>
+<div class="relative">
+<input class="w-full h-14 px-4 rounded-xl bg-surface border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary font-body-lg text-body-lg text-on-surface placeholder:text-outline/70 transition-colors" id="schedule-name" name="schedule-name" placeholder="e.g., Post-Surgery Care, Blood Pressure" type="text" value="Post-Surgery Recovery Plan"/>
+<span class="absolute right-3.5 top-4 material-symbols-outlined text-outline" data-icon="edit">edit</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Give this schedule a distinct, easily identifiable name.</p>
+</div>
+<!-- Date Range Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md pt-1">
+<!-- Start Date -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-on-surface-variant" for="start-date">
+              Start Date <span class="text-error">*</span>
+</label>
+<div class="relative flex items-center h-14 px-3.5 rounded-xl bg-surface border border-outline-variant focus-within:border-primary focus-within:ring-1 focus-within:ring-primary">
+<span class="material-symbols-outlined text-primary mr-2.5 text-[20px]" data-icon="calendar_today">calendar_today</span>
+<input class="w-full bg-transparent border-0 p-0 font-body-md text-body-md text-on-surface focus:ring-0 cursor-pointer" id="start-date" name="start-date" readonly="" type="text" value="Oct 15, 2024"/>
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="event">event</span>
+</div>
+</div>
+<!-- End Date -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="block font-label-md text-label-md text-on-surface-variant" for="end-date">
+                End Date (Optional)
+              </label>
+<span class="font-label-sm text-label-sm text-outline">Ongoing</span>
+</div>
+<div class="relative flex items-center h-14 px-3.5 rounded-xl bg-surface border border-outline-variant focus-within:border-primary focus-within:ring-1 focus-within:ring-primary">
+<span class="material-symbols-outlined text-outline mr-2.5 text-[20px]" data-icon="calendar_month">calendar_month</span>
+<input class="w-full bg-transparent border-0 p-0 font-body-md text-body-md text-on-surface placeholder:text-outline/70 focus:ring-0" id="end-date" name="end-date" placeholder="Select end date (leave empty for ongoing)" type="text"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION B: Add Medicines -->
+<section aria-labelledby="section-b-heading" class="space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center text-label-sm font-label-sm">B</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface" id="section-b-heading">Add Medicines</h2>
+</div>
+<span class="text-label-sm font-label-sm text-primary font-medium">1 Selected</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/40 shadow-[0px_1px_3px_rgba(15,23,42,0.04)] space-y-3">
+<label class="block font-label-md text-label-md text-on-surface-variant" for="select-medicine-field">Select Medicine</label>
+<!-- Dropdown select component simulation -->
+<div class="relative">
+<div class="w-full min-h-[56px] px-4 py-2 rounded-xl bg-surface border-2 border-primary flex items-center justify-between cursor-pointer" id="select-medicine-field">
+<div class="flex items-center space-x-3">
+<span class="material-symbols-outlined text-primary" data-icon="medication">medication</span>
+<div>
+<span class="block font-label-lg text-label-lg text-on-surface">Atorvastatin 20mg</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Oral Tablet • Cholesterol &amp; Heart</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary transition-transform" data-icon="arrow_drop_down">arrow_drop_down</span>
+</div>
+<!-- Expanded simulated dropdown list showing items + Screen 7 CTA -->
+<div class="mt-2 rounded-xl bg-surface-container-lowest border border-outline-variant/50 shadow-md overflow-hidden">
+<div class="p-2 border-b border-surface-container space-y-1">
+<div class="flex items-center justify-between px-3 py-2 rounded-lg bg-primary-fixed/30 text-on-surface cursor-pointer">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label-md text-label-md font-bold">Atorvastatin 20mg (Selected)</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-primary" data-icon="check">check</span>
+</div>
+<div class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-surface-container-low text-on-surface cursor-pointer">
+<span class="font-body-md text-body-md">Metformin 500mg</span>
+<span class="text-label-sm font-label-sm text-outline">Oral Tablet</span>
+</div>
+<div class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-surface-container-low text-on-surface cursor-pointer">
+<span class="font-body-md text-body-md">Amoxicillin 250mg</span>
+<span class="text-label-sm font-label-sm text-outline">Capsule</span>
+</div>
+</div>
+<!-- Actionable Option at Bottom linking to Screen 7 (Add New Medicine) -->
+<button class="w-full h-12 px-4 flex items-center justify-center space-x-2 bg-primary-container/10 hover:bg-primary-container/20 text-primary font-label-lg text-label-lg active:scale-[0.99] transition-transform" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="add_circle">add_circle</span>
+<span>+ Add New Medicine (Screen 7)</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION C: Configure Medication Timing -->
+<section aria-labelledby="section-c-heading" class="space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center text-label-sm font-label-sm">C</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface" id="section-c-heading">Medication Timing</h2>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">2 doses scheduled</span>
+</div>
+<!-- Configured Medicine Card (Level 2 Active Surface) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant shadow-[0px_4px_6px_-1px_rgba(13,148,136,0.06),0px_2px_4px_-2px_rgba(15,23,42,0.05)] space-y-space-md">
+<!-- Header row with Pill Identifier visual representation -->
+<div class="flex items-start justify-between">
+<div class="flex items-center space-x-3">
+<!-- Pill visual avatar -->
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center border border-outline-variant/40">
+<span class="material-symbols-outlined text-primary text-[28px]" data-icon="pill">pill</span>
+</div>
+<div>
+<div class="flex items-center space-x-2">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Atorvastatin</h3>
+<span class="px-2 py-0.5 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">20 mg</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">White, oval debossed 'AT20'</p>
+</div>
+</div>
+<!-- Food Instruction Status Badge -->
+<span class="px-2.5 py-1 rounded-lg bg-surface-container-high text-primary font-label-md text-label-md flex items-center space-x-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="restaurant">restaurant</span>
+<span>Before Food (B/F)</span>
+</span>
+</div>
+<!-- Food instruction segmented control / radio -->
+<div class="space-y-1.5 pt-1">
+<label class="block font-label-md text-label-md text-on-surface-variant">Food Instruction</label>
+<div class="grid grid-cols-3 gap-2 p-1 bg-surface-container rounded-xl">
+<!-- Selected: Before Food -->
+<button class="h-10 rounded-lg bg-surface-container-lowest text-primary font-label-sm text-label-sm font-bold shadow-sm flex items-center justify-center space-x-1 border border-primary/20" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="check_circle">check_circle</span>
+<span>Before Food</span>
+</button>
+<button class="h-10 rounded-lg text-on-surface-variant font-label-sm text-label-sm hover:text-on-surface flex items-center justify-center" type="button">
+              With Food
+            </button>
+<button class="h-10 rounded-lg text-on-surface-variant font-label-sm text-label-sm hover:text-on-surface flex items-center justify-center" type="button">
+              No restriction
+            </button>
+</div>
+</div>
+<!-- Time Slots Grid / Dose Configuration -->
+<div class="space-y-2 pt-2">
+<div class="flex items-center justify-between">
+<label class="block font-label-md text-label-md text-on-surface-variant">Daily Schedule Slots</label>
+<span class="font-label-sm text-label-sm text-outline">Tap slot to toggle</span>
+</div>
+<div class="space-y-2.5">
+<!-- Slot 1: Morning (Enabled) -->
+<div class="p-3 rounded-xl bg-surface border border-primary/40 flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<input checked="" class="w-5 h-5 rounded border-outline text-primary focus:ring-primary" id="slot-morning" type="checkbox"/>
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="light_mode">light_mode</span>
+<label class="font-label-lg text-label-lg text-on-surface font-semibold" for="slot-morning">Morning</label>
+</div>
+</div>
+<!-- Time Picker Input (Enabled) -->
+<div class="flex items-center space-x-2">
+<div class="relative bg-surface-container-lowest border border-outline-variant px-3 py-1.5 rounded-lg flex items-center shadow-sm">
+<input class="font-headline-sm text-headline-sm text-on-surface tabular-nums bg-transparent border-0 p-0 focus:ring-0 cursor-pointer" type="time" value="08:00"/>
+<span class="font-label-sm text-label-sm text-outline ml-1">AM</span>
+</div>
+</div>
+</div>
+<!-- Slot 2: Afternoon (Disabled) -->
+<div class="p-3 rounded-xl bg-surface/50 border border-outline-variant/30 flex items-center justify-between opacity-70">
+<div class="flex items-center space-x-3">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" id="slot-afternoon" type="checkbox"/>
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-outline text-[20px]" data-icon="wb_sunny">wb_sunny</span>
+<label class="font-label-lg text-label-lg text-on-surface-variant" for="slot-afternoon">Afternoon</label>
+</div>
+</div>
+<span class="text-label-sm font-label-sm text-outline">Tap to enable</span>
+</div>
+<!-- Slot 3: Evening (Enabled) -->
+<div class="p-3 rounded-xl bg-surface border border-primary/40 flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<input checked="" class="w-5 h-5 rounded border-outline text-primary focus:ring-primary" id="slot-evening" type="checkbox"/>
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="wb_twilight">wb_twilight</span>
+<label class="font-label-lg text-label-lg text-on-surface font-semibold" for="slot-evening">Evening</label>
+</div>
+</div>
+<!-- Time Picker Input (Enabled) -->
+<div class="flex items-center space-x-2">
+<div class="relative bg-surface-container-lowest border border-outline-variant px-3 py-1.5 rounded-lg flex items-center shadow-sm">
+<input class="font-headline-sm text-headline-sm text-on-surface tabular-nums bg-transparent border-0 p-0 focus:ring-0 cursor-pointer" type="time" value="20:00"/>
+<span class="font-label-sm text-label-sm text-outline ml-1">PM</span>
+</div>
+</div>
+</div>
+<!-- Slot 4: Night (Disabled) -->
+<div class="p-3 rounded-xl bg-surface/50 border border-outline-variant/30 flex items-center justify-between opacity-70">
+<div class="flex items-center space-x-3">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" id="slot-night" type="checkbox"/>
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-outline text-[20px]" data-icon="bedtime">bedtime</span>
+<label class="font-label-lg text-label-lg text-on-surface-variant" for="slot-night">Night</label>
+</div>
+</div>
+<span class="text-label-sm font-label-sm text-outline">Tap to enable</span>
+</div>
+</div>
+</div>
+<!-- Reminder toggle switch -->
+<div class="pt-3 border-t border-surface-container flex items-center justify-between">
+<div class="flex items-center space-x-2.5">
+<span class="material-symbols-outlined text-primary" data-icon="notifications_active">notifications_active</span>
+<div>
+<span class="block font-label-md text-label-md text-on-surface">Enable Local Notification Reminders</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">Sound &amp; critical push alarm alerts</span>
+</div>
+</div>
+<!-- Styled Accessible Toggle Switch (Active ON) -->
+<button aria-checked="true" class="w-12 h-7 bg-primary rounded-full relative p-0.5 transition-colors" role="switch" type="button">
+<span class="w-6 h-6 bg-on-primary rounded-full block shadow transform translate-x-5 transition-transform"></span>
+</button>
+</div>
+</div>
+<!-- Button: + Add Another Medicine to Regimen -->
+<button class="w-full h-12 rounded-xl border-1.5 border-dashed border-primary text-primary hover:bg-primary/5 flex items-center justify-center space-x-2 font-label-lg text-label-lg active:scale-98 transition-transform" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span>
+<span>+ Add Another Medicine to Regimen</span>
+</button>
+</section>
+<!-- Offline Resilience Safe Note -->
+<div class="p-3 rounded-xl bg-surface-container-low flex items-start space-x-2.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5" data-icon="verified_user">verified_user</span>
+<p class="font-body-sm text-body-sm">
+        All dose timings are scheduled directly via Android AlarmManager for 100% offline accuracy even in airplane mode.
+      </p>
+</div>
+</main>
+<!-- Sticky Bottom Actions Bar -->
+<footer class="fixed bottom-0 left-0 w-full bg-surface-container-lowest/95 backdrop-blur-md px-margin py-3 border-t border-outline-variant/30 shadow-[0px_-2px_10px_rgba(15,23,42,0.06)] z-50">
+<div class="max-w-xl mx-auto space-y-2">
+<!-- Validation Note -->
+<div class="flex items-center justify-center space-x-1.5 text-center">
+<span class="material-symbols-outlined text-[16px] text-tertiary" data-icon="check_circle">check_circle</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant">
+          Requires schedule name and at least one configured medication dose.
+        </p>
+</div>
+<!-- Action Buttons (Hard minimum 48dp touch heights) -->
+<div class="grid grid-cols-2 gap-3">
+<!-- Cancel Button (Outlined) -->
+<button class="h-12 rounded-xl border border-outline-variant text-on-surface hover:bg-surface-container font-label-lg text-label-lg flex items-center justify-center active:scale-95 transition-transform duration-150" type="button">
+          Cancel
+        </button>
+<!-- Save Schedule Button (Primary Active Teal Button) -->
+<button class="h-12 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg flex items-center justify-center space-x-1.5 shadow-sm active:bg-primary-container active:scale-95 transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="save">save</span>
+<span>Save Schedule</span>
+</button>
+</div>
+</div>
+</footer>
+</body></html>

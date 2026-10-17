@@ -1,0 +1,397 @@
+<!DOCTYPE html><html class="h-full" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>MediTrack - Schedule Details</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Inter Google Font -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration Injection -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed": "#7ffc97",
+            "secondary": "#006398",
+            "surface": "#f8f9ff",
+            "secondary-container": "#5bb8fe",
+            "on-primary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface-container-high": "#dce9ff",
+            "on-primary-container": "#f4fffc",
+            "surface-tint": "#006a61",
+            "inverse-on-surface": "#eaf1ff",
+            "surface-container-highest": "#d3e4fe",
+            "on-secondary-fixed": "#001d31",
+            "on-secondary": "#ffffff",
+            "on-background": "#0b1c30",
+            "on-tertiary-fixed-variant": "#005320",
+            "on-secondary-container": "#00476e",
+            "primary-fixed-dim": "#6bd8cb",
+            "surface-variant": "#d3e4fe",
+            "secondary-fixed-dim": "#93ccff",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#cbdbf5",
+            "surface-container-low": "#eff4ff",
+            "primary-container": "#008378",
+            "primary-fixed": "#89f5e7",
+            "outline-variant": "#bcc9c6",
+            "on-primary-fixed-variant": "#005049",
+            "error": "#ba1a1a",
+            "primary": "#00685f",
+            "on-secondary-fixed-variant": "#004b73",
+            "error-container": "#ffdad6",
+            "outline": "#6d7a77",
+            "tertiary-container": "#00873a",
+            "inverse-primary": "#6bd8cb",
+            "on-tertiary-container": "#f7fff2",
+            "tertiary": "#006b2c",
+            "on-surface": "#0b1c30",
+            "background": "#f8f9ff",
+            "on-surface-variant": "#3d4947",
+            "surface-container": "#e5eeff",
+            "secondary-fixed": "#cce5ff",
+            "on-tertiary-fixed": "#002109",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00201d",
+            "on-error": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "tertiary-fixed-dim": "#62df7d",
+            "inverse-surface": "#213145"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "margin": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem",
+            "gutter": "1rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "label-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-lg": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #bcc9c6;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md antialiased min-h-screen flex flex-col selection:bg-primary-fixed selection:text-on-primary-fixed pb-24">
+<!-- TOP APP BAR -->
+<header class="fixed top-0 left-0 w-full z-40 flex items-center justify-between px-margin h-16 bg-surface border-b border-outline-variant shadow-none">
+<div class="flex items-center space-x-2">
+<button aria-label="Go back" class="flex items-center justify-center w-12 h-12 -ml-2 rounded-full hover:bg-surface-container-high active:scale-95 transition-transform duration-150 text-on-surface" type="button">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface tracking-tight">Schedule Details</span>
+</div>
+<!-- Right Action: Edit Schedule Outlined Button -->
+<div class="flex items-center">
+<button class="flex items-center space-x-1 px-3 py-1.5 h-9 rounded-xl border border-primary text-primary hover:bg-surface-container-low active:scale-95 transition-all text-label-md font-label-md" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+<span class="hidden sm:inline">Edit Schedule</span>
+</button>
+</div>
+</header>
+<!-- OFFLINE SYNC STATUS RIBBON -->
+<div class="mt-16 w-full bg-secondary-container/20 border-b border-secondary-container/30 px-margin py-1.5 flex items-center justify-between">
+<div class="flex items-center space-x-2 text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px] text-secondary">cloud_done</span>
+<span class="">Local database synced • Alarms active offline</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">SQLite v3</span>
+</div>
+<!-- MAIN SCROLLABLE CONTENT CANVAS -->
+<main class="flex-1 px-margin pt-space-md space-y-space-md max-w-xl mx-auto w-full">
+<!-- HERO HEADER CARD -->
+<section class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant shadow-sm space-y-space-sm relative overflow-hidden">
+<!-- Decorative subtle background badge tint -->
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-primary-fixed/20 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex items-start justify-between gap-2">
+<div class="space-y-1">
+<span class="inline-flex items-center text-label-sm font-label-sm text-primary tracking-wide uppercase font-bold">
+            Care Protocol #CV-402
+          </span>
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-on-surface">Cardiovascular Care</h1>
+</div>
+<!-- Status Badge: Active -->
+<span class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm shrink-0 border border-tertiary/20 font-semibold shadow-xs">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span>
+<span class="">Active</span>
+</span>
+</div>
+<!-- Date Range Badge -->
+<div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-surface-container text-on-surface-variant text-label-md font-label-md border border-outline-variant/60">
+<span class="material-symbols-outlined text-[16px] text-primary">calendar_month</span>
+<span class="font-medium text-on-surface">Oct 01, 2024 – Ongoing</span>
+</div>
+<!-- Regimen Description -->
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed pt-1">
+        Twice daily routine prescribed for hypertension and cardiovascular maintenance.
+      </p>
+<!-- Prescription Metadata Quick-strip -->
+<div class="grid grid-cols-2 gap-2 pt-2 border-t border-outline-variant/40">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[18px] text-outline">account_circle</span>
+<div>
+<p class="text-label-sm font-label-sm text-outline">Physician</p>
+<p class="text-label-md font-label-md text-on-surface">Dr. Ronald Vance</p>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[18px] text-outline">verified</span>
+<div>
+<p class="text-label-sm font-label-sm text-outline">Adherence Score</p>
+<p class="text-label-md font-label-md text-tertiary font-bold">96% (30 Days)</p>
+</div>
+</div>
+</div>
+</section>
+<!-- NOTIFICATION & SNOOZE ALERT BANNER -->
+<section class="bg-surface-container-low rounded-xl p-3 border border-outline-variant flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-9 h-9 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed shrink-0">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">notifications_active</span>
+</div>
+<div>
+<p class="text-label-md font-label-md text-on-surface font-semibold">Notification Status</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Alarms active (device local notifications enabled)</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[18px] text-tertiary shrink-0">check_circle</span>
+</section>
+<!-- SCHEDULE MATRIX SECTION -->
+<section class="space-y-space-sm">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Structured Medicine Schedule</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Daily timetable and meal requirements</p>
+</div>
+<span class="text-label-sm font-label-sm text-outline">3 Prescriptions</span>
+</div>
+<!-- Scannable Responsive Card Matrix / Table Wrapper -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm">
+<!-- Horizontal Scrollable Container for high-density matrix -->
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full min-w-[560px] text-left border-collapse">
+<thead>
+<tr class="bg-surface-container border-b border-outline-variant text-label-md font-label-md text-on-surface-variant">
+<th class="py-3 px-3 w-44 font-semibold" scope="col">Medicine Name</th>
+<th class="py-3 px-3 w-36 font-semibold" scope="col">Food Rel. (B/F)</th>
+<th class="py-3 px-2 text-center font-semibold" scope="col">Morning</th>
+<th class="py-3 px-2 text-center font-semibold" scope="col">Afternoon</th>
+<th class="py-3 px-2 text-center font-semibold" scope="col">Evening</th>
+<th class="py-3 px-2 text-center font-semibold" scope="col">Night</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/60 font-body-md text-body-md text-on-surface">
+<!-- ROW 1: Atorvastatin -->
+<tr class="hover:bg-surface transition-colors">
+<td class="py-3.5 px-3">
+<div class="font-semibold text-on-surface">Atorvastatin 20mg</div>
+<div class="text-body-sm font-body-sm text-outline flex items-center space-x-1">
+<span class="w-2 h-2 rounded-full bg-primary-fixed-dim inline-block"></span>
+<span class="">Lipid Management</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md text-label-sm font-label-sm bg-surface-container-high text-on-secondary-fixed font-medium">
+                    Yes (30m before)
+                  </span>
+</td>
+<!-- Morning -->
+<td class="py-3.5 px-2 text-center">
+<span class="inline-flex items-center px-2 py-1 rounded-lg bg-tertiary-fixed/40 text-on-tertiary-fixed-variant text-label-sm font-label-sm font-bold border border-tertiary-fixed-dim">
+                    ✓ 08:00 AM
+                  </span>
+</td>
+<!-- Afternoon -->
+<td class="py-3.5 px-2 text-center text-outline">
+<span class="text-body-md">—</span>
+</td>
+<!-- Evening -->
+<td class="py-3.5 px-2 text-center text-outline">
+<span class="text-body-md">—</span>
+</td>
+<!-- Night -->
+<td class="py-3.5 px-2 text-center text-outline">
+<span class="text-body-md">—</span>
+</td>
+</tr>
+<!-- ROW 2: Lisinopril -->
+<tr class="hover:bg-surface transition-colors bg-surface/30">
+<td class="py-3.5 px-3">
+<div class="font-semibold text-on-surface">Lisinopril 10mg</div>
+<div class="text-body-sm font-body-sm text-outline flex items-center space-x-1">
+<span class="w-2 h-2 rounded-full bg-primary inline-block"></span>
+<span class="">ACE Inhibitor</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md text-label-sm font-label-sm bg-surface-container text-on-surface-variant font-medium">
+                    No (with food)
+                  </span>
+</td>
+<!-- Morning -->
+<td class="py-3.5 px-2 text-center">
+<span class="inline-flex items-center px-2 py-1 rounded-lg bg-tertiary-fixed/40 text-on-tertiary-fixed-variant text-label-sm font-label-sm font-bold border border-tertiary-fixed-dim">
+                    ✓ 08:00 AM
+                  </span>
+</td>
+<!-- Afternoon -->
+<td class="py-3.5 px-2 text-center text-outline">
+<span class="text-body-md">—</span>
+</td>
+<!-- Evening -->
+<td class="py-3.5 px-2 text-center">
+<span class="inline-flex items-center px-2 py-1 rounded-lg bg-tertiary-fixed/40 text-on-tertiary-fixed-variant text-label-sm font-label-sm font-bold border border-tertiary-fixed-dim">
+                    ✓ 08:00 PM
+                  </span>
+</td>
+<!-- Night -->
+<td class="py-3.5 px-2 text-center text-outline">
+<span class="text-body-md">—</span>
+</td>
+</tr>
+<!-- ROW 3: Baby Aspirin -->
+<tr class="hover:bg-surface transition-colors">
+<td class="py-3.5 px-3">
+<div class="font-semibold text-on-surface">Baby Aspirin 81mg</div>
+<div class="text-body-sm font-body-sm text-outline flex items-center space-x-1">
+<span class="w-2 h-2 rounded-full bg-secondary inline-block"></span>
+<span class="">Antiplatelet Therapy</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md text-label-sm font-label-sm bg-surface-container text-on-surface-variant font-medium">
+                    No
+                  </span>
+</td>
+<!-- Morning -->
+<td class="py-3.5 px-2 text-center text-outline">
+<span class="text-body-md">—</span>
+</td>
+<!-- Afternoon -->
+<td class="py-3.5 px-2 text-center text-outline">
+<span class="text-body-md">—</span>
+</td>
+<!-- Evening -->
+<td class="py-3.5 px-2 text-center text-outline">
+<span class="text-body-md">—</span>
+</td>
+<!-- Night -->
+<td class="py-3.5 px-2 text-center">
+<span class="inline-flex items-center px-2 py-1 rounded-lg bg-tertiary-fixed/40 text-on-tertiary-fixed-variant text-label-sm font-label-sm font-bold border border-tertiary-fixed-dim">
+                    ✓ 10:00 PM
+                  </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Legend / Scan Guide Footer -->
+<div class="p-2.5 bg-surface-container-low border-t border-outline-variant flex items-center justify-between text-label-sm font-label-sm text-outline">
+<div class="flex items-center space-x-3">
+<span class="flex items-center space-x-1">
+<span class="w-2.5 h-2.5 rounded bg-tertiary-fixed-dim inline-block"></span>
+<span class="">Intake Scheduled</span>
+</span>
+<span class="flex items-center space-x-1">
+<span class="">—</span>
+<span class="">No Dosage</span>
+</span>
+</div>
+<span class="italic">Swipe horizontal to view times</span>
+</div>
+</div>
+</section>
+<!-- MEDICATION VERIFICATION & PILL DETAILS (Bento Inspection Strip) -->
+
+<!-- PRIMARY ACTION: EDIT THIS SCHEDULE -->
+<div class="pt-4 pb-4">
+<button class="w-full h-12 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg flex items-center justify-center space-x-2 shadow-sm active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">edit_calendar</span>
+<span class="">Edit This Schedule</span>
+</button>
+<p class="text-center text-label-sm font-label-sm text-outline pt-2">Modifications take effect across next upcoming dose cycle</p>
+</div>
+</main>
+<!-- PERSISTENT BOTTOM NAVIGATION BAR (Shared Components Token Matching) -->
+<!-- Label Texts: Schedules (Active), Dose, Reports, Caregiver -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex items-center justify-around px-margin h-20 bg-surface-container-lowest shadow-sm pb-safe">
+<!-- Item 1: Schedules (ACTIVE) -->
+<button class="flex flex-col items-center justify-center bg-primary-fixed text-on-primary-fixed rounded-full px-5 py-1 active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: &quot;FILL&quot; 1;">calendar_today</span>
+<span class="text-label-sm font-label-sm mt-0.5 font-bold">Schedules</span>
+</button>
+<!-- Item 2: Dose -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[24px]">medication</span>
+<span class="text-label-sm font-label-sm mt-0.5">Dose</span>
+</button>
+<!-- Item 3: Reports -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[24px]">bar_chart</span>
+<span class="text-label-sm font-label-sm mt-0.5">Reports</span>
+</button>
+<!-- Item 4: Caregiver -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[24px]">supervised_user_circle</span>
+<span class="text-label-sm font-label-sm mt-0.5">Caregiver</span>
+</button>
+</nav>
+
+
+</body></html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediTrack - Add Caregiver Details</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed": "#7ffc97",
+            "secondary": "#006398",
+            "surface": "#f8f9ff",
+            "secondary-container": "#5bb8fe",
+            "on-primary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface-container-high": "#dce9ff",
+            "on-primary-container": "#f4fffc",
+            "surface-tint": "#006a61",
+            "inverse-on-surface": "#eaf1ff",
+            "surface-container-highest": "#d3e4fe",
+            "on-secondary-fixed": "#001d31",
+            "on-secondary": "#ffffff",
+            "on-background": "#0b1c30",
+            "on-tertiary-fixed-variant": "#005320",
+            "on-secondary-container": "#00476e",
+            "primary-fixed-dim": "#6bd8cb",
+            "surface-variant": "#d3e4fe",
+            "secondary-fixed-dim": "#93ccff",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#cbdbf5",
+            "surface-container-low": "#eff4ff",
+            "primary-container": "#008378",
+            "primary-fixed": "#89f5e7",
+            "outline-variant": "#bcc9c6",
+            "on-primary-fixed-variant": "#005049",
+            "error": "#ba1a1a",
+            "primary": "#00685f",
+            "on-secondary-fixed-variant": "#004b73",
+            "error-container": "#ffdad6",
+            "outline": "#6d7a77",
+            "tertiary-container": "#00873a",
+            "inverse-primary": "#6bd8cb",
+            "on-tertiary-container": "#f7fff2",
+            "tertiary": "#006b2c",
+            "on-surface": "#0b1c30",
+            "background": "#f8f9ff",
+            "on-surface-variant": "#3d4947",
+            "surface-container": "#e5eeff",
+            "secondary-fixed": "#cce5ff",
+            "on-tertiary-fixed": "#002109",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00201d",
+            "on-error": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "tertiary-fixed-dim": "#62df7d",
+            "inverse-surface": "#213145"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "margin": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem",
+            "gutter": "1rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "label-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-lg": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    input:focus, select:focus {
+      outline: none;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col justify-between selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TOP APP BAR -->
+<header class="fixed top-0 left-0 w-full z-40 flex items-center justify-between px-margin h-16 bg-surface shadow-none border-b border-outline-variant">
+<div class="flex items-center gap-space-sm">
+<button aria-label="Go back" class="w-12 h-12 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="text-headline-sm font-headline-sm font-bold text-on-surface tracking-tight">Add Caregiver Details</h1>
+</div>
+<button class="text-label-lg font-label-lg text-primary hover:bg-surface-container-high px-space-sm py-space-xs rounded-lg active:scale-95 transition-transform duration-150" type="button">
+      Cancel
+    </button>
+</header>
+<!-- OFFLINE SYNC STATUS RIBBON -->
+<aside class="mt-16 bg-secondary text-on-secondary px-margin py-1.5 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="offline_pin">offline_pin</span>
+<span class="text-label-sm font-label-sm">Offline-First Engine: SQLite Encrypted</span>
+</div>
+<span class="text-label-sm font-label-sm opacity-90">Local Node #01</span>
+</aside>
+<!-- MAIN SCROLLABLE CONTENT CANVAS -->
+<main class="flex-1 w-full max-w-md mx-auto px-margin pt-space-md pb-28">
+<!-- FORM CONTAINER CARD (Modern Bento/Tactile Level 1 Card) -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-md shadow-sm">
+<!-- Introduction Banner within Card -->
+<div class="bg-surface-container-low rounded-lg p-space-md mb-space-md border border-outline-variant/50 flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[20px]" data-icon="supervised_user_circle">supervised_user_circle</span>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">
+          Designate a trusted family member, nurse, or caregiver to easily share PDF medication reports.
+        </p>
+</div>
+<form class="space-y-space-md" id="caregiver-form" onsubmit="event.preventDefault();">
+<!-- CAREGIVER FULL NAME INPUT -->
+<div>
+<label class="block text-label-md font-label-md text-on-surface-variant mb-1.5" for="caregiver-name">
+            Caregiver Full Name <span class="text-error font-bold">*</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none" data-icon="person">person</span>
+<input class="w-full h-14 pl-11 pr-4 bg-surface-container-lowest text-on-surface text-body-lg font-body-lg rounded-xl border border-outline-variant focus:border-2 focus:border-primary transition-all duration-150" id="caregiver-name" name="fullName" placeholder="e.g., Sarah Davis, Dr. Marcus Vance" required="" type="text" value="Sarah Davis"/>
+</div>
+<span class="block mt-1 text-label-sm font-label-sm text-outline">Stored locally with AES-256</span>
+</div>
+<!-- RELATIONSHIP SELECTOR CHIPS -->
+<div>
+<label class="block text-label-md font-label-md text-on-surface-variant mb-2">
+            Relationship to User <span class="text-error font-bold">*</span>
+</label>
+<div aria-label="Caregiver relationship" class="flex flex-wrap gap-2" role="radiogroup">
+<!-- Chip: Spouse -->
+<button aria-checked="false" class="h-10 px-3.5 py-1.5 rounded-lg border border-outline-variant text-label-md font-label-md text-on-surface-variant bg-surface hover:bg-surface-container-high transition-colors active:scale-95" role="radio" type="button">
+              Spouse
+            </button>
+<!-- Chip: Daughter/Son (Selected) -->
+<button aria-checked="true" class="h-10 px-3.5 py-1.5 rounded-lg border-2 border-primary text-label-md font-label-md text-on-primary-container bg-primary-container flex items-center gap-1.5 shadow-sm active:scale-95" role="radio" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="check" style="font-variation-settings: 'FILL' 1;">check</span>
+              Daughter
+            </button>
+<!-- Chip: Parent -->
+<button aria-checked="false" class="h-10 px-3.5 py-1.5 rounded-lg border border-outline-variant text-label-md font-label-md text-on-surface-variant bg-surface hover:bg-surface-container-high transition-colors active:scale-95" role="radio" type="button">
+              Parent
+            </button>
+<!-- Chip: Professional Caregiver -->
+<button aria-checked="false" class="h-10 px-3.5 py-1.5 rounded-lg border border-outline-variant text-label-md font-label-md text-on-surface-variant bg-surface hover:bg-surface-container-high transition-colors active:scale-95" role="radio" type="button">
+              Professional Caregiver
+            </button>
+<!-- Chip: Other -->
+<button aria-checked="false" class="h-10 px-3.5 py-1.5 rounded-lg border border-outline-variant text-label-md font-label-md text-on-surface-variant bg-surface hover:bg-surface-container-high transition-colors active:scale-95" role="radio" type="button">
+              Other
+            </button>
+</div>
+</div>
+<!-- PHONE NUMBER INPUT -->
+<div>
+<label class="block text-label-md font-label-md text-on-surface-variant mb-1.5" for="caregiver-phone">
+            Phone Number <span class="text-error font-bold">*</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none" data-icon="call">call</span>
+<input class="w-full h-14 pl-11 pr-4 bg-surface-container-lowest text-on-surface text-body-lg font-body-lg rounded-xl border border-outline-variant focus:border-2 focus:border-primary transition-all duration-150" id="caregiver-phone" name="phone" placeholder="(555) 019-2834" required="" type="tel" value="(555) 019-2834"/>
+</div>
+<p class="mt-1 text-label-sm font-label-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="info">info</span>
+            Used for direct phone dialer shortcut.
+          </p>
+</div>
+<!-- EMAIL ADDRESS INPUT -->
+<div>
+<label class="block text-label-md font-label-md text-on-surface-variant mb-1.5" for="caregiver-email">
+            Email Address (Optional)
+          </label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none" data-icon="mail">mail</span>
+<input class="w-full h-14 pl-11 pr-4 bg-surface-container-lowest text-on-surface text-body-lg font-body-lg rounded-xl border border-outline-variant focus:border-2 focus:border-primary transition-all duration-150" id="caregiver-email" name="email" placeholder="sarah.davis@example.com" type="email"/>
+</div>
+<p class="mt-1 text-label-sm font-label-sm text-outline">Target for exporting monthly PDF compliance reports.</p>
+</div>
+<!-- PRIVACY & LOCAL-FIRST CALLOUT -->
+<div class="mt-space-lg bg-surface-container-low border border-outline-variant rounded-xl p-space-md">
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container/40 text-on-secondary-container flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[20px]" data-icon="lock" style="font-variation-settings: 'FILL' 1;">lock</span>
+</div>
+<div>
+<h2 class="text-label-lg font-label-lg text-on-surface font-bold">Zero Cloud Storage</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1 leading-normal">
+                Caregiver contact information is stored exclusively in your local device SQLite database. MediTrack never sends automated messages or shares data without your explicit permission.
+              </p>
+</div>
+</div>
+</div>
+<!-- ACTIONS ROW -->
+<div class="pt-space-md space-y-3">
+<!-- Primary Save Button: 52dp height (~3.25rem / h-13) -->
+<button class="w-full h-[52px] bg-primary text-on-primary text-label-lg font-label-lg font-bold rounded-xl flex items-center justify-center gap-2 shadow-sm active:bg-primary-container active:scale-[0.99] transition-all duration-150" type="submit">
+<span class="material-symbols-outlined text-[20px]" data-icon="save">save</span>
+            Save Caregiver Details
+          </button>
+<!-- Outlined Cancel Button -->
+<button class="w-full h-12 bg-transparent border-[1.5px] border-primary text-primary text-label-lg font-label-lg font-semibold rounded-xl flex items-center justify-center active:bg-surface-container hover:bg-surface-container-low transition-colors duration-150" type="button">
+            Cancel
+          </button>
+</div>
+</form>
+</section>
+</main>
+<!-- BOTTOM NAVIGATION BAR (Mandatory Shared Component: Caregiver active) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex items-center justify-around px-margin h-20 bg-surface-container-lowest border-t border-outline-variant shadow-sm">
+<!-- Item 1: Schedules (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" href="#schedules">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="text-label-sm font-label-sm mt-0.5">Schedules</span>
+</a>
+<!-- Item 2: Dose (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" href="#dose">
+<span class="material-symbols-outlined" data-icon="medication">medication</span>
+<span class="text-label-sm font-label-sm mt-0.5">Dose</span>
+</a>
+<!-- Item 3: Reports (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" href="#reports">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+<span class="text-label-sm font-label-sm mt-0.5">Reports</span>
+</a>
+<!-- Item 4: Caregiver (Active) -->
+<a aria-current="page" class="flex flex-col items-center justify-center bg-primary-fixed text-on-primary-fixed rounded-full px-5 py-1 hover:bg-surface-container-high active:scale-95 transition-transform duration-150" href="#caregiver">
+<span class="material-symbols-outlined" data-icon="supervised_user_circle" style="font-variation-settings: 'FILL' 1;">supervised_user_circle</span>
+<span class="text-label-sm font-label-sm font-bold mt-0.5">Caregiver</span>
+</a>
+</nav>
+<script>
+    // Micro-interaction for relationship chip radio state
+    document.querySelectorAll('[role="radio"]').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('[role="radio"]').forEach(btn => {
+          btn.setAttribute('aria-checked', 'false');
+          btn.className = 'h-10 px-3.5 py-1.5 rounded-lg border border-outline-variant text-label-md font-label-md text-on-surface-variant bg-surface hover:bg-surface-container-high transition-colors active:scale-95 flex items-center';
+          const icon = btn.querySelector('.material-symbols-outlined');
+          if (icon) icon.remove();
+        });
+
+        button.setAttribute('aria-checked', 'true');
+        button.className = 'h-10 px-3.5 py-1.5 rounded-lg border-2 border-primary text-label-md font-label-md text-on-primary-container bg-primary-container flex items-center gap-1.5 shadow-sm active:scale-95';
+        
+        const checkSpan = document.createElement('span');
+        checkSpan.className = 'material-symbols-outlined text-[16px]';
+        checkSpan.setAttribute('data-icon', 'check');
+        checkSpan.setAttribute('style', "font-variation-settings: 'FILL' 1;");
+        checkSpan.textContent = 'check';
+        button.prepend(checkSpan);
+      });
+    });
+  </script>
+</body></html>

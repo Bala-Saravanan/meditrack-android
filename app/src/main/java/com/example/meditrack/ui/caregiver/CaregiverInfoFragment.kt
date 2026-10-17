@@ -1,0 +1,29 @@
+package com.example.meditrack.ui.caregiver
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import com.example.meditrack.R
+
+class CaregiverInfoFragment : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_placeholder, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.findViewById<TextView>(R.id.tv_placeholder_title).text = getString(R.string.title_caregiver)
+        view.findViewById<ImageView>(R.id.iv_placeholder_icon).setImageResource(R.drawable.ic_caregiver)
+        view.findViewById<TextView>(R.id.tv_placeholder_heading).text = "Caregiver Information"
+        view.findViewById<TextView>(R.id.tv_placeholder_desc).text = "Emergency contacts and direct dialer integration."
+    }
+}

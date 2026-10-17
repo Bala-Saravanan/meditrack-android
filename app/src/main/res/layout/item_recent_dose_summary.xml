@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ClinicalCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Top Row: Schedule Name and Details Chevron -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_summary_schedule_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-bold"
+                    android:textColor="@color/on_surface"
+                    android:textSize="16sp"
+                    tools:text="Cardiovascular Care" />
+
+                <TextView
+                    android:id="@+id/tv_summary_schedule_sub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="12sp"
+                    tools:text="Past 4 Days • 8 doses total" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btn_summary_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-bold"
+                    android:text="Details"
+                    android:textColor="@color/primary"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_chevron_right"
+                    app:tint="@color/primary" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Adherence Flow Label & Percentage -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/four_day_flow"
+                android:textColor="@color/on_surface_variant"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_adherence_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-bold"
+                android:textColor="@color/status_taken"
+                android:textSize="13sp"
+                tools:text="75% Adherent" />
+        </LinearLayout>
+
+        <!-- Segmented Adherence Progress Bar -->
+        <LinearLayout
+            android:id="@+id/layout_segmented_bar"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/ic_launcher_background"
+            android:backgroundTint="@color/surface_container"
+            android:orientation="horizontal"
+            android:padding="1dp">
+
+            <!-- Green Segment: Taken -->
+            <View
+                android:id="@+id/seg_taken"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="75"
+                android:background="@color/status_taken" />
+
+            <!-- Red Segment: Skipped -->
+            <View
+                android:id="@+id/seg_skipped"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="12.5"
+                android:background="@color/status_skipped" />
+
+            <!-- Outline Segment: Unconfirmed -->
+            <View
+                android:id="@+id/seg_unconfirmed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="12.5"
+                android:background="@color/outline" />
+        </LinearLayout>
+
+        <!-- 3-Column Counts Legend -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/ic_launcher_background"
+            android:backgroundTint="@color/surface_container_low"
+            android:orientation="horizontal"
+            android:paddingVertical="10dp">
+
+            <!-- Taken Column -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_count_taken"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-bold"
+                    android:textColor="@color/status_taken"
+                    android:textSize="18sp"
+                    tools:text="6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status_taken"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/outline_variant" />
+
+            <!-- Skipped Column -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_count_skipped"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-bold"
+                    android:textColor="@color/status_skipped"
+                    android:textSize="18sp"
+                    tools:text="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status_skipped"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/outline_variant" />
+
+            <!-- Unconfirmed Column -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_count_unconfirmed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-bold"
+                    android:textColor="@color/outline"
+                    android:textSize="18sp"
+                    tools:text="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status_unconfirmed"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

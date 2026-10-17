@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">MediTrack</string>
+    <string name="title_schedules">Schedules</string>
+    <string name="title_dose">Dose</string>
+    <string name="title_reports">Reports</string>
+    <string name="title_caregiver">Caregiver</string>
+    <string name="tagline">Clinical Adherence Companion</string>
+    <string name="welcome_heading">Take control of your medication routine.</string>
+    <string name="welcome_subheading">Manage your medication schedules, track daily doses offline, and review comprehensive compliance history with confidence.</string>
+    <string name="btn_get_started">Get Started</string>
+    <string name="btn_load_demo">Load Sample Demo Data</string>
+    <string name="btn_clear_data">Reset / Clear All Data</string>
+    <string name="returning_user">Returning user?</string>
+    <string name="restore_backup">Restore from Backup</string>
+    <string name="sample_demo_notice">Sample demonstration app • Local device storage</string>
+    <string name="feature_offline_title">100% Offline-First</string>
+    <string name="feature_offline_desc">Zero cloud dependency required. Dose reminders execute locally even when traveling or without cellular connectivity.</string>
+    <string name="feature_alerts_title">Smart Alerts</string>
+    <string name="feature_alerts_desc">Gentle, flexible recurring alarms calibrated for motor ease.</string>
+    <string name="feature_vault_title">Private Vault</string>
+    <string name="feature_vault_desc">Stored on device. No tracking, ads, or profile harvesting.</string>
+    <string name="feature_reports_title">Reliable Adherence Logs</string>
+    <string name="feature_reports_desc">Exportable PDF logs for doctor checkups</string>
+    <string name="offline_ready">Offline-First Engine Ready</string>
+
+    <!-- Registration -->
+    <string name="title_profile_setup">Profile Setup</string>
+    <string name="local_mode">Local Mode</string>
+    <string name="step_2_of_2">STEP 2 OF 2</string>
+    <string name="badge_100_offline">100% OFFLINE</string>
+    <string name="reg_heading">Before Continuing,\nPlease tell us your name</string>
+    <string name="reg_subheading">MediTrack works completely offline. Your name is saved only to your local device to personalize your reminders.</string>
+    <string name="full_name_label">Full name</string>
+    <string name="full_name_hint">Enter your full name</string>
+    <string name="full_name_helper">Full name is required to personalize your schedules and caregiver reports.</string>
+    <string name="zero_data_collection">Zero Data Collection</string>
+    <string name="zero_data_collection_desc">No account, cloud servers, or passwords needed.</string>
+    <string name="btn_continue_to_dashboard">Continue to Dashboard</string>
+    <string name="local_db_guarantee">Stored locally in device SQLite database</string>
+    <string name="error_name_required">Please enter your full name</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_overview">DASHBOARD OVERVIEW</string>
+    <string name="offline_active">Offline Active</string>
+    <string name="upcoming_reminders">Upcoming Reminders</string>
+    <string name="offline_verified_log">User-reported status • Offline verified log</string>
+    <string name="recent_dose_summary">Recent Dose Summary (Past 4 Days)</string>
+    <string name="grouped_by_schedule">Grouped by individual medication schedule</string>
+    <string name="four_day_flow">4-Day Adherence Flow</string>
+    <string name="perfect_record">Perfect Record</string>
+    <string name="adherent_suffix">% Adherent</string>
+    <string name="btn_taken">Taken</string>
+    <string name="btn_skipped">Skipped</string>
+    <string name="status_pending">Pending</string>
+    <string name="status_taken">Taken</string>
+    <string name="status_skipped">Skipped</string>
+    <string name="status_unconfirmed">Unconfirmed</string>
+    <string name="status_upcoming">Upcoming</string>
+    <string name="no_upcoming_reminders">All caught up! No pending doses scheduled for today.</string>
+    <string name="no_schedules_summary">No medication schedules recorded yet. Tap Schedules below to add your first routine.</string>
+    <string name="clear_demo_data_confirm">Clear all demo data and reset MediTrack to an empty state?</string>
+    <string name="clear_data_action">Reset Database</string>
+    <string name="cancel">Cancel</string>
+</resources>

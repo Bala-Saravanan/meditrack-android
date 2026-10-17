@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>MediTrack - Add New Medicine</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed": "#7ffc97",
+            "secondary": "#006398",
+            "surface": "#f8f9ff",
+            "secondary-container": "#5bb8fe",
+            "on-primary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface-container-high": "#dce9ff",
+            "on-primary-container": "#f4fffc",
+            "surface-tint": "#006a61",
+            "inverse-on-surface": "#eaf1ff",
+            "surface-container-highest": "#d3e4fe",
+            "on-secondary-fixed": "#001d31",
+            "on-secondary": "#ffffff",
+            "on-background": "#0b1c30",
+            "on-tertiary-fixed-variant": "#005320",
+            "on-secondary-container": "#00476e",
+            "primary-fixed-dim": "#6bd8cb",
+            "surface-variant": "#d3e4fe",
+            "secondary-fixed-dim": "#93ccff",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#cbdbf5",
+            "surface-container-low": "#eff4ff",
+            "primary-container": "#008378",
+            "primary-fixed": "#89f5e7",
+            "outline-variant": "#bcc9c6",
+            "on-primary-fixed-variant": "#005049",
+            "error": "#ba1a1a",
+            "primary": "#00685f",
+            "on-secondary-fixed-variant": "#004b73",
+            "error-container": "#ffdad6",
+            "outline": "#6d7a77",
+            "tertiary-container": "#00873a",
+            "inverse-primary": "#6bd8cb",
+            "on-tertiary-container": "#f7fff2",
+            "tertiary": "#006b2c",
+            "on-surface": "#0b1c30",
+            "background": "#f8f9ff",
+            "on-surface-variant": "#3d4947",
+            "surface-container": "#e5eeff",
+            "secondary-fixed": "#cce5ff",
+            "on-tertiary-fixed": "#002109",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00201d",
+            "on-error": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "tertiary-fixed-dim": "#62df7d",
+            "inverse-surface": "#213145"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "margin": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem",
+            "gutter": "1rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "label-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-lg": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface antialiased h-full flex justify-center selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Mobile Screen Container (390-440px handheld frame emulation) -->
+<div class="w-full max-w-md bg-background min-h-screen flex flex-col justify-between relative shadow-sm">
+<!-- Top App Bar (Task-Focused: Modal / Sub-page) -->
+<!-- Note: BottomNavBar is intentionally suppressed per Semantic Shell Mandate for focused task sub-pages -->
+<header class="sticky top-0 z-40 bg-surface h-16 px-margin flex items-center justify-between border-b border-outline-variant shadow-none">
+<div class="flex items-center space-x-3">
+<button aria-label="Back to Schedule Configuration" class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-surface-container-high active:scale-95 transition-transform duration-150 text-on-surface" id="btn-back" onclick="window.history.back()">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-bold text-on-surface tracking-tight">Add New Medicine</h1>
+</div>
+<button aria-label="Cancel and Close Modal" class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-surface-container-high active:scale-95 transition-transform duration-150 text-on-surface-variant" id="btn-close" onclick="window.history.back()">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+</header>
+<!-- Offline-First Sync / Local State Ribbon -->
+<div class="bg-surface-container-low px-margin py-2 border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">cloud_done</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Local SQLite Storage • Zero network required</span>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-semibold">Offline</span>
+</div>
+<!-- Main Content Canvas (Scrollable Form) -->
+<main class="flex-1 px-margin pt-space-lg pb-space-xl overflow-y-auto">
+<form class="space-y-space-lg" id="medicine-form" onsubmit="event.preventDefault(); handleSaveMedicine();">
+<!-- Primary Form Card (Level 1 Surface with tactile borders) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant shadow-sm space-y-space-md">
+<!-- Medicine Name Input Group -->
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-lg text-label-lg text-on-surface flex items-center gap-1" for="medicine-name">
+                Medicine Name <span class="text-error font-bold">*</span>
+</label>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Required</span>
+</div>
+<div class="relative flex items-center">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">medication</span>
+</div>
+<input autocomplete="off" class="w-full h-14 pl-11 pr-12 rounded-xl bg-surface-container-lowest border border-outline focus:border-2 focus:border-primary text-on-surface font-body-lg text-body-lg placeholder:text-outline outline-none transition-all duration-150" id="medicine-name" name="medicineName" oninput="toggleClearButton(this.value)" placeholder="e.g., Metformin, Lisinopril, Amoxicillin" required="" type="text"/>
+<!-- Clear Input Button (48x48 touch frame) -->
+<button aria-label="Clear medicine name" class="hidden absolute right-1 inset-y-1 w-12 h-12 flex items-center justify-center text-outline hover:text-on-surface active:scale-90 transition-transform duration-100" id="btn-clear-name" onclick="clearMedicineInput()" type="button">
+<span class="material-symbols-outlined text-[20px]">cancel</span>
+</button>
+</div>
+</div>
+<!-- Prescribed Instructions or Notes (Optional) -->
+<div class="space-y-space-xs pt-1">
+<div class="flex items-center justify-between">
+<label class="font-label-lg text-label-lg text-on-surface" for="instructions-notes">
+                Prescribed Instructions or Notes
+              </label>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Optional</span>
+</div>
+<div class="relative">
+<textarea class="w-full p-3.5 rounded-xl bg-surface-container-lowest border border-outline focus:border-2 focus:border-primary text-on-surface font-body-md text-body-md placeholder:text-outline outline-none transition-all duration-150 resize-none" id="instructions-notes" name="prescribedNotes" placeholder="e.g., Take with full glass of water. Avoid grapefruit." rows="4"></textarea>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Copy specific directions from your official pharmacist prescription label.
+            </p>
+</div>
+</div>
+<!-- Pill Identifier Visual Cue (Level 1 Surface - Tactile-Material Pillbox Aid) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant shadow-sm flex items-start space-x-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[24px]">pill</span>
+</div>
+<div class="space-y-0.5">
+<span class="font-label-md text-label-md text-on-surface block">Safe Storage &amp; Physical Check</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Confirm your pill container imprint matches before each dose. No automatic dosage rules are generated.
+            </p>
+</div>
+</div>
+<!-- Helper Callout Banner (Reassuring, Clear, Clinically Safe) -->
+<div class="bg-surface-container-low rounded-xl p-space-md border border-outline-variant flex items-start space-x-3">
+<span class="material-symbols-outlined text-secondary text-[24px] shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">
+            verified_user
+          </span>
+<div class="space-y-1">
+<h4 class="font-label-lg text-label-lg font-bold text-on-surface">Physician Verification Notice</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              Enter details exactly as instructed on your physician's prescription bottle. <strong class="text-on-surface">MediTrack does not calculate or suggest dosages.</strong>
+</p>
+</div>
+</div>
+</form>
+</main>
+<!-- Bottom Actions Toolbar (Docked Mobile Action Tray) -->
+<footer class="bg-surface-container-lowest px-margin pt-space-sm pb-space-lg border-t border-outline-variant shadow-sm space-y-2.5">
+<!-- Primary Save Button: Minimum 48dp (h-[50px]), 16dp rounded radius -->
+<button class="w-full h-[50px] bg-primary text-on-primary font-label-lg text-label-lg rounded-xl flex items-center justify-center gap-2 shadow-sm active:bg-primary-container active:scale-[0.99] transition-all duration-150" id="btn-save-medicine" onclick="handleSaveMedicine()" type="button">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check</span>
+<span>Save Medicine</span>
+</button>
+<!-- Secondary Cancel Button: 48dp touch height -->
+<button class="w-full h-12 bg-transparent text-primary hover:bg-surface-container-high font-label-lg text-label-lg rounded-xl flex items-center justify-center active:scale-[0.99] transition-all duration-150" id="btn-cancel" onclick="window.history.back()" type="button">
+<span>Cancel</span>
+</button>
+</footer>
+<!-- Interactive Feedback Toast (Modal Confirmation Notification) -->
+<div class="fixed bottom-24 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-sm bg-inverse-surface text-inverse-on-surface px-4 py-3 rounded-xl shadow-lg flex items-center space-x-3 opacity-0 pointer-events-none transition-all duration-200 transform translate-y-2 z-50" id="feedback-toast">
+<span class="material-symbols-outlined text-primary-fixed text-[22px]">check_circle</span>
+<div class="flex-1">
+<p class="font-label-md text-label-md font-bold text-inverse-on-surface" id="toast-message">Medicine Saved</p>
+<p class="font-body-sm text-body-sm text-surface-dim">Returning to schedule builder...</p>
+</div>
+</div>
+</div>
+<script>
+    function toggleClearButton(val) {
+      const clearBtn = document.getElementById('btn-clear-name');
+      if (val && val.trim().length > 0) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+    }
+
+    function clearMedicineInput() {
+      const input = document.getElementById('medicine-name');
+      input.value = '';
+      input.focus();
+      toggleClearButton('');
+    }
+
+    function handleSaveMedicine() {
+      const medicineInput = document.getElementById('medicine-name');
+      const medicineName = medicineInput.value.trim();
+
+      if (!medicineName) {
+        medicineInput.focus();
+        medicineInput.classList.add('ring-2', 'ring-error');
+        setTimeout(() => {
+          medicineInput.classList.remove('ring-2', 'ring-error');
+        }, 1500);
+        return;
+      }
+
+      // Simulated local persistence into offline store
+      const notes = document.getElementById('instructions-notes').value.trim();
+      const medicineRecord = {
+        name: medicineName,
+        instructions: notes,
+        createdAt: new Date().toISOString(),
+        id: 'med_' + Date.now()
+      };
+
+      try {
+        localStorage.setItem('meditrack_recent_medicine', JSON.stringify(medicineRecord));
+      } catch (e) {
+        // Safe fallback for restricted sandbox environments
+      }
+
+      // Trigger accessible confirmation toast
+      const toast = document.getElementById('feedback-toast');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.textContent = `${medicineName} saved successfully`;
+      toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      // Navigate back to Screen 6 with medicine auto-selected context
+      setTimeout(() => {
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          // Fallback UI indicator if back stack is empty
+          toastMsg.textContent = "Saved to Screen 6";
+        }
+      }, 1200);
+    }
+  </script>
+</body></html>

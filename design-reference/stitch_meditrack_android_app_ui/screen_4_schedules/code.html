@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediTrack - Medication Schedules</title>
+<!-- Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed": "#7ffc97",
+            "secondary": "#006398",
+            "surface": "#f8f9ff",
+            "secondary-container": "#5bb8fe",
+            "on-primary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface-container-high": "#dce9ff",
+            "on-primary-container": "#f4fffc",
+            "surface-tint": "#006a61",
+            "inverse-on-surface": "#eaf1ff",
+            "surface-container-highest": "#d3e4fe",
+            "on-secondary-fixed": "#001d31",
+            "on-secondary": "#ffffff",
+            "on-background": "#0b1c30",
+            "on-tertiary-fixed-variant": "#005320",
+            "on-secondary-container": "#00476e",
+            "primary-fixed-dim": "#6bd8cb",
+            "surface-variant": "#d3e4fe",
+            "secondary-fixed-dim": "#93ccff",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#cbdbf5",
+            "surface-container-low": "#eff4ff",
+            "primary-container": "#008378",
+            "primary-fixed": "#89f5e7",
+            "outline-variant": "#bcc9c6",
+            "on-primary-fixed-variant": "#005049",
+            "error": "#ba1a1a",
+            "primary": "#00685f",
+            "on-secondary-fixed-variant": "#004b73",
+            "error-container": "#ffdad6",
+            "outline": "#6d7a77",
+            "tertiary-container": "#00873a",
+            "inverse-primary": "#6bd8cb",
+            "on-tertiary-container": "#f7fff2",
+            "tertiary": "#006b2c",
+            "on-surface": "#0b1c30",
+            "background": "#f8f9ff",
+            "on-surface-variant": "#3d4947",
+            "surface-container": "#e5eeff",
+            "secondary-fixed": "#cce5ff",
+            "on-tertiary-fixed": "#002109",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00201d",
+            "on-error": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "tertiary-fixed-dim": "#62df7d",
+            "inverse-surface": "#213145"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "margin": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem",
+            "gutter": "1rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "label-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-lg": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+    /* Touch target guarantee */
+    .touch-target {
+      min-width: 48px;
+      min-height: 48px;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed min-h-screen flex flex-col justify-between pb-24">
+<!-- Top App Bar (Docked full-width, compliant with Shared Components TopAppBar) -->
+<header class="fixed top-0 left-0 w-full z-40 flex items-center justify-between px-margin h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant shadow-none">
+<div class="flex items-center gap-2">
+<button aria-label="Go back" class="touch-target flex items-center justify-center text-primary rounded-full hover:bg-surface-container-high active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface">Medication Schedules</span>
+</div>
+</div>
+<!-- Trailing Action Icons & Avatar -->
+<div class="flex items-center gap-1">
+<button aria-label="Search or filter" class="touch-target flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high rounded-full active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button aria-label="Dashboard shortcut" class="touch-target flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high rounded-full active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+</button>
+<div aria-label="User avatar J" class="w-9 h-9 ml-1 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-label-lg font-bold shadow-sm">
+        J
+      </div>
+</div>
+</header>
+<!-- Main Content Container with vertical spacing -->
+<main class="w-full max-w-lg mx-auto pt-20 px-margin flex flex-col gap-y-4">
+<!-- Offline Sync Banner (Design System Component) -->
+<div class="w-full flex items-center justify-between px-3 py-2 bg-secondary text-on-secondary rounded-xl text-label-sm font-label-sm shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="cloud_done">cloud_done</span>
+<span>Local SQLite DB active • All schedules synced</span>
+</div>
+<span class="opacity-80">v2.4</span>
+</div>
+<!-- Screen Header & Statistics Overview Card (Bento Style) -->
+<div class="grid grid-cols-2 gap-3">
+<div class="p-3.5 bg-surface-container-lowest rounded-xl border border-outline-variant/50 flex flex-col justify-between">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Active Regimens</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="text-headline-lg-mobile font-headline-lg-mobile text-primary font-bold">2</span>
+<span class="text-label-md font-label-md text-tertiary font-semibold flex items-center">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_circle">check_circle</span>
+            Stable
+          </span>
+</div>
+</div>
+<div class="p-3.5 bg-surface-container-lowest rounded-xl border border-outline-variant/50 flex flex-col justify-between">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Daily Adherence</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="text-headline-lg-mobile font-headline-lg-mobile text-on-surface font-bold">94%</span>
+<span class="text-label-md font-label-md text-primary font-semibold flex items-center">
+<span class="material-symbols-outlined text-[14px]" data-icon="trending_up">trending_up</span>
+            +3%
+          </span>
+</div>
+</div>
+</div>
+<!-- Action Bar: Prominent '+ Create New Schedule' Button (Leads to Screen 6) -->
+<div class="w-full">
+<button class="touch-target w-full flex items-center justify-center gap-2 bg-primary text-on-primary rounded-xl font-label-lg text-label-lg shadow-sm hover:bg-primary-container active:scale-[0.98] transition-all duration-150" type="button">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span>Create New Schedule</span>
+</button>
+</div>
+<!-- Filter Chips Rail -->
+<div class="w-full overflow-x-auto no-scrollbar py-1">
+<div aria-label="Filter schedules" class="flex items-center gap-2 whitespace-nowrap" role="tablist">
+<!-- Active Filter: All (3) -->
+<button aria-selected="true" class="touch-target px-4 py-2 rounded-xl bg-primary-fixed text-on-primary-fixed font-label-md text-label-md flex items-center gap-1.5 transition-colors" role="tab" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="layers">layers</span>
+<span>All (3)</span>
+</button>
+<!-- Active (2) -->
+<button aria-selected="false" class="touch-target px-4 py-2 rounded-xl bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container border border-outline-variant/60 font-label-md text-label-md flex items-center gap-1.5 transition-colors" role="tab" type="button">
+<span>Active (2)</span>
+</button>
+<!-- Completed (1) -->
+<button aria-selected="false" class="touch-target px-4 py-2 rounded-xl bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container border border-outline-variant/60 font-label-md text-label-md flex items-center gap-1.5 transition-colors" role="tab" type="button">
+<span>Completed (1)</span>
+</button>
+<!-- Discontinued (0) -->
+<button aria-selected="false" class="touch-target px-4 py-2 rounded-xl bg-surface-container-lowest text-outline border border-outline-variant/40 font-label-md text-label-md flex items-center gap-1.5 transition-colors opacity-70" role="tab" type="button">
+<span>Discontinued (0)</span>
+</button>
+</div>
+</div>
+<!-- Schedule Cards Section -->
+<div class="flex flex-col gap-y-3 pt-1">
+<!-- Card 1: Cardiovascular Care (Active) -->
+<article class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/70 shadow-sm hover:shadow-md transition-shadow relative flex flex-col gap-3 group active:bg-surface-container-low cursor-pointer">
+<!-- Header Row -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary-fixed/40 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined fill-icon text-[22px]" data-icon="favorite">favorite</span>
+</div>
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Cardiovascular Care</h2>
+<div class="flex items-center gap-1.5 mt-0.5 text-body-sm font-body-sm text-outline">
+<span class="material-symbols-outlined text-[14px]" data-icon="calendar_today">calendar_today</span>
+<span>Oct 01, 2024 – Ongoing</span>
+</div>
+</div>
+</div>
+<!-- Status Badge -->
+<span class="px-2.5 py-1 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed-variant text-label-sm font-label-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_circle">check_circle</span>
+            Active
+          </span>
+</div>
+<!-- Medicine Pills Capsule & Imprint Visual Indicator -->
+<div class="bg-surface-container-low rounded-lg p-2.5 flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="text-label-md font-label-md text-primary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="medication">medication</span>
+              3 Medicines (Atorvastatin, Lisinopril, Aspirin)
+            </span>
+<span class="text-label-sm font-label-sm text-outline">Twice Daily</span>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant">Twice daily routine for hypertension management.</p>
+</div>
+<!-- Footer Touch Affordance & Screen 5 Navigation -->
+<div class="flex items-center justify-between pt-1 border-t border-outline-variant/40">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-label-sm font-label-sm text-outline">Next dose due at 20:00</span>
+</div>
+<div class="flex items-center text-primary font-label-md text-label-md group-hover:translate-x-0.5 transition-transform">
+<span>View Details</span>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</article>
+<!-- Card 2: Diabetes Maintenance (Active) -->
+<article class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/70 shadow-sm hover:shadow-md transition-shadow relative flex flex-col gap-3 group active:bg-surface-container-low cursor-pointer">
+<!-- Header Row -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-secondary-fixed flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined fill-icon text-[22px]" data-icon="water_drop">water_drop</span>
+</div>
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Diabetes Maintenance</h2>
+<div class="flex items-center gap-1.5 mt-0.5 text-body-sm font-body-sm text-outline">
+<span class="material-symbols-outlined text-[14px]" data-icon="calendar_today">calendar_today</span>
+<span>Sep 15, 2024 – Nov 15, 2024</span>
+</div>
+</div>
+</div>
+<!-- Status Badge -->
+<span class="px-2.5 py-1 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed-variant text-label-sm font-label-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_circle">check_circle</span>
+            Active
+          </span>
+</div>
+<!-- Medicine Summary Box -->
+<div class="bg-surface-container-low rounded-lg p-2.5 flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="text-label-md font-label-md text-primary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="medication">medication</span>
+              2 Medicines (Metformin, Glimepiride)
+            </span>
+<span class="text-label-sm font-label-sm text-outline">With Meals</span>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant">Morning and evening doses with meals.</p>
+</div>
+<!-- Footer with Screen 5 chevron indicator -->
+<div class="flex items-center justify-between pt-1 border-t border-outline-variant/40">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-label-sm font-label-sm text-outline">Logged with Breakfast • 08:30</span>
+</div>
+<div class="flex items-center text-primary font-label-md text-label-md group-hover:translate-x-0.5 transition-transform">
+<span>View Details</span>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</article>
+<!-- Card 3: Antibiotic Course (Keflex) (Completed) -->
+<article class="bg-surface-container-lowest/80 rounded-xl p-4 border border-outline-variant/60 shadow-none relative flex flex-col gap-3 group active:bg-surface-container-low cursor-pointer">
+<!-- Header Row -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[22px]" data-icon="medical_services">medical_services</span>
+</div>
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Antibiotic Course (Keflex)</h2>
+<div class="flex items-center gap-1.5 mt-0.5 text-body-sm font-body-sm text-outline">
+<span class="material-symbols-outlined text-[14px]" data-icon="event_available">event_available</span>
+<span>Sep 20, 2024 – Sep 30, 2024</span>
+</div>
+</div>
+</div>
+<!-- Status Badge (Slate Neutral for Completed) -->
+<span class="px-2.5 py-1 rounded-lg bg-surface-container-highest text-on-surface-variant text-label-sm font-label-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="task_alt">task_alt</span>
+            Completed
+          </span>
+</div>
+<!-- Medicine Summary Box -->
+<div class="bg-surface-container-low/60 rounded-lg p-2.5 flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="text-label-md font-label-md text-on-surface font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="medication">medication</span>
+              1 Medicine (Cephalexin 500mg)
+            </span>
+<span class="text-label-sm font-label-sm text-outline">Full adherence</span>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant">10-day finished course.</p>
+</div>
+<!-- Footer with Screen 5 chevron indicator -->
+<div class="flex items-center justify-between pt-1 border-t border-outline-variant/40">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-tertiary" data-icon="verified">verified</span>
+<span class="text-label-sm font-label-sm text-outline">Treatment archived</span>
+</div>
+<div class="flex items-center text-outline font-label-md text-label-md group-hover:translate-x-0.5 transition-transform">
+<span>Summary</span>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</article>
+</div>
+</main>
+<!-- Persistent Bottom Navigation Bar (Docked full-width bottom-0 h-20, Schedules active) -->
+<nav aria-label="Main Navigation" class="fixed bottom-0 left-0 w-full z-50 flex items-center justify-around px-margin h-20 pb-safe bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant dark:border-outline shadow-sm dark:shadow-none">
+<!-- Destination 1: Schedules (ACTIVE) -->
+<button aria-current="page" class="touch-target flex flex-col items-center justify-center bg-primary-fixed dark:bg-primary text-on-primary-fixed dark:text-on-primary rounded-full px-5 py-1 active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined fill-icon text-[24px]" data-icon="calendar_today">calendar_today</span>
+<span class="text-label-sm font-label-sm font-bold tracking-tight mt-0.5">Schedules</span>
+</button>
+<!-- Destination 2: Dose -->
+<button class="touch-target flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container rounded-full active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[24px]" data-icon="medication">medication</span>
+<span class="text-label-sm font-label-sm mt-0.5">Dose</span>
+</button>
+<!-- Destination 3: Reports -->
+<button class="touch-target flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container rounded-full active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[24px]" data-icon="bar_chart">bar_chart</span>
+<span class="text-label-sm font-label-sm mt-0.5">Reports</span>
+</button>
+<!-- Destination 4: Caregiver -->
+<button class="touch-target flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container rounded-full active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-[24px]" data-icon="supervised_user_circle">supervised_user_circle</span>
+<span class="text-label-sm font-label-sm mt-0.5">Caregiver</span>
+</button>
+</nav>
+</body></html>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/schedulesFragment"
+        android:icon="@drawable/ic_calendar"
+        android:title="@string/title_schedules" />
+
+    <item
+        android:id="@+id/dashboardFragment"
+        android:icon="@drawable/ic_medication"
+        android:title="@string/title_dose" />
+
+    <item
+        android:id="@+id/reportsFragment"
+        android:icon="@drawable/ic_reports"
+        android:title="@string/title_reports" />
+
+    <item
+        android:id="@+id/caregiverInfoFragment"
+        android:icon="@drawable/ic_caregiver"
+        android:title="@string/title_caregiver" />
+</menu>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>MediTrack — Dashboard</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed": "#7ffc97",
+            "secondary": "#006398",
+            "surface": "#f8f9ff",
+            "secondary-container": "#5bb8fe",
+            "on-primary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface-container-high": "#dce9ff",
+            "on-primary-container": "#f4fffc",
+            "surface-tint": "#006a61",
+            "inverse-on-surface": "#eaf1ff",
+            "surface-container-highest": "#d3e4fe",
+            "on-secondary-fixed": "#001d31",
+            "on-secondary": "#ffffff",
+            "on-background": "#0b1c30",
+            "on-tertiary-fixed-variant": "#005320",
+            "on-secondary-container": "#00476e",
+            "primary-fixed-dim": "#6bd8cb",
+            "surface-variant": "#d3e4fe",
+            "secondary-fixed-dim": "#93ccff",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#cbdbf5",
+            "surface-container-low": "#eff4ff",
+            "primary-container": "#008378",
+            "primary-fixed": "#89f5e7",
+            "outline-variant": "#bcc9c6",
+            "on-primary-fixed-variant": "#005049",
+            "error": "#ba1a1a",
+            "primary": "#00685f",
+            "on-secondary-fixed-variant": "#004b73",
+            "error-container": "#ffdad6",
+            "outline": "#6d7a77",
+            "tertiary-container": "#00873a",
+            "inverse-primary": "#6bd8cb",
+            "on-tertiary-container": "#f7fff2",
+            "tertiary": "#006b2c",
+            "on-surface": "#0b1c30",
+            "background": "#f8f9ff",
+            "on-surface-variant": "#3d4947",
+            "surface-container": "#e5eeff",
+            "secondary-fixed": "#cce5ff",
+            "on-tertiary-fixed": "#002109",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00201d",
+            "on-error": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "tertiary-fixed-dim": "#62df7d",
+            "inverse-surface": "#213145"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "margin": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem",
+            "gutter": "1rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "label-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-lg": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 24px;
+      line-height: 1;
+    }
+    .material-symbols-fill {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+    body {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased min-h-screen flex flex-col justify-between selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Top App Bar (Shared Components Anchor execution) -->
+<header class="fixed top-0 left-0 w-full z-40 flex items-center justify-between px-margin h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-none transition-colors">
+<div class="flex items-center space-x-2">
+<button aria-label="Go back" class="p-2 -ml-2 rounded-full text-on-surface hover:bg-surface-container-high transition-transform active:scale-95 flex items-center justify-center" type="button">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="flex items-center gap-2">
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface tracking-tight">MediTrack</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-primary-fixed text-on-primary-fixed font-semibold">Offline</span>
+</div>
+</div>
+<!-- Trailing Avatar: User J -->
+<div class="flex items-center gap-2">
+<button aria-label="User avatar J for Johnathan" class="w-10 h-10 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-headline-sm font-bold shadow-sm active:scale-95 transition-transform hover:opacity-95" type="button">
+        J
+      </button>
+</div>
+</header>
+<!-- Main Scrollable Dashboard Canvas -->
+<main class="w-full max-w-md mx-auto pt-20 pb-28 px-margin flex flex-col gap-6">
+<!-- Personalized Greeting & Dashboard Anchor -->
+<section class="flex flex-col gap-1 pt-1">
+<div class="flex items-center justify-between">
+<span class="text-label-md font-label-md text-on-surface-variant font-medium tracking-wide">DASHBOARD OVERVIEW</span>
+<span class="flex items-center gap-1 text-label-sm font-label-sm text-primary font-medium">
+<span class="material-symbols-outlined text-[16px] material-symbols-fill" data-icon="cloud_done">cloud_done</span>
+          Synced
+        </span>
+</div>
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-on-background tracking-tight">
+        Good morning, Johnathan 👋
+      </h1>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+        You have 2 doses scheduled for your morning routines today.
+      </p>
+</section>
+<!-- SECTION A: Upcoming Reminders -->
+<section class="flex flex-col gap-3">
+<!-- Section Header with Date Badge -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold tracking-tight">
+            Upcoming Reminders
+          </h2>
+</div>
+<div class="inline-flex items-center px-2.5 py-1 rounded-full bg-surface-container-high border border-outline-variant text-label-sm font-label-sm text-on-surface font-medium">
+          Today, Oct 14
+        </div>
+</div>
+<!-- User-reported status notice banner -->
+<div class="flex items-center gap-2 px-3 py-2 rounded-lg bg-surface-container-low border border-outline-variant text-label-sm font-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="info">info</span>
+<span>User-reported status • Offline verified log</span>
+</div>
+<!-- Reminder Cards List -->
+<div class="flex flex-col gap-space-md">
+<!-- Card 1: Cardiovascular Care (Atorvastatin) -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-md shadow-sm active:border-primary transition-all duration-150 cursor-pointer flex flex-col gap-3 group" onclick="alert('Navigating to Screen 9: Dose detail inspector')">
+<!-- Top Row: Time & Status -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="schedule">schedule</span>
+<span class="font-headline-md text-headline-md font-semibold text-on-surface tabular-nums">08:00 AM</span>
+</div>
+<!-- Status Badge: Pending (Slate Pill) -->
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant border border-outline-variant text-label-sm font-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+              Pending
+            </span>
+</div>
+<!-- Middle Row: Medication Brand & Sub-details -->
+<div class="flex flex-col gap-1 border-t border-outline-variant/40 pt-2.5">
+<span class="text-label-sm font-label-sm text-primary font-semibold tracking-wider">Cardiovascular Care</span>
+<div class="flex items-baseline justify-between">
+<h3 class="text-headline-sm font-headline-sm text-on-surface group-hover:text-primary transition-colors">
+                Atorvastatin 20mg
+              </h3>
+<span class="text-label-sm font-label-sm text-on-surface-variant">1 Tablet</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-outline" data-icon="restaurant">restaurant</span>
+              Take with water before breakfast
+            </p>
+</div>
+<!-- Bottom Action Row (48dp height minimum compliance) -->
+<div class="grid grid-cols-2 gap-space-sm pt-2 border-t border-outline-variant/30" onclick="event.stopPropagation()">
+<!-- Skip Dose Button -->
+<button class="h-12 rounded-xl bg-error-container/40 border border-error/20 text-error hover:bg-error-container flex items-center justify-center gap-2 font-label-lg text-label-lg active:scale-95 transition-transform" onclick="alert('Cardiovascular Care marked skipped')" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+<span>Skipped</span>
+</button>
+<!-- Log / Taken Button -->
+<button class="h-12 rounded-xl bg-primary text-on-primary hover:bg-primary-container flex items-center justify-center gap-2 font-label-lg text-label-lg font-semibold shadow-sm active:scale-95 transition-transform" onclick="alert('Atorvastatin 20mg logged as Taken')" type="button">
+<span class="material-symbols-outlined text-[20px] text-on-primary" data-icon="check">check</span>
+<span>Taken</span>
+</button>
+</div>
+</article>
+<!-- Card 2: Morning Vitality (Multivitamin Complex) -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-md shadow-sm active:border-primary transition-all duration-150 cursor-pointer flex flex-col gap-3 group" onclick="alert('Navigating to Screen 9: Dose detail inspector')">
+<!-- Top Row: Time & Status -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="schedule">schedule</span>
+<span class="font-headline-md text-headline-md font-semibold text-on-surface tabular-nums">09:00 AM</span>
+</div>
+<!-- Status Badge: Upcoming -->
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-low text-on-surface-variant border border-outline-variant text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[14px]" data-icon="update">update</span>
+              Upcoming
+            </span>
+</div>
+<!-- Middle Row: Medication Brand & Sub-details -->
+<div class="flex flex-col gap-1 border-t border-outline-variant/40 pt-2.5">
+<span class="text-label-sm font-label-sm text-secondary font-semibold tracking-wider">Morning Vitality</span>
+<div class="flex items-baseline justify-between">
+<h3 class="text-headline-sm font-headline-sm text-on-surface group-hover:text-primary transition-colors">
+                Multivitamin Complex
+              </h3>
+<span class="text-label-sm font-label-sm text-on-surface-variant">1 Softgel</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-outline" data-icon="lunch_dining">lunch_dining</span>
+              Take with morning snack or meal
+            </p>
+</div>
+<!-- Bottom Action Row -->
+<div class="grid grid-cols-2 gap-space-sm pt-2 border-t border-outline-variant/30" onclick="event.stopPropagation()">
+<!-- Skip Button -->
+<button class="h-12 rounded-xl bg-error-container/40 border border-error/20 text-error hover:bg-error-container flex items-center justify-center gap-2 font-label-lg text-label-lg active:scale-95 transition-transform" onclick="alert('Multivitamin Complex marked skipped')" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+<span>Skipped</span>
+</button>
+<!-- Taken Button -->
+<button class="h-12 rounded-xl bg-primary text-on-primary hover:bg-primary-container flex items-center justify-center gap-2 font-label-lg text-label-lg font-semibold shadow-sm active:scale-95 transition-transform" onclick="alert('Multivitamin Complex logged as Taken')" type="button">
+<span class="material-symbols-outlined text-[20px] text-on-primary" data-icon="check">check</span>
+<span>Taken</span>
+</button>
+</div>
+</article>
+</div>
+</section>
+<!-- SECTION B: Recent Dose Summary -->
+<section class="flex flex-col gap-3">
+<div class="flex flex-col">
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold tracking-tight">
+          Recent Dose Summary (Past 4 Days)
+        </h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+          Grouped by individual medication schedule
+        </p>
+</div>
+<!-- Summary Schedule Cards -->
+<div class="flex flex-col gap-space-md">
+<!-- Schedule Card 1: Cardiovascular Care -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-md shadow-sm active:scale-[0.99] transition-all cursor-pointer flex flex-col gap-3" onclick="alert('Navigating to Screen 11: Adherence Analytics')">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface font-semibold">
+                Cardiovascular Care
+              </h3>
+<span class="text-body-sm font-body-sm text-on-surface-variant">Daily • 2 doses/day</span>
+</div>
+<div class="flex items-center text-primary font-label-md text-label-md font-semibold">
+<span>Details</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- Adherence Segmented Bar (4 days) -->
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm text-on-surface-variant">
+<span>4-Day Adherence Flow</span>
+<span class="font-semibold text-on-surface">75% Adherent</span>
+</div>
+<!-- Multi-segment visual bar -->
+<div class="w-full h-3 rounded-full bg-surface-container flex overflow-hidden p-0.5 gap-0.5">
+<!-- Green segments (6 taken / 8 total = 75%) -->
+<div class="h-full bg-tertiary rounded-l-full" style="width: 75%;" title="6 Taken"></div>
+<!-- Red segment (1 skipped = 12.5%) -->
+<div class="h-full bg-error" style="width: 12.5%;" title="1 Skipped"></div>
+<!-- Slate segment (1 unconfirmed = 12.5%) -->
+<div class="h-full bg-outline rounded-r-full" style="width: 12.5%;" title="1 Unconfirmed"></div>
+</div>
+</div>
+<!-- Dose Counts Legend -->
+<div class="grid grid-cols-3 gap-2 bg-surface-container-low/60 rounded-lg p-2.5 text-center border border-outline-variant/40">
+<div class="flex flex-col items-center">
+<span class="text-headline-sm font-headline-sm font-bold text-tertiary">6</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Taken</span>
+</div>
+<div class="flex flex-col items-center border-x border-outline-variant/60">
+<span class="text-headline-sm font-headline-sm font-bold text-error">1</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Skipped</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="text-headline-sm font-headline-sm font-bold text-outline">1</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Unconfirmed</span>
+</div>
+</div>
+</article>
+<!-- Schedule Card 2: Post-Surgery Recovery -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-md shadow-sm active:scale-[0.99] transition-all cursor-pointer flex flex-col gap-3" onclick="alert('Navigating to Screen 11: Adherence Analytics')">
+<div class="flex items-center justify-between">
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-headline-sm font-headline-sm text-on-surface font-semibold">
+                  Post-Surgery Recovery
+                </h3>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-bold">100%</span>
+</div>
+<span class="text-body-sm font-body-sm text-on-surface-variant">Antibiotic &amp; Anti-inflammatory</span>
+</div>
+<div class="flex items-center text-primary font-label-md text-label-md font-semibold">
+<span>Details</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- 100% Adherence Bar -->
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm text-on-surface-variant">
+<span>4-Day Adherence Flow</span>
+<span class="font-semibold text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified">verified</span>
+                Perfect Record
+              </span>
+</div>
+<div class="w-full h-3 rounded-full bg-surface-container flex overflow-hidden p-0.5">
+<div class="h-full bg-tertiary rounded-full w-full" title="8 Taken"></div>
+</div>
+</div>
+<!-- Dose Counts Legend -->
+<div class="grid grid-cols-3 gap-2 bg-surface-container-low/60 rounded-lg p-2.5 text-center border border-outline-variant/40">
+<div class="flex flex-col items-center">
+<span class="text-headline-sm font-headline-sm font-bold text-tertiary">8</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Taken</span>
+</div>
+<div class="flex flex-col items-center border-x border-outline-variant/60">
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface-variant">0</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Skipped</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface-variant">0</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Unconfirmed</span>
+</div>
+</div>
+</article>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Shared Components Anchor execution) -->
+<!-- Contextual lock: Dashboard screen matches primary dose management overview -->
+<nav aria-label="Main Navigation" class="fixed bottom-0 left-0 w-full z-50 flex items-center justify-around px-margin h-20 pb-safe bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant dark:border-outline shadow-sm dark:shadow-none">
+<!-- Item 1: Schedules -->
+<a aria-label="Schedules navigation" class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container active:scale-95 transition-transform duration-150 rounded-xl" href="#schedules">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="text-label-sm font-label-sm mt-0.5">Schedules</span>
+</a>
+<!-- Item 2: Dose (Active Highlight per context) -->
+<a aria-current="page" aria-label="Dose navigation (Current Tab)" class="flex flex-col items-center justify-center bg-primary-fixed dark:bg-primary text-on-primary-fixed dark:text-on-primary rounded-full px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container active:scale-95 transition-transform duration-150" href="#dose">
+<span class="material-symbols-outlined material-symbols-fill" data-icon="medication">medication</span>
+<span class="text-label-sm font-label-sm mt-0.5 font-bold">Dose</span>
+</a>
+<!-- Item 3: Reports -->
+<a aria-label="Reports navigation" class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container active:scale-95 transition-transform duration-150 rounded-xl" href="#reports">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+<span class="text-label-sm font-label-sm mt-0.5">Reports</span>
+</a>
+<!-- Item 4: Caregiver -->
+<a aria-label="Caregiver navigation" class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container active:scale-95 transition-transform duration-150 rounded-xl" href="#caregiver">
+<span class="material-symbols-outlined" data-icon="supervised_user_circle">supervised_user_circle</span>
+<span class="text-label-sm font-label-sm mt-0.5">Caregiver</span>
+</a>
+</nav>
+</body></html>
