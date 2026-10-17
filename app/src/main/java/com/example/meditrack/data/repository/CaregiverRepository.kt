@@ -50,4 +50,8 @@ class CaregiverRepository(private val caregiverDao: CaregiverDao) {
     suspend fun hasCaregiver(): Boolean {
         return caregiverDao.getCaregiverOnce() != null
     }
+
+    suspend fun deleteCaregiver() {
+        caregiverDao.deleteCaregiver()
+    }
 }

@@ -81,6 +81,19 @@ class ScheduleReportFragment : Fragment() {
 
         setupViews(view)
         observeViewModel(view)
+
+        // Observe return from CaregiverForm if redirected from sharing
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("caregiver_saved_for_report")
+            ?.observe(viewLifecycleOwner) { saved ->
+                if (saved == true) {
+                    findNavController().currentBackStackEntry?.savedStateHandle?.remove<Boolean>("caregiver_saved_for_report")
+                    Toast.makeText(
+                        requireContext(),
+                        "Caregiver designated. Tap Share PDF whenever you are ready to share.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
     }
 
     private fun setupViews(view: View) {
@@ -313,6 +326,30 @@ class ScheduleReportFragment : Fragment() {
     }
 
     private fun launchShareFlow() {
+        val caregiver = viewModel.caregiver.value
+        if (caregiver == null) {
+            com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Share with Caregiver")
+                .setMessage("You haven't designated a caregiver yet. Would you like to add caregiver details to personalize this report, or share directly via other apps?")
+                .setPositiveButton("Add Caregiver") { _, _ ->
+                    val bundle = Bundle().apply {
+                        putBoolean("isEdit", false)
+                        putBoolean("fromReportShare", true)
+                        putLong("reportScheduleId", scheduleId)
+                    }
+                    findNavController().navigate(R.id.action_scheduleReport_to_caregiverForm, bundle)
+                }
+                .setNegativeButton("Share Directly") { _, _ ->
+                    executeShare()
+                }
+                .setNeutralButton("Cancel", null)
+                .show()
+        } else {
+            executeShare()
+        }
+    }
+
+    private fun executeShare() {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             val currentReport = viewModel.getReportOnce()
             if (currentReport == null) {

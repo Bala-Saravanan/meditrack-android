@@ -144,12 +144,38 @@
         <argument
             android:name="scheduleId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_scheduleReport_to_caregiverForm"
+            app:destination="@id/caregiverFormFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/caregiverInfoFragment"
         android:name="com.example.meditrack.ui.caregiver.CaregiverInfoFragment"
         android:label="Caregiver"
-        tools:layout="@layout/fragment_placeholder" />
+        tools:layout="@layout/fragment_caregiver_info">
+        <action
+            android:id="@+id/action_caregiverInfo_to_caregiverForm"
+            app:destination="@id/caregiverFormFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/caregiverFormFragment"
+        android:name="com.example.meditrack.ui.caregiver.CaregiverFormFragment"
+        android:label="Caregiver Details"
+        tools:layout="@layout/fragment_caregiver_form">
+        <argument
+            android:name="isEdit"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
+            android:name="fromReportShare"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
+            android:name="reportScheduleId"
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
 
 </navigation>
