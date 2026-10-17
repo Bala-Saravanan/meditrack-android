@@ -64,6 +64,7 @@ class UserRegistrationFragment : Fragment() {
 
                 withContext(Dispatchers.Main) {
                     findNavController().navigate(R.id.action_registration_to_dashboard)
+                    (activity as? com.example.meditrack.MainActivity)?.requestNotificationPermission(force = false)
                 }
             }
         }

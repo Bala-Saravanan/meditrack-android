@@ -108,6 +108,9 @@ class MainActivity : AppCompatActivity() {
         val doseId = intent.getLongExtra("doseId", -1L)
 
         if (navigateToHistory && scheduleId > 0) {
+            intent.removeExtra("navigate_to_history")
+            intent.removeExtra("scheduleId")
+            intent.removeExtra("doseId")
             val bundle = Bundle().apply {
                 putLong("scheduleId", scheduleId)
                 putLong("doseId", doseId)
